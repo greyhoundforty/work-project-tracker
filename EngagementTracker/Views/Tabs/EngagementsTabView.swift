@@ -76,17 +76,7 @@ struct EngagementRowView: View {
                     .font(.system(size: 13))
                     .foregroundStyle(Color.gruvFg)
                 if !taggedContacts.isEmpty {
-                    HStack(spacing: 4) {
-                        ForEach(taggedContacts) { contact in
-                            Text(contact.name)
-                                .font(.system(size: 10))
-                                .foregroundStyle(Color.gruvAqua)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(Color.gruvBg2)
-                                .clipShape(Capsule())
-                        }
-                    }
+                    TagWrapView(contacts: taggedContacts)
                 }
             }
             Spacer()
@@ -99,5 +89,34 @@ struct EngagementRowView: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 10)
+    }
+}
+
+struct TagWrapView: View {
+    let contacts: [Contact]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            let rows = chunk(contacts, size: 3)
+            ForEach(rows.indices, id: \.self) { i in
+                HStack(spacing: 4) {
+                    ForEach(rows[i]) { contact in
+                        Text(contact.name)
+                            .font(.system(size: 10))
+                            .foregroundStyle(Color.gruvAqua)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Color.gruvBg2)
+                            .clipShape(Capsule())
+                    }
+                }
+            }
+        }
+    }
+
+    private func chunk(_ items: [Contact], size: Int) -> [[Contact]] {
+        stride(from: 0, to: items.count, by: size).map {
+            Array(items[$0..<min($0 + size, items.count)])
+        }
     }
 }

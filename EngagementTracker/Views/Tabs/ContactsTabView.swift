@@ -72,7 +72,7 @@ struct ContactRowView: View {
                 .fill(Color.gruvBg2)
                 .frame(width: 36, height: 36)
                 .overlay(
-                    Text(String(contact.name.prefix(1)).uppercased())
+                    Text(initials(for: contact.name))
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(Color.gruvFg)
                 )
@@ -113,5 +113,12 @@ struct ContactRowView: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 8)
+    }
+
+    private func initials(for name: String) -> String {
+        let parts = name.split(separator: " ")
+        let first = parts.first.map { String($0.prefix(1)) } ?? ""
+        let last = parts.count > 1 ? parts.last.map { String($0.prefix(1)) } ?? "" : ""
+        return (first + last).uppercased()
     }
 }
