@@ -3,6 +3,7 @@ import SwiftData
 
 struct MenuBarPopoverView: View {
     @Environment(AppState.self) private var appState
+    @Environment(\.openSettings) private var openSettings
     @Query(sort: \Project.updatedAt, order: .reverse) private var allProjects: [Project]
 
     @State private var showNewProject = false
@@ -151,6 +152,13 @@ struct MenuBarPopoverView: View {
                 .font(.system(size: 11))
                 .foregroundStyle(Color.gruvBlue)
                 Spacer()
+                Button {
+                    openSettings()
+                } label: {
+                    Image(systemName: "gearshape")
+                        .foregroundStyle(Color.gruvFgDim)
+                }
+                .buttonStyle(.plain)
                 Button("Quit") { NSApp.terminate(nil) }
                     .buttonStyle(.plain)
                     .font(.system(size: 11))
