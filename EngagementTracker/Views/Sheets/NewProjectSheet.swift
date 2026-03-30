@@ -58,7 +58,7 @@ struct NewProjectSheet: View {
                             .onChange(of: selectedTemplate) { _, template in
                                 guard let t = template else { return }
                                 isPOC = t.isPOC
-                                tagsString = t.tags.joined(separator: ", ")
+                                tagsString = t.tags.filter { $0.hasPrefix("#") }.map { String($0.dropFirst()) }.joined(separator: ", ")
                                 initialStage = t.projectStage
                             }
                         }
@@ -94,8 +94,8 @@ struct NewProjectSheet: View {
                             DatePicker("Close Date", selection: $targetCloseDate, displayedComponents: .date)
                                 .foregroundStyle(Color.themeFg)
                         }
-                        LabeledField(label: "Tags (comma-separated)") {
-                            TextField("Optional", text: $tagsString)
+                        LabeledField(label: "Tags (resource types, comma-separated)") {
+                            TextField("e.g. vpc, iks, powervs", text: $tagsString)
                         }
                     }
 
@@ -120,7 +120,9 @@ struct NewProjectSheet: View {
             isPOC: isPOC,
             estimatedValueCents: parseCents(estimatedValueString),
             targetCloseDate: hasCloseDate ? targetCloseDate : nil,
-            tags: tagsString.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+            tags: tagsString.split(separator: ",")
+                .map { "#\($0.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: CharacterSet(charactersIn: "#")))" }
+                .filter { $0 != "#" }
         )
         context.insert(project)
         let checkpoints = CheckpointSeeder.makeAllCheckpoints()

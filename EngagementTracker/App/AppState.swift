@@ -9,6 +9,7 @@ enum ThemeMode: String {
 final class AppState {
     var selectedStage: ProjectStage? = .discovery
     var selectedTag: String? = nil
+    var selectedLabel: String? = nil
     var selectedProject: Project?
     var searchQuery: String = ""
     var isCloudSyncEnabled: Bool {
