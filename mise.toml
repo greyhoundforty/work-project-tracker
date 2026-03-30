@@ -1,0 +1,8 @@
+[tools]
+fnox = "latest"
+node = "lts"
+python = "3.12"
+
+[env]
+_.python.venv = { path = ".venv", create = true }
+PROJECT_NAME = "{{ config_root | basename }}"
