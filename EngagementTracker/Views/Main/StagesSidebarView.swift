@@ -5,10 +5,14 @@ struct StagesSidebarView: View {
     @Environment(AppState.self) private var appState
     @Query private var projects: [Project]
 
+    private var allLabels: [String] {
+        let active = projects.filter(\.isActive)
+        return Set(active.compactMap(\.accountName).filter { !$0.isEmpty }).sorted()
+    }
+
     private var allTags: [String] {
         let active = projects.filter(\.isActive)
-        let tagSet = Set(active.flatMap(\.tags))
-        return tagSet.sorted()
+        return Set(active.flatMap(\.tags).filter { $0.hasPrefix("#") }).sorted()
     }
 
     var body: some View {
@@ -18,11 +22,12 @@ struct StagesSidebarView: View {
                     label: "All Projects",
                     icon: "folder",
                     badge: projects.filter(\.isActive).count,
-                    isSelected: appState.selectedStage == nil && appState.selectedTag == nil,
+                    isSelected: appState.selectedStage == nil && appState.selectedTag == nil && appState.selectedLabel == nil,
                     color: .themeFg
                 ) {
                     appState.selectedStage = nil
                     appState.selectedTag = nil
+                    appState.selectedLabel = nil
                 }
             }
 
@@ -32,11 +37,12 @@ struct StagesSidebarView: View {
                         label: stage.rawValue,
                         icon: stageIcon(stage),
                         badge: count(for: stage),
-                        isSelected: appState.selectedStage == stage && appState.selectedTag == nil,
+                        isSelected: appState.selectedStage == stage && appState.selectedTag == nil && appState.selectedLabel == nil,
                         color: Color.themeStageColor(for: stage)
                     ) {
                         appState.selectedStage = stage
                         appState.selectedTag = nil
+                        appState.selectedLabel = nil
                     }
                 }
             }
@@ -46,21 +52,41 @@ struct StagesSidebarView: View {
                     label: ProjectStage.won.rawValue,
                     icon: "checkmark.seal.fill",
                     badge: count(for: .won),
-                    isSelected: appState.selectedStage == .won && appState.selectedTag == nil,
+                    isSelected: appState.selectedStage == .won && appState.selectedTag == nil && appState.selectedLabel == nil,
                     color: .themeGreen
                 ) {
                     appState.selectedStage = .won
                     appState.selectedTag = nil
+                    appState.selectedLabel = nil
                 }
                 SidebarRow(
                     label: ProjectStage.lost.rawValue,
                     icon: "xmark.seal.fill",
                     badge: count(for: .lost),
-                    isSelected: appState.selectedStage == .lost && appState.selectedTag == nil,
+                    isSelected: appState.selectedStage == .lost && appState.selectedTag == nil && appState.selectedLabel == nil,
                     color: .themeRed
                 ) {
                     appState.selectedStage = .lost
                     appState.selectedTag = nil
+                    appState.selectedLabel = nil
+                }
+            }
+
+            if !allLabels.isEmpty {
+                Section("Labels") {
+                    ForEach(allLabels, id: \.self) { label in
+                        SidebarRow(
+                            label: label.replacingOccurrences(of: " ", with: "-"),
+                            icon: "at",
+                            badge: labelCount(label),
+                            isSelected: appState.selectedLabel == label,
+                            color: .themeBlue
+                        ) {
+                            appState.selectedLabel = label
+                            appState.selectedTag = nil
+                            appState.selectedStage = nil
+                        }
+                    }
                 }
             }
 
@@ -68,13 +94,14 @@ struct StagesSidebarView: View {
                 Section("Tags") {
                     ForEach(allTags, id: \.self) { tag in
                         SidebarRow(
-                            label: tag,
-                            icon: "tag",
+                            label: String(tag.dropFirst()),
+                            icon: "number",
                             badge: tagCount(tag),
                             isSelected: appState.selectedTag == tag,
                             color: .themeYellow
                         ) {
                             appState.selectedTag = tag
+                            appState.selectedLabel = nil
                             appState.selectedStage = nil
                         }
                     }
@@ -88,6 +115,10 @@ struct StagesSidebarView: View {
 
     private func count(for stage: ProjectStage) -> Int {
         projects.filter { $0.stage == stage && $0.isActive }.count
+    }
+
+    private func labelCount(_ accountName: String) -> Int {
+        projects.filter { $0.isActive && $0.accountName == accountName }.count
     }
 
     private func tagCount(_ tag: String) -> Int {

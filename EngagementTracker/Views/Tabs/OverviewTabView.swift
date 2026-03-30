@@ -7,14 +7,11 @@ struct OverviewTabView: View {
 
     var body: some View {
         @Bindable var project = project
-        let ibmTeam = project.contacts
-            .filter { $0.type == .ibmInternal }
-            .sorted { $0.name < $1.name }
 
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
 
-                // Project summary card
+                // Combined Project Info + Links card
                 OverviewCard(title: "Project Info") {
                     OverviewInfoRow(label: "Account", value: project.accountName ?? "—")
                     OverviewInfoRow(label: "Stage") {
@@ -25,71 +22,38 @@ struct OverviewTabView: View {
                     if let oppID = project.opportunityID, !oppID.isEmpty {
                         OverviewInfoRow(label: "Opp ID", value: oppID)
                     }
-                    if !project.tags.isEmpty {
-                        OverviewInfoRow(label: "Tags", value: project.tags.joined(separator: ", "))
+                    let projectTags = project.tags.filter { $0.hasPrefix("#") }
+                    if !projectTags.isEmpty {
+                        OverviewInfoRow(label: "Tags", value: projectTags.map { String($0.dropFirst()) }.joined(separator: ", "))
+                    }
+
+                    Divider().padding(.vertical, 6)
+
+                    HStack(spacing: 16) {
+                        LinkIconButton(
+                            label: "ISC Opportunity",
+                            icon: "link.badge.plus",
+                            value: linkBinding(\.iscOpportunityLink),
+                            onSave: { try? context.save() }
+                        )
+                        LinkIconButton(
+                            label: "GTM Nav Account",
+                            icon: "building.2",
+                            value: linkBinding(\.gtmNavAccountLink),
+                            onSave: { try? context.save() }
+                        )
+                        LinkIconButton(
+                            label: "OneDrive Folder",
+                            icon: "folder.badge.questionmark",
+                            value: linkBinding(\.oneDriveFolderLink),
+                            onSave: { try? context.save() }
+                        )
+                        Spacer()
                     }
                 }
 
-                // IBM team card (only shown when contacts exist)
-                if !ibmTeam.isEmpty {
-                    OverviewCard(title: "IBM Team") {
-                        ForEach(ibmTeam) { contact in
-                            HStack(spacing: 8) {
-                                Circle()
-                                    .fill(Color.themeBg3)
-                                    .frame(width: 28, height: 28)
-                                    .overlay(
-                                        Text(initials(for: contact.name))
-                                            .font(.system(size: 11, weight: .semibold))
-                                            .foregroundStyle(Color.themeFg)
-                                    )
-                                Text(contact.name)
-                                    .font(.system(size: 13))
-                                    .foregroundStyle(Color.themeFg)
-                                if let role = contact.internalRole {
-                                    Text(role.rawValue)
-                                        .font(.system(size: 10))
-                                        .foregroundStyle(Color.themeAqua)
-                                        .padding(.horizontal, 6)
-                                        .padding(.vertical, 1)
-                                        .background(Color.themeBg2)
-                                        .clipShape(Capsule())
-                                }
-                                Spacer()
-                                if let email = contact.email, !email.isEmpty {
-                                    Text(email)
-                                        .font(.system(size: 11))
-                                        .foregroundStyle(Color.themeBlue)
-                                }
-                            }
-                            .padding(.vertical, 2)
-                        }
-                    }
-                }
-
-                // Links card
-                OverviewCard(title: "Links") {
-                    LinkRow(
-                        label: "ISC Opportunity",
-                        icon: "link.badge.plus",
-                        value: linkBinding(\.iscOpportunityLink),
-                        onSave: { try? context.save() }
-                    )
-                    Divider().padding(.vertical, 4)
-                    LinkRow(
-                        label: "GTM Nav Account",
-                        icon: "building.2",
-                        value: linkBinding(\.gtmNavAccountLink),
-                        onSave: { try? context.save() }
-                    )
-                    Divider().padding(.vertical, 4)
-                    LinkRow(
-                        label: "OneDrive Folder",
-                        icon: "folder.badge.questionmark",
-                        value: linkBinding(\.oneDriveFolderLink),
-                        onSave: { try? context.save() }
-                    )
-                }
+                // Engagement calendar
+                EngagementCalendarView(engagements: project.engagements)
             }
             .padding()
         }
@@ -102,59 +66,203 @@ struct OverviewTabView: View {
             set: { project[keyPath: keyPath] = $0.isEmpty ? nil : $0 }
         )
     }
+}
 
-    private func initials(for name: String) -> String {
-        let parts = name.split(separator: " ")
-        let first = parts.first.map { String($0.prefix(1)) } ?? ""
-        let last = parts.count > 1 ? parts.last.map { String($0.prefix(1)) } ?? "" : ""
-        return (first + last).uppercased()
+// MARK: - Engagement Calendar
+
+struct EngagementCalendarView: View {
+    let engagements: [Engagement]
+
+    @State private var displayedMonth: Date = {
+        let cal = Calendar.current
+        let comps = cal.dateComponents([.year, .month], from: Date())
+        return cal.date(from: comps) ?? Date()
+    }()
+
+    private let calendar = Calendar.current
+    private let dayColumns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
+    private let weekdaySymbols = Calendar.current.veryShortWeekdaySymbols
+
+    private var engagementDays: Set<String> {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        return Set(engagements.map { fmt.string(from: $0.date) })
+    }
+
+    private var daysInGrid: [Date?] {
+        guard let monthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: displayedMonth)),
+              let range = calendar.range(of: .day, in: .month, for: monthStart) else { return [] }
+        let firstWeekday = calendar.component(.weekday, from: monthStart)
+        let leadingBlanks = (firstWeekday - calendar.firstWeekday + 7) % 7
+        var days: [Date?] = Array(repeating: nil, count: leadingBlanks)
+        for day in range {
+            days.append(calendar.date(byAdding: .day, value: day - 1, to: monthStart))
+        }
+        return days
+    }
+
+    var body: some View {
+        OverviewCard(title: "Engagement Activity") {
+            // Month navigation header
+            HStack {
+                Button {
+                    displayedMonth = calendar.date(byAdding: .month, value: -1, to: displayedMonth) ?? displayedMonth
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(Color.themeFgDim)
+                }
+                .buttonStyle(.plain)
+
+                Spacer()
+
+                Text(displayedMonth, format: .dateTime.month(.wide).year())
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(Color.themeFg)
+
+                Spacer()
+
+                Button {
+                    displayedMonth = calendar.date(byAdding: .month, value: 1, to: displayedMonth) ?? displayedMonth
+                } label: {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(Color.themeFgDim)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.bottom, 4)
+
+            // Weekday headers
+            LazyVGrid(columns: dayColumns, spacing: 4) {
+                ForEach(weekdaySymbols, id: \.self) { symbol in
+                    Text(symbol)
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundStyle(Color.themeFgDim)
+                        .frame(maxWidth: .infinity)
+                }
+
+                // Day cells
+                ForEach(Array(daysInGrid.enumerated()), id: \.offset) { _, date in
+                    if let date {
+                        CalendarDayCell(date: date, hasEngagement: engagementDays.contains(dayKey(date)), isToday: calendar.isDateInToday(date))
+                    } else {
+                        Color.clear.frame(height: 28)
+                    }
+                }
+            }
+
+            // Legend
+            if !engagementDays.isEmpty {
+                HStack(spacing: 6) {
+                    Circle()
+                        .fill(Color.themeAqua.opacity(0.35))
+                        .frame(width: 8, height: 8)
+                    Text("Engagement logged")
+                        .font(.system(size: 10))
+                        .foregroundStyle(Color.themeFgDim)
+                }
+                .padding(.top, 6)
+            }
+        }
+    }
+
+    private func dayKey(_ date: Date) -> String {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        return fmt.string(from: date)
     }
 }
 
-// MARK: - Link row with inline editing + open button
+private struct CalendarDayCell: View {
+    let date: Date
+    let hasEngagement: Bool
+    let isToday: Bool
 
-struct LinkRow: View {
+    var body: some View {
+        ZStack {
+            if hasEngagement {
+                Circle()
+                    .fill(Color.themeAqua.opacity(0.35))
+            } else if isToday {
+                Circle()
+                    .strokeBorder(Color.themeFgDim.opacity(0.4), lineWidth: 1)
+            }
+            Text("\(Calendar.current.component(.day, from: date))")
+                .font(.system(size: 11, weight: hasEngagement ? .semibold : .regular))
+                .foregroundStyle(hasEngagement ? Color.themeAqua : (isToday ? Color.themeFg : Color.themeFgDim))
+        }
+        .frame(height: 28)
+    }
+}
+
+// MARK: - Link icon button with popover editor
+
+struct LinkIconButton: View {
     let label: String
     let icon: String
     @Binding var value: String
     let onSave: () -> Void
 
+    @State private var showPopover = false
+
     private var url: URL? {
         let s = value.trimmingCharacters(in: .whitespaces)
         guard !s.isEmpty else { return nil }
-        // Prepend https:// if missing a scheme so URL(string:) parses it
         let normalized = s.hasPrefix("http") ? s : "https://\(s)"
         return URL(string: normalized)
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 6) {
+        Button {
+            if let url {
+                NSWorkspace.shared.open(url)
+            } else {
+                showPopover = true
+            }
+        } label: {
+            VStack(spacing: 4) {
                 Image(systemName: icon)
-                    .font(.system(size: 12))
+                    .font(.system(size: 16))
                     .foregroundStyle(url != nil ? Color.themeAqua : Color.themeBg3)
-                    .frame(width: 18)
+                Text(label)
+                    .font(.system(size: 9))
+                    .foregroundStyle(url != nil ? Color.themeAqua : Color.themeFgDim.opacity(0.5))
+                    .underline(url != nil)
+                    .lineLimit(1)
+            }
+        }
+        .buttonStyle(.plain)
+        .help(url != nil ? "Open \(label)" : "Set \(label)")
+        .contextMenu {
+            if url != nil {
+                Button("Edit Link") { showPopover = true }
+                Button("Clear Link") { value = ""; onSave() }
+            } else {
+                Button("Set Link") { showPopover = true }
+            }
+        }
+        .popover(isPresented: $showPopover, arrowEdge: .bottom) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text(label)
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(Color.themeFgDim)
-                Spacer()
-                if let url {
-                    Link(destination: url) {
-                        HStack(spacing: 3) {
-                            Text("Open")
-                                .font(.system(size: 11))
-                            Image(systemName: "arrow.up.right.square")
-                                .font(.system(size: 11))
-                        }
-                        .foregroundStyle(Color.themeBlue)
+                HStack(spacing: 6) {
+                    TextField("Paste link…", text: $value)
+                        .textFieldStyle(.roundedBorder)
+                        .font(.system(size: 12))
+                        .frame(width: 260)
+                        .onSubmit { onSave(); showPopover = false }
+                    if url != nil {
+                        Button("Clear") { value = ""; onSave(); showPopover = false }
+                            .font(.system(size: 11))
                     }
+                    Button("Save") { onSave(); showPopover = false }
+                        .font(.system(size: 11))
                 }
             }
-            TextField("Paste link…", text: $value)
-                .textFieldStyle(.roundedBorder)
-                .font(.system(size: 12))
-                .foregroundStyle(Color.themeFg)
-                .onSubmit { onSave() }
+            .padding(12)
+            .background(Color.themeBg1)
         }
     }
 }

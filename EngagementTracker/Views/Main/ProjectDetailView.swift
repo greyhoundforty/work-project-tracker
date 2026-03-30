@@ -41,6 +41,7 @@ struct ProjectDetailHeaderView: View {
     @State private var showStagePicker = false
     @State private var showDeleteConfirm = false
     @State private var showExport = false
+    @State private var showTagEditor = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -109,10 +110,31 @@ struct ProjectDetailHeaderView: View {
                     TagPill(label: value, color: .themeGreen)
                 }
                 if let account = project.accountName {
-                    TagPill(label: account, color: .themeFgDim)
+                    TagPill(label: account.replacingOccurrences(of: " ", with: "-"), color: .themeBlue)
                 }
                 if let closeDate = project.targetCloseDate {
                     TagPill(label: "Close: \(closeDate.formatted(date: .abbreviated, time: .omitted))", color: .themeFgDim)
+                }
+                let projectTags = project.tags.filter { $0.hasPrefix("#") }
+                if !projectTags.isEmpty {
+                    Text("|")
+                        .font(.system(size: 11))
+                        .foregroundStyle(Color.themeFgDim)
+                    ForEach(projectTags, id: \.self) { tag in
+                        TagPill(label: String(tag.dropFirst()), color: .themeYellow)
+                    }
+                }
+                Button {
+                    showTagEditor = true
+                } label: {
+                    Image(systemName: "tag")
+                        .font(.system(size: 11))
+                        .foregroundStyle(Color.themeFgDim)
+                }
+                .buttonStyle(.plain)
+                .help("Edit tags")
+                .popover(isPresented: $showTagEditor, arrowEdge: .bottom) {
+                    TagsEditorPopover(project: project)
                 }
             }
         }
@@ -195,5 +217,84 @@ struct TagPill: View {
             .padding(.vertical, 3)
             .background(Color.themeBg2)
             .clipShape(Capsule())
+    }
+}
+
+struct TagsEditorPopover: View {
+    let project: Project
+    @Environment(\.modelContext) private var context
+    @State private var newTag: String = ""
+
+    private var tags: [String] { project.tags.filter { $0.hasPrefix("#") } }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Edit Tags")
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(Color.themeFgDim)
+                .padding(.horizontal, 12)
+                .padding(.top, 10)
+
+            Divider()
+
+            if tags.isEmpty {
+                Text("No tags yet")
+                    .font(.system(size: 12))
+                    .foregroundStyle(Color.themeFgDim)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 4)
+            } else {
+                ForEach(tags, id: \.self) { tag in
+                    HStack {
+                        Text(String(tag.dropFirst()))
+                            .font(.system(size: 13))
+                            .foregroundStyle(Color.themeYellow)
+                        Spacer()
+                        Button {
+                            removeTag(tag)
+                        } label: {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 10))
+                                .foregroundStyle(Color.themeFgDim)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 5)
+                }
+            }
+
+            Divider()
+
+            HStack(spacing: 6) {
+                TextField("Add tag", text: $newTag)
+                    .textFieldStyle(.roundedBorder)
+                    .font(.system(size: 12))
+                    .onSubmit { addTag() }
+                Button("Add") { addTag() }
+                    .disabled(newTag.trimmingCharacters(in: .whitespaces).isEmpty)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+        }
+        .frame(width: 200)
+        .background(Color.themeBg1)
+    }
+
+    private func addTag() {
+        let raw = newTag.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: CharacterSet(charactersIn: "#"))
+        guard !raw.isEmpty else { return }
+        let tag = "#\(raw)"
+        guard !project.tags.contains(tag) else { newTag = ""; return }
+        project.tags.append(tag)
+        project.updatedAt = Date()
+        try? context.save()
+        newTag = ""
+    }
+
+    private func removeTag(_ tag: String) {
+        project.tags.removeAll { $0 == tag }
+        project.updatedAt = Date()
+        try? context.save()
     }
 }

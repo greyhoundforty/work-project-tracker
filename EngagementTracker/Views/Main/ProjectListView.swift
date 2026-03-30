@@ -11,7 +11,9 @@ struct ProjectListView: View {
     private var filtered: [Project] {
         let base = allProjects.filter(\.isActive)
         let byFilter: [Project]
-        if let tag = appState.selectedTag {
+        if let label = appState.selectedLabel {
+            byFilter = base.filter { $0.accountName == label }
+        } else if let tag = appState.selectedTag {
             byFilter = base.filter { $0.tags.contains(tag) }
         } else if let stage = appState.selectedStage {
             byFilter = base.filter { $0.stage == stage }
@@ -48,7 +50,12 @@ struct ProjectListView: View {
         }
         .listStyle(.inset)
         .frame(minWidth: 220)
-        .navigationTitle(appState.selectedTag.map { "#\($0)" } ?? appState.selectedStage?.rawValue ?? "All Projects")
+        .navigationTitle(
+            appState.selectedLabel.map { $0.replacingOccurrences(of: " ", with: "-") }
+            ?? appState.selectedTag.map { String($0.dropFirst()) }
+            ?? appState.selectedStage?.rawValue
+            ?? "All Projects"
+        )
         .overlay {
             if filtered.isEmpty {
                 ContentUnavailableView(
