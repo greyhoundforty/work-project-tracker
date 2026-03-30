@@ -1,6 +1,10 @@
 import SwiftUI
 import SwiftData
 
+enum ThemeMode: String {
+    case system, light, dark
+}
+
 @Observable
 final class AppState {
     var selectedStage: ProjectStage? = .discovery
@@ -10,6 +14,10 @@ final class AppState {
     var isCloudSyncEnabled: Bool {
         get { UserDefaults.standard.bool(forKey: "cloudSyncEnabled") }
         set { UserDefaults.standard.set(newValue, forKey: "cloudSyncEnabled") }
+    }
+    var themeMode: ThemeMode {
+        get { ThemeMode(rawValue: UserDefaults.standard.string(forKey: "themeMode") ?? "system") ?? .system }
+        set { UserDefaults.standard.set(newValue.rawValue, forKey: "themeMode") }
     }
 
     static func makeContainer(cloudSync: Bool) -> ModelContainer {
