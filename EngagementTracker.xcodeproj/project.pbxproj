@@ -17,6 +17,7 @@
 		94A041DCE2C87DF70AAB363C /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B4AF03BAA576689329F6A0 /* Note.swift */; };
 		AAF5CF80F9AEA5E2CB305DBD /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = F749FEE3E002F243C7D09F6D /* Contact.swift */; };
 		D58FC1BBADF35C2359D0E5F9 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E86052E3162427C8589915 /* Enums.swift */; };
+		E4A5FAE188AB4F7D90C13B88 /* CheckpointSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E779BC866948178B663998 /* CheckpointSeeder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		4109D80A799ABFAFEF8F2AEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		552059A7EDF684B9D86005BD /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
 		627193FC2257799E20E92E14 /* Checkpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkpoint.swift; sourceTree = "<group>"; };
+		73E779BC866948178B663998 /* CheckpointSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointSeeder.swift; sourceTree = "<group>"; };
 		62B4AF03BAA576689329F6A0 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		63C50165EBA0FB0AF8AB4E47 /* ProjectTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTask.swift; sourceTree = "<group>"; };
 		82E86052E3162427C8589915 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				627193FC2257799E20E92E14 /* Checkpoint.swift */,
+				73E779BC866948178B663998 /* CheckpointSeeder.swift */,
 				F749FEE3E002F243C7D09F6D /* Contact.swift */,
 				CCE2A432222F09AE7920E6C9 /* Engagement.swift */,
 				82E86052E3162427C8589915 /* Enums.swift */,
@@ -205,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FF40E7523D45D106CDB90F4 /* Checkpoint.swift in Sources */,
+				E4A5FAE188AB4F7D90C13B88 /* CheckpointSeeder.swift in Sources */,
 				AAF5CF80F9AEA5E2CB305DBD /* Contact.swift in Sources */,
 				681639735E96C7F2903DD59A /* Engagement.swift in Sources */,
 				5250104FC3B8AAC191D734F3 /* EngagementTrackerApp.swift in Sources */,
