@@ -1,0 +1,425 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A74FC15E5823D9AA1BF85E6 /* CheckpointSeederTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F8CF0E178676902B3F1941 /* CheckpointSeederTests.swift */; };
+		5250104FC3B8AAC191D734F3 /* EngagementTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F788AD6B2F2882F39C98AD /* EngagementTrackerApp.swift */; };
+		57D778A5F2FFD534A5F7A7D2 /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552059A7EDF684B9D86005BD /* SwiftData.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FF7126FDE1B2B060C26A4A05 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DF5E35D3D5DB3D76CF29AAB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 38DE482C423318C98CD86BD0;
+			remoteInfo = EngagementTracker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0081E647F2EA1FD9895D3971 /* EngagementTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EngagementTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		18704851EBEDB87C86336747 /* EngagementTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EngagementTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		32F788AD6B2F2882F39C98AD /* EngagementTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngagementTrackerApp.swift; sourceTree = "<group>"; };
+		4109D80A799ABFAFEF8F2AEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		552059A7EDF684B9D86005BD /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
+		E9073123893BB594FC91AA07 /* EngagementTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngagementTracker.entitlements; sourceTree = "<group>"; };
+		F5F8CF0E178676902B3F1941 /* CheckpointSeederTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointSeederTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9EF50146F8FE0C2B3587E9B4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57D778A5F2FFD534A5F7A7D2 /* SwiftData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		122BB3E945A5472E31CB295B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0081E647F2EA1FD9895D3971 /* EngagementTracker.app */,
+				18704851EBEDB87C86336747 /* EngagementTrackerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		253FFFF1082D08C3D27E0C53 /* EngagementTrackerTests */ = {
+			isa = PBXGroup;
+			children = (
+				F5F8CF0E178676902B3F1941 /* CheckpointSeederTests.swift */,
+			);
+			path = EngagementTrackerTests;
+			sourceTree = "<group>";
+		};
+		26DE661E4CD74CB0DFFCE639 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				32F788AD6B2F2882F39C98AD /* EngagementTrackerApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		3D039443573B0DD7DDEB98ED /* EngagementTracker */ = {
+			isa = PBXGroup;
+			children = (
+				26DE661E4CD74CB0DFFCE639 /* App */,
+				E9073123893BB594FC91AA07 /* EngagementTracker.entitlements */,
+				4109D80A799ABFAFEF8F2AEA /* Info.plist */,
+			);
+			path = EngagementTracker;
+			sourceTree = "<group>";
+		};
+		6243A8DD9D526E50EF871C92 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				552059A7EDF684B9D86005BD /* SwiftData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F04C2FF54B843A49FE654932 = {
+			isa = PBXGroup;
+			children = (
+				3D039443573B0DD7DDEB98ED /* EngagementTracker */,
+				253FFFF1082D08C3D27E0C53 /* EngagementTrackerTests */,
+				6243A8DD9D526E50EF871C92 /* Frameworks */,
+				122BB3E945A5472E31CB295B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		38DE482C423318C98CD86BD0 /* EngagementTracker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04478ECC994F44130027A331 /* Build configuration list for PBXNativeTarget "EngagementTracker" */;
+			buildPhases = (
+				04704546E3022CB6F79E351D /* Sources */,
+				9EF50146F8FE0C2B3587E9B4 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EngagementTracker;
+			packageProductDependencies = (
+			);
+			productName = EngagementTracker;
+			productReference = 0081E647F2EA1FD9895D3971 /* EngagementTracker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B763CF7FA167119945B1CF0A /* EngagementTrackerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 332F69385262E94A01665AB1 /* Build configuration list for PBXNativeTarget "EngagementTrackerTests" */;
+			buildPhases = (
+				1E9FC71F990D3BA4CE8EB458 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D24B4B5C8FAEA3461FF3F8F2 /* PBXTargetDependency */,
+			);
+			name = EngagementTrackerTests;
+			packageProductDependencies = (
+			);
+			productName = EngagementTrackerTests;
+			productReference = 18704851EBEDB87C86336747 /* EngagementTrackerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6DF5E35D3D5DB3D76CF29AAB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					38DE482C423318C98CD86BD0 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 668E7FF47B2F656DFE51E2D0 /* Build configuration list for PBXProject "EngagementTracker" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = F04C2FF54B843A49FE654932;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 122BB3E945A5472E31CB295B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				38DE482C423318C98CD86BD0 /* EngagementTracker */,
+				B763CF7FA167119945B1CF0A /* EngagementTrackerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		04704546E3022CB6F79E351D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5250104FC3B8AAC191D734F3 /* EngagementTrackerApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1E9FC71F990D3BA4CE8EB458 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A74FC15E5823D9AA1BF85E6 /* CheckpointSeederTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D24B4B5C8FAEA3461FF3F8F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 38DE482C423318C98CD86BD0 /* EngagementTracker */;
+			targetProxy = FF7126FDE1B2B060C26A4A05 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1DBF59362FD9815D145E775F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		60C3070B59E0BA85A35076CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		B75A219B356DD6DBF1816367 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EngagementTracker/EngagementTracker.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = EngagementTracker/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.greyhoundforty.EngagementTracker;
+				PRODUCT_NAME = EngagementTracker;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		CD1A4876EAF4C19C8EEAB468 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EngagementTracker/EngagementTracker.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = EngagementTracker/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.greyhoundforty.EngagementTracker;
+				PRODUCT_NAME = EngagementTracker;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DD381E9539C897A1D9E26114 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.greyhoundforty.EngagementTrackerTests;
+				PRODUCT_NAME = EngagementTrackerTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EngagementTracker.app/Contents/MacOS/EngagementTracker";
+			};
+			name = Debug;
+		};
+		EDD137F251908D1533AFAEE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.greyhoundforty.EngagementTrackerTests;
+				PRODUCT_NAME = EngagementTrackerTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EngagementTracker.app/Contents/MacOS/EngagementTracker";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		04478ECC994F44130027A331 /* Build configuration list for PBXNativeTarget "EngagementTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B75A219B356DD6DBF1816367 /* Debug */,
+				CD1A4876EAF4C19C8EEAB468 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		332F69385262E94A01665AB1 /* Build configuration list for PBXNativeTarget "EngagementTrackerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD381E9539C897A1D9E26114 /* Debug */,
+				EDD137F251908D1533AFAEE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		668E7FF47B2F656DFE51E2D0 /* Build configuration list for PBXProject "EngagementTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DBF59362FD9815D145E775F /* Debug */,
+				60C3070B59E0BA85A35076CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6DF5E35D3D5DB3D76CF29AAB /* Project object */;
+}
