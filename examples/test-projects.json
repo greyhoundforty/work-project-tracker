@@ -1,0 +1,227 @@
+{
+  "exportDate": "2026-03-30T17:00:00Z",
+  "exportVersion": "1",
+  "projects": [
+    {
+      "name": "TEST-CloudMigration-ACME",
+      "accountName": "ACME Industries",
+      "opportunityID": "TEST-001",
+      "stage": "Discovery",
+      "isPOC": false,
+      "estimatedValueCents": 15000000,
+      "tags": ["cloud", "migration", "test"],
+      "iscOpportunityLink": "",
+      "gtmNavAccountLink": "",
+      "oneDriveFolderLink": "",
+      "contacts": [
+        {
+          "name": "Jane Smith",
+          "title": "CTO",
+          "email": "jane.smith@acme-test.example",
+          "type": "External",
+          "internalRole": null
+        },
+        {
+          "name": "Bob Internal",
+          "title": "SE",
+          "email": "bob@ibm-test.example",
+          "type": "Internal (IBM)",
+          "internalRole": "SE"
+        }
+      ],
+      "engagements": [
+        {
+          "date": "2026-03-10T14:00:00Z",
+          "summary": "Initial discovery call. Customer wants to migrate 3 on-prem workloads to cloud within 6 months. Pain points: cost of hardware refresh and lack of internal cloud expertise.",
+          "contactNames": ["Jane Smith", "Bob Internal"]
+        }
+      ],
+      "notes": [
+        {
+          "content": "Customer has a hard deadline of Q3 for the migration. Budget approved at $150k. Key stakeholder is Jane Smith.",
+          "createdAt": "2026-03-10T15:00:00Z"
+        }
+      ],
+      "tasks": [
+        {
+          "title": "Send discovery questionnaire",
+          "isCompleted": true,
+          "completedAt": "2026-03-12T09:00:00Z",
+          "createdAt": "2026-03-10T15:00:00Z"
+        },
+        {
+          "title": "Schedule architecture workshop",
+          "isCompleted": false,
+          "completedAt": null,
+          "createdAt": "2026-03-10T15:01:00Z"
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "name": "TEST-AIPilot-GlobalTech",
+      "accountName": "GlobalTech Solutions",
+      "opportunityID": "TEST-002",
+      "stage": "Initial Delivery",
+      "isPOC": true,
+      "estimatedValueCents": 8000000,
+      "tags": ["ai", "poc", "watsonx", "test"],
+      "iscOpportunityLink": "",
+      "gtmNavAccountLink": "",
+      "oneDriveFolderLink": "",
+      "contacts": [
+        {
+          "name": "Alice Techner",
+          "title": "VP Engineering",
+          "email": "alice@globaltech-test.example",
+          "type": "External",
+          "internalRole": null
+        }
+      ],
+      "engagements": [
+        {
+          "date": "2026-03-05T13:00:00Z",
+          "summary": "Kicked off the POC. Agreed on 4-week timeline. Use case: customer service automation using watsonx Assistant.",
+          "contactNames": ["Alice Techner"]
+        },
+        {
+          "date": "2026-03-20T13:00:00Z",
+          "summary": "Week 2 check-in. Demo of initial prototype well received. Customer requested integration with their Salesforce instance.",
+          "contactNames": ["Alice Techner"]
+        }
+      ],
+      "notes": [
+        {
+          "content": "POC success criteria: >85% intent accuracy on their test dataset. Salesforce integration is a must-have for full deal.",
+          "createdAt": "2026-03-05T14:00:00Z"
+        }
+      ],
+      "tasks": [
+        {
+          "title": "Stand up watsonx environment",
+          "isCompleted": true,
+          "completedAt": "2026-03-07T10:00:00Z",
+          "createdAt": "2026-03-05T14:00:00Z"
+        },
+        {
+          "title": "Deliver Salesforce integration prototype",
+          "isCompleted": false,
+          "completedAt": null,
+          "createdAt": "2026-03-20T14:00:00Z"
+        },
+        {
+          "title": "Prepare POC results presentation",
+          "isCompleted": false,
+          "completedAt": null,
+          "createdAt": "2026-03-20T14:01:00Z"
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "name": "TEST-StorageExpansion-TestCorp",
+      "accountName": "TestCorp Ltd",
+      "opportunityID": "TEST-003",
+      "stage": "Refine",
+      "isPOC": false,
+      "estimatedValueCents": 22000000,
+      "tags": ["storage", "powerVS", "test"],
+      "iscOpportunityLink": "",
+      "gtmNavAccountLink": "",
+      "oneDriveFolderLink": "",
+      "contacts": [
+        {
+          "name": "David Lee",
+          "title": "IT Director",
+          "email": "dlee@testcorp-test.example",
+          "type": "External",
+          "internalRole": null
+        },
+        {
+          "name": "Carol Manager",
+          "title": "Client Manager",
+          "email": "carol@ibm-test.example",
+          "type": "Internal (IBM)",
+          "internalRole": "Manager"
+        }
+      ],
+      "engagements": [
+        {
+          "date": "2026-02-28T11:00:00Z",
+          "summary": "Presented initial BOM. Customer pushed back on price — wants 15% reduction. Agreed to revisit storage tier options.",
+          "contactNames": ["David Lee", "Carol Manager"]
+        }
+      ],
+      "notes": [
+        {
+          "content": "Customer is price-sensitive. Consider FlashSystem A9000 vs A9000R trade-off. Carol to involve pricing desk.",
+          "createdAt": "2026-02-28T12:00:00Z"
+        }
+      ],
+      "tasks": [
+        {
+          "title": "Revise BOM with alternative storage tiers",
+          "isCompleted": false,
+          "completedAt": null,
+          "createdAt": "2026-02-28T12:00:00Z"
+        },
+        {
+          "title": "Get pricing desk approval",
+          "isCompleted": false,
+          "completedAt": null,
+          "createdAt": "2026-02-28T12:01:00Z"
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "name": "TEST-NetworkModernization-FakeCo",
+      "accountName": "FakeCo Enterprises",
+      "opportunityID": "TEST-004",
+      "stage": "Proposal",
+      "isPOC": false,
+      "estimatedValueCents": 45000000,
+      "tags": ["networking", "modernization", "test"],
+      "iscOpportunityLink": "",
+      "gtmNavAccountLink": "",
+      "oneDriveFolderLink": "",
+      "contacts": [
+        {
+          "name": "Mike Buyer",
+          "title": "CISO",
+          "email": "mbuyer@fakeco-test.example",
+          "type": "External",
+          "internalRole": null
+        }
+      ],
+      "engagements": [
+        {
+          "date": "2026-03-15T10:00:00Z",
+          "summary": "Delivered formal proposal. Customer reviewing internally. Decision expected by April 15.",
+          "contactNames": ["Mike Buyer"]
+        }
+      ],
+      "notes": [
+        {
+          "content": "Competing against Cisco direct. Our differentiator is the managed services wrapper. Mike is the economic buyer — get him the exec briefing.",
+          "createdAt": "2026-03-15T11:00:00Z"
+        }
+      ],
+      "tasks": [
+        {
+          "title": "Schedule exec briefing",
+          "isCompleted": false,
+          "completedAt": null,
+          "createdAt": "2026-03-15T11:00:00Z"
+        },
+        {
+          "title": "Follow up on proposal status",
+          "isCompleted": false,
+          "completedAt": null,
+          "createdAt": "2026-03-15T11:01:00Z"
+        }
+      ],
+      "checkpoints": []
+    }
+  ]
+}
