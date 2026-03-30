@@ -4,6 +4,7 @@ import SwiftData
 struct NewProjectSheet: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Environment(AppState.self) private var appState
 
     @State private var name: String = ""
     @State private var accountName: String = ""
@@ -105,6 +106,8 @@ struct NewProjectSheet: View {
             context.insert(cp)
         }
         try? context.save()
+        appState.selectedStage = project.stage
+        appState.selectedProject = project
         dismiss()
     }
 

@@ -4,6 +4,7 @@ import SwiftData
 @Observable
 final class AppState {
     var selectedStage: ProjectStage? = .discovery
+    var selectedTag: String? = nil
     var selectedProject: Project?
     var searchQuery: String = ""
     var isCloudSyncEnabled: Bool {

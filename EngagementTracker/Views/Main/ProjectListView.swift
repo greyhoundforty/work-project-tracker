@@ -8,15 +8,17 @@ struct ProjectListView: View {
 
     private var filtered: [Project] {
         let base = allProjects.filter(\.isActive)
-        let byStage: [Project]
-        if let stage = appState.selectedStage {
-            byStage = base.filter { $0.stage == stage }
+        let byFilter: [Project]
+        if let tag = appState.selectedTag {
+            byFilter = base.filter { $0.tags.contains(tag) }
+        } else if let stage = appState.selectedStage {
+            byFilter = base.filter { $0.stage == stage }
         } else {
-            byStage = base
+            byFilter = base
         }
-        guard !appState.searchQuery.isEmpty else { return byStage }
+        guard !appState.searchQuery.isEmpty else { return byFilter }
         let q = appState.searchQuery.lowercased()
-        return byStage.filter {
+        return byFilter.filter {
             $0.name.lowercased().contains(q) ||
             ($0.accountName?.lowercased().contains(q) ?? false) ||
             ($0.opportunityID?.lowercased().contains(q) ?? false)
@@ -24,17 +26,31 @@ struct ProjectListView: View {
     }
 
     var body: some View {
-        @Bindable var appState = appState
-        List(filtered, selection: $appState.selectedProject) { project in
-            ProjectRowView(project: project)
-                .tag(project)
+        List {
+            ForEach(filtered) { project in
+                ProjectRowView(project: project, isSelected: appState.selectedProject?.id == project.id)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        appState.selectedProject = project
+                    }
+                    .listRowBackground(
+                        appState.selectedProject?.id == project.id
+                            ? Color.gruvAqua.opacity(0.15)
+                            : Color.clear
+                    )
+                    .listRowInsets(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+            }
         }
         .listStyle(.inset)
         .frame(minWidth: 220)
-        .navigationTitle(appState.selectedStage?.rawValue ?? "All Projects")
+        .navigationTitle(appState.selectedTag.map { "#\($0)" } ?? appState.selectedStage?.rawValue ?? "All Projects")
         .overlay {
             if filtered.isEmpty {
-                ContentUnavailableView("No Projects", systemImage: "briefcase", description: Text("Create a project to get started."))
+                ContentUnavailableView(
+                    "No Projects",
+                    systemImage: "briefcase",
+                    description: Text("Create a project to get started.")
+                )
             }
         }
         .toolbar {
@@ -55,6 +71,7 @@ struct ProjectListView: View {
 
 struct ProjectRowView: View {
     let project: Project
+    let isSelected: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {

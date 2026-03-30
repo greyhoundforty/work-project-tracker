@@ -74,24 +74,28 @@ struct TasksTabView: View {
         context.insert(task)
         project.tasks.append(task)
         project.updatedAt = Date()
+        try? context.save()
         newTaskTitle = ""
     }
 
     private func delete(_ task: ProjectTask) {
         project.tasks.removeAll { $0.id == task.id }
         context.delete(task)
+        try? context.save()
     }
 }
 
 struct TaskRowView: View {
     let task: ProjectTask
     let onDelete: () -> Void
+    @Environment(\.modelContext) private var context
 
     var body: some View {
         HStack(spacing: 10) {
             Button {
                 task.toggle()
                 task.project?.updatedAt = Date()
+                try? context.save()
             } label: {
                 Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
                     .foregroundStyle(task.isCompleted ? Color.gruvGreen : Color.gruvBg3)

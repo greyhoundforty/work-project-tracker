@@ -59,6 +59,7 @@ struct ContactsTabView: View {
     private func delete(_ contact: Contact) {
         project.contacts.removeAll { $0.id == contact.id }
         context.delete(contact)
+        try? context.save()
     }
 }
 

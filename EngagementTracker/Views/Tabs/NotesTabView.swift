@@ -76,6 +76,7 @@ struct NotesTabView: View {
         context.insert(note)
         project.notes.append(note)
         project.updatedAt = Date()
+        try? context.save()
         newNoteContent = ""
         isAddingNote = false
     }
@@ -83,6 +84,7 @@ struct NotesTabView: View {
     private func delete(_ note: Note) {
         project.notes.removeAll { $0.id == note.id }
         context.delete(note)
+        try? context.save()
     }
 }
 

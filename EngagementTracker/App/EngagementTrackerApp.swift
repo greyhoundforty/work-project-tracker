@@ -4,10 +4,9 @@ import SwiftData
 @main
 struct EngagementTrackerApp: App {
     @State private var appState = AppState()
-
-    var container: ModelContainer {
-        AppState.makeContainer(cloudSync: appState.isCloudSyncEnabled)
-    }
+    @State private var container = AppState.makeContainer(
+        cloudSync: UserDefaults.standard.bool(forKey: "cloudSyncEnabled")
+    )
 
     var body: some Scene {
         WindowGroup(id: "main") {
@@ -19,13 +18,14 @@ struct EngagementTrackerApp: App {
         MenuBarExtra("Engagement Tracker", systemImage: "briefcase.fill") {
             MenuBarPopoverView()
                 .environment(appState)
-                .modelContainer(container)
         }
         .menuBarExtraStyle(.window)
+        .modelContainer(container)
 
         Settings {
             SettingsView()
                 .environment(appState)
         }
+        .modelContainer(container)
     }
 }

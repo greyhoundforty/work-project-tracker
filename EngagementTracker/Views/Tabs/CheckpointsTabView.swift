@@ -50,11 +50,13 @@ struct CheckpointsTabView: View {
 
 struct CheckpointRowView: View {
     let checkpoint: Checkpoint
+    @Environment(\.modelContext) private var context
 
     var body: some View {
         Button {
             checkpoint.toggle()
             checkpoint.project?.updatedAt = Date()
+            try? context.save()
         } label: {
             HStack(spacing: 10) {
                 Image(systemName: checkpoint.isCompleted ? "checkmark.circle.fill" : "circle")

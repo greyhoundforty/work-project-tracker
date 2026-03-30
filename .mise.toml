@@ -1,0 +1,40 @@
+[tasks.build]
+description = "Build EngagementTracker via xcodebuild"
+run = """
+xcodebuild \
+  -project EngagementTracker.xcodeproj \
+  -scheme EngagementTracker \
+  -destination 'platform=macOS,arch=arm64' \
+  -configuration Debug \
+  build
+"""
+
+[tasks.clean]
+description = "Clean EngagementTracker build products"
+run = """
+xcodebuild \
+  -project EngagementTracker.xcodeproj \
+  -scheme EngagementTracker \
+  clean
+"""
+
+[tasks."clean-build"]
+description = "Clean then build"
+run = """
+xcodebuild \
+  -project EngagementTracker.xcodeproj \
+  -scheme EngagementTracker \
+  -destination 'platform=macOS,arch=arm64' \
+  -configuration Debug \
+  clean build
+"""
+
+[tasks.test]
+description = "Run unit tests"
+run = """
+xcodebuild \
+  -project EngagementTracker.xcodeproj \
+  -scheme EngagementTrackerTests \
+  -destination 'platform=macOS,arch=arm64' \
+  test
+"""

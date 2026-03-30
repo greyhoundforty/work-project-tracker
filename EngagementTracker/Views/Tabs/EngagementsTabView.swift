@@ -46,6 +46,7 @@ struct EngagementsTabView: View {
     private func delete(_ engagement: Engagement) {
         project.engagements.removeAll { $0.id == engagement.id }
         context.delete(engagement)
+        try? context.save()
     }
 }
 
