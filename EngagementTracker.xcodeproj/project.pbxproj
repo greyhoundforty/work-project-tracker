@@ -38,6 +38,8 @@
 		B6D08BD817A4076DDD0C436E /* NotesTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F67B9AE879F56CCA52FF73 /* NotesTabView.swift */; };
 		B98B91A72C4BEA36D7BAA0B0 /* NewProjectSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ED0540CA094AD0E4CE56E7 /* NewProjectSheet.swift */; };
 		BB8207BD2D9491D4D0560C96 /* MenuBarPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FBCBFF52A3D3A090DA1163 /* MenuBarPopoverView.swift */; };
+		BF1E400013C32C47A9C25AB9 /* ImportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6736F54BC490954B10E09B /* ImportSheet.swift */; };
+		C545EC183BF1BA0BA2313AC9 /* ExportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA5BEB46A4653842DC7D9BA /* ExportSheet.swift */; };
 		D58FC1BBADF35C2359D0E5F9 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E86052E3162427C8589915 /* Enums.swift */; };
 		D6D9EF30977C497BAB34FBE5 /* ExportModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60BB4893F497AA0E99FF0DA /* ExportModels.swift */; };
 		E19D3443C1B7DEC0D92F8DE6 /* ProjectDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667315A690EA2A742742EC15 /* ProjectDetailView.swift */; };
@@ -65,7 +67,9 @@
 		18704851EBEDB87C86336747 /* EngagementTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EngagementTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32F788AD6B2F2882F39C98AD /* EngagementTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngagementTrackerApp.swift; sourceTree = "<group>"; };
 		38F55996E4B25BEA8866A4FE /* ContactsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTabView.swift; sourceTree = "<group>"; };
+		3FA5BEB46A4653842DC7D9BA /* ExportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportSheet.swift; sourceTree = "<group>"; };
 		4109D80A799ABFAFEF8F2AEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4C6736F54BC490954B10E09B /* ImportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportSheet.swift; sourceTree = "<group>"; };
 		51116AAA7B466D42D7944FC6 /* EngagementsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngagementsTabView.swift; sourceTree = "<group>"; };
 		552059A7EDF684B9D86005BD /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
 		5874993E636C9E4AAB5312EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -227,6 +231,7 @@
 		6C605FA38E56D15B4436EE53 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				78087AA0FE892F87B59EF9F5 /* Export */,
 				08844AC11DBC30898891BBCD /* Main */,
 				4038EF18883F7C075B65A5E7 /* MenuBar */,
 				50988F6E980A399A6845A4D9 /* Settings */,
@@ -234,6 +239,15 @@
 				492D861AD2B617DA711740AF /* Tabs */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		78087AA0FE892F87B59EF9F5 /* Export */ = {
+			isa = PBXGroup;
+			children = (
+				3FA5BEB46A4653842DC7D9BA /* ExportSheet.swift */,
+				4C6736F54BC490954B10E09B /* ImportSheet.swift */,
+			);
+			path = Export;
 			sourceTree = "<group>";
 		};
 		7F1BF21F9E8C4D4A888BBB33 /* Services */ = {
@@ -375,8 +389,10 @@
 				D58FC1BBADF35C2359D0E5F9 /* Enums.swift in Sources */,
 				D6D9EF30977C497BAB34FBE5 /* ExportModels.swift in Sources */,
 				EE2A4CF7E2F18F2150E30F3F /* ExportService.swift in Sources */,
+				C545EC183BF1BA0BA2313AC9 /* ExportSheet.swift in Sources */,
 				93284E736D549176EF6C70B5 /* GruvboxColors.swift in Sources */,
 				21AD19CD97922EC2BDDBAD68 /* ImportService.swift in Sources */,
+				BF1E400013C32C47A9C25AB9 /* ImportSheet.swift in Sources */,
 				60835F6348A120DFEE9EB035 /* LogEngagementSheet.swift in Sources */,
 				BB8207BD2D9491D4D0560C96 /* MenuBarPopoverView.swift in Sources */,
 				B98B91A72C4BEA36D7BAA0B0 /* NewProjectSheet.swift in Sources */,

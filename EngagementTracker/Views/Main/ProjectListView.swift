@@ -5,6 +5,8 @@ struct ProjectListView: View {
     @Environment(AppState.self) private var appState
     @Query private var allProjects: [Project]
     @State private var showNewProject = false
+    @State private var showExport = false
+    @State private var showImport = false
 
     private var filtered: [Project] {
         let base = allProjects.filter(\.isActive)
@@ -62,9 +64,31 @@ struct ProjectListView: View {
                 }
                 .keyboardShortcut("n", modifiers: .command)
             }
+            ToolbarItem {
+                Button {
+                    showExport = true
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                }
+                .help("Export all projects")
+            }
+            ToolbarItem {
+                Button {
+                    showImport = true
+                } label: {
+                    Image(systemName: "square.and.arrow.down")
+                }
+                .help("Import projects")
+            }
         }
         .sheet(isPresented: $showNewProject) {
             NewProjectSheet()
+        }
+        .sheet(isPresented: $showExport) {
+            ExportSheet(scope: .allProjects)
+        }
+        .sheet(isPresented: $showImport) {
+            ImportSheet()
         }
     }
 }
