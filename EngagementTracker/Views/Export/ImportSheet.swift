@@ -173,6 +173,7 @@ struct ImportSheet: View {
             )
             context.insert(project)
 
+            var nameToContactID: [String: UUID] = [:]
             for c in exported.contacts {
                 let contact = Contact(
                     name: c.name, title: c.title, email: c.email,
@@ -181,6 +182,17 @@ struct ImportSheet: View {
                 )
                 context.insert(contact)
                 project.contacts.append(contact)
+                nameToContactID[c.name] = contact.id
+            }
+
+            for e in exported.engagements {
+                let engagement = Engagement(
+                    date: e.date,
+                    summary: e.summary,
+                    contactIDs: e.contactNames.compactMap { nameToContactID[$0] }
+                )
+                context.insert(engagement)
+                project.engagements.append(engagement)
             }
 
             for t in exported.tasks {
