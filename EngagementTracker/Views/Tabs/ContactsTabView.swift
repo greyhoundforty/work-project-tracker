@@ -1,0 +1,117 @@
+import SwiftUI
+import SwiftData
+
+struct ContactsTabView: View {
+    @Environment(\.modelContext) private var context
+    let project: Project
+    @State private var showAddContact = false
+
+    private func contacts(of type: ContactType) -> [Contact] {
+        project.contacts.filter { $0.type == type }.sorted { $0.name < $1.name }
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack {
+                Spacer()
+                Button {
+                    showAddContact = true
+                } label: {
+                    Label("Add Contact", systemImage: "person.badge.plus")
+                }
+                .padding()
+            }
+            .background(Color.gruvBg1)
+
+            Divider()
+
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 16) {
+                    ForEach(ContactType.allCases, id: \.self) { type in
+                        let group = contacts(of: type)
+                        if !group.isEmpty {
+                            Section {
+                                ForEach(group) { contact in
+                                    ContactRowView(contact: contact, onDelete: { delete(contact) })
+                                }
+                            } header: {
+                                Text(type.rawValue.uppercased())
+                                    .font(.system(size: 10, weight: .semibold))
+                                    .foregroundStyle(Color.gruvFgDim)
+                                    .padding(.horizontal)
+                                    .padding(.top, 8)
+                            }
+                        }
+                    }
+
+                    if project.contacts.isEmpty {
+                        ContentUnavailableView("No Contacts", systemImage: "person.2", description: Text("Add customer, IBM, or partner contacts."))
+                            .padding()
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $showAddContact) {
+            AddContactSheet(project: project)
+        }
+    }
+
+    private func delete(_ contact: Contact) {
+        project.contacts.removeAll { $0.id == contact.id }
+        context.delete(contact)
+    }
+}
+
+struct ContactRowView: View {
+    let contact: Contact
+    let onDelete: () -> Void
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Circle()
+                .fill(Color.gruvBg2)
+                .frame(width: 36, height: 36)
+                .overlay(
+                    Text(String(contact.name.prefix(1)).uppercased())
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(Color.gruvFg)
+                )
+
+            VStack(alignment: .leading, spacing: 2) {
+                HStack {
+                    Text(contact.name)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(Color.gruvFg)
+                    if let role = contact.internalRole {
+                        Text(role.rawValue)
+                            .font(.system(size: 10))
+                            .foregroundStyle(Color.gruvAqua)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 1)
+                            .background(Color.gruvBg2)
+                            .clipShape(Capsule())
+                    }
+                }
+                if let title = contact.title {
+                    Text(title)
+                        .font(.system(size: 11))
+                        .foregroundStyle(Color.gruvFgDim)
+                }
+                if let email = contact.email {
+                    Text(email)
+                        .font(.system(size: 11))
+                        .foregroundStyle(Color.gruvBlue)
+                }
+            }
+            Spacer()
+            Button(action: onDelete) {
+                Image(systemName: "trash")
+                    .foregroundStyle(Color.gruvRed)
+            }
+            .buttonStyle(.plain)
+            .opacity(0.6)
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 8)
+    }
+}

@@ -2,17 +2,29 @@ import SwiftUI
 
 struct ProjectDetailView: View {
     let project: Project
+    @State private var selectedTab: String = "checkpoints"
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            // Header
             ProjectDetailHeaderView(project: project)
             Divider()
-            // Tabs — implemented in Task 8
-            Text("Tabs coming soon")
-                .foregroundStyle(Color.gruvFgDim)
-                .padding()
-            Spacer()
+            TabView(selection: $selectedTab) {
+                CheckpointsTabView(project: project)
+                    .tabItem { Label("Checkpoints", systemImage: "checklist") }
+                    .tag("checkpoints")
+                TasksTabView(project: project)
+                    .tabItem { Label("Tasks", systemImage: "checkmark.square") }
+                    .tag("tasks")
+                ContactsTabView(project: project)
+                    .tabItem { Label("Contacts", systemImage: "person.2") }
+                    .tag("contacts")
+                EngagementsTabView(project: project)
+                    .tabItem { Label("Engagements", systemImage: "bubble.left.and.bubble.right") }
+                    .tag("engagements")
+                NotesTabView(project: project)
+                    .tabItem { Label("Notes", systemImage: "note.text") }
+                    .tag("notes")
+            }
         }
         .background(Color.gruvBg)
     }
