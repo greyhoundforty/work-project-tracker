@@ -40,6 +40,7 @@ struct ProjectDetailHeaderView: View {
 
     @State private var showStagePicker = false
     @State private var showDeleteConfirm = false
+    @State private var showExport = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -48,6 +49,17 @@ struct ProjectDetailHeaderView: View {
                     .font(.system(size: 18, weight: .bold))
                     .foregroundStyle(Color.gruvFg)
                 Spacer()
+                Button {
+                    showExport = true
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                        .foregroundStyle(Color.gruvBlue)
+                }
+                .buttonStyle(.plain)
+                .help("Export this project")
+                .sheet(isPresented: $showExport) {
+                    ExportSheet(scope: .singleProject(project))
+                }
                 Button(role: .destructive) {
                     showDeleteConfirm = true
                 } label: {

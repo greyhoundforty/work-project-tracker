@@ -12,6 +12,8 @@ struct EngagementTrackerApp: App {
         WindowGroup(id: "main") {
             ContentView()
                 .environment(appState)
+                .preferredColorScheme(appState.themeMode == .system ? nil :
+                                      appState.themeMode == .light ? .light : .dark)
         }
         .modelContainer(container)
 

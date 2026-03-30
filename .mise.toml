@@ -38,3 +38,21 @@ xcodebuild \
   -destination 'platform=macOS,arch=arm64' \
   test
 """
+
+[tasks."db-backup"]
+description = "Backup SwiftData store to ~/Desktop/EngagementTracker-backups/"
+run = """
+BACKUP_DIR="$HOME/Desktop/EngagementTracker-backups"
+DB_DIR="$HOME/Library/Application Support/com.greyhoundforty.EngagementTracker"
+TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+DEST="$BACKUP_DIR/$TIMESTAMP"
+
+mkdir -p "$DEST"
+
+if [ -d "$DB_DIR" ]; then
+  cp -R "$DB_DIR/." "$DEST/"
+  echo "Backed up to $DEST"
+else
+  echo "No database directory found at $DB_DIR (app may not have been run yet)"
+fi
+"""

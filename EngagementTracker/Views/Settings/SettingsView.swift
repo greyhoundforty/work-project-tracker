@@ -19,12 +19,26 @@ struct SettingsView: View {
             }
 
             Section {
+                Picker("Theme", selection: Binding(
+                    get: { appState.themeMode },
+                    set: { appState.themeMode = $0 }
+                )) {
+                    Text("System").tag(ThemeMode.system)
+                    Text("Light").tag(ThemeMode.light)
+                    Text("Dark").tag(ThemeMode.dark)
+                }
+                .pickerStyle(.radioGroup)
+            } header: {
+                Text("Appearance")
+            }
+
+            Section {
                 LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
             } header: {
                 Text("About")
             }
         }
         .formStyle(.grouped)
-        .frame(width: 420, height: 200)
+        .frame(width: 420, height: 280)
     }
 }
