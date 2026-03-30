@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0578DC6A8B6E2941236A5EAD /* ProjectStageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B75283300A66FBEF2E2FF1 /* ProjectStageTests.swift */; };
+		075DEBC3144C14E0D5D0B29F /* ExportServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DA2BAAE0BFB52F81D51AF /* ExportServiceTests.swift */; };
 		0A74FC15E5823D9AA1BF85E6 /* CheckpointSeederTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F8CF0E178676902B3F1941 /* CheckpointSeederTests.swift */; };
 		12FDC86AE3BD3170229AFC17 /* CheckpointsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C120D36321FD114B0B12D0 /* CheckpointsTabView.swift */; };
 		1F69BB202FFD629963B03D3F /* OverviewTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D352B286BEC31D3217424D2A /* OverviewTabView.swift */; };
@@ -39,6 +40,7 @@
 		D58FC1BBADF35C2359D0E5F9 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E86052E3162427C8589915 /* Enums.swift */; };
 		D6D9EF30977C497BAB34FBE5 /* ExportModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60BB4893F497AA0E99FF0DA /* ExportModels.swift */; };
 		E19D3443C1B7DEC0D92F8DE6 /* ProjectDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667315A690EA2A742742EC15 /* ProjectDetailView.swift */; };
+		EE2A4CF7E2F18F2150E30F3F /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C460831A71EE682C70B7C21E /* ExportService.swift */; };
 		FC9CFD95ECF54205F54B8CF8 /* StagesSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083ABE1EEC050DC136FBB /* StagesSidebarView.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +58,7 @@
 		0081E647F2EA1FD9895D3971 /* EngagementTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EngagementTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B9EF2F993C7A6C3565201CE /* AddContactSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactSheet.swift; sourceTree = "<group>"; };
 		12EBC0A82C1D517978A4CD02 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
+		136DA2BAAE0BFB52F81D51AF /* ExportServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportServiceTests.swift; sourceTree = "<group>"; };
 		18704851EBEDB87C86336747 /* EngagementTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EngagementTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32F788AD6B2F2882F39C98AD /* EngagementTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngagementTrackerApp.swift; sourceTree = "<group>"; };
 		38F55996E4B25BEA8866A4FE /* ContactsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTabView.swift; sourceTree = "<group>"; };
@@ -75,6 +78,7 @@
 		A9E731AD64C56074C9977ADD /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		B0709E5045E8E31D72D0BA8E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C2F67B9AE879F56CCA52FF73 /* NotesTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTabView.swift; sourceTree = "<group>"; };
+		C460831A71EE682C70B7C21E /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
 		C60BB4893F497AA0E99FF0DA /* ExportModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportModels.swift; sourceTree = "<group>"; };
 		C6E3A31D91687A72137F19BD /* CheckpointSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointSeeder.swift; sourceTree = "<group>"; };
 		CCE2A432222F09AE7920E6C9 /* Engagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Engagement.swift; sourceTree = "<group>"; };
@@ -129,6 +133,7 @@
 			children = (
 				F5F8CF0E178676902B3F1941 /* CheckpointSeederTests.swift */,
 				EF34B930FBCC51AB1BC2125A /* ExportModelsTests.swift */,
+				136DA2BAAE0BFB52F81D51AF /* ExportServiceTests.swift */,
 				91B75283300A66FBEF2E2FF1 /* ProjectStageTests.swift */,
 				8AD6CCD5883650AF903F00EF /* SearchFilterTests.swift */,
 			);
@@ -230,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				C60BB4893F497AA0E99FF0DA /* ExportModels.swift */,
+				C460831A71EE682C70B7C21E /* ExportService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -362,6 +368,7 @@
 				86C363F02D5D5FBCC20779DF /* EngagementsTabView.swift in Sources */,
 				D58FC1BBADF35C2359D0E5F9 /* Enums.swift in Sources */,
 				D6D9EF30977C497BAB34FBE5 /* ExportModels.swift in Sources */,
+				EE2A4CF7E2F18F2150E30F3F /* ExportService.swift in Sources */,
 				93284E736D549176EF6C70B5 /* GruvboxColors.swift in Sources */,
 				60835F6348A120DFEE9EB035 /* LogEngagementSheet.swift in Sources */,
 				BB8207BD2D9491D4D0560C96 /* MenuBarPopoverView.swift in Sources */,
@@ -385,6 +392,7 @@
 			files = (
 				0A74FC15E5823D9AA1BF85E6 /* CheckpointSeederTests.swift in Sources */,
 				7C0B9F30AF2EF01185B90166 /* ExportModelsTests.swift in Sources */,
+				075DEBC3144C14E0D5D0B29F /* ExportServiceTests.swift in Sources */,
 				0578DC6A8B6E2941236A5EAD /* ProjectStageTests.swift in Sources */,
 				7B52BB4E76FFAFE1D8F557F1 /* SearchFilterTests.swift in Sources */,
 			);
