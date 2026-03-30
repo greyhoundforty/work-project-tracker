@@ -36,7 +36,7 @@ struct MenuBarPopoverView: View {
             // Search bar
             HStack {
                 Image(systemName: "magnifyingglass")
-                    .foregroundStyle(Color.gruvFgDim)
+                    .foregroundStyle(Color.themeFgDim)
                 TextField("Search projects…", text: $appState.searchQuery)
                     .textFieldStyle(.plain)
                     .font(.system(size: 13))
@@ -45,13 +45,13 @@ struct MenuBarPopoverView: View {
                         appState.searchQuery = ""
                     } label: {
                         Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(Color.gruvFgDim)
+                            .foregroundStyle(Color.themeFgDim)
                     }
                     .buttonStyle(.plain)
                 }
             }
             .padding(10)
-            .background(Color.gruvBg1)
+            .background(Color.themeBg1)
 
             Divider()
 
@@ -61,7 +61,7 @@ struct MenuBarPopoverView: View {
                     LazyVStack(alignment: .leading, spacing: 0) {
                         if filtered.isEmpty {
                             Text("No results")
-                                .foregroundStyle(Color.gruvFgDim)
+                                .foregroundStyle(Color.themeFgDim)
                                 .font(.system(size: 12))
                                 .padding()
                         } else {
@@ -83,7 +83,7 @@ struct MenuBarPopoverView: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(Color.gruvAqua)
+                    .tint(Color.themeAqua)
 
                     Button {
                         showLogEngagement = true
@@ -92,7 +92,7 @@ struct MenuBarPopoverView: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.bordered)
-                    .tint(Color.gruvOrange)
+                    .tint(Color.themeOrange)
                     .disabled(activeProjects.isEmpty)
                 }
                 .padding(10)
@@ -103,7 +103,7 @@ struct MenuBarPopoverView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("PIPELINE")
                         .font(.system(size: 10, weight: .semibold))
-                        .foregroundStyle(Color.gruvFgDim)
+                        .foregroundStyle(Color.themeFgDim)
                         .padding(.horizontal, 10)
                         .padding(.top, 8)
 
@@ -112,15 +112,15 @@ struct MenuBarPopoverView: View {
                             VStack(spacing: 2) {
                                 Text("\(count(for: stage))")
                                     .font(.system(size: 18, weight: .bold))
-                                    .foregroundStyle(Color.gruvStageColor(for: stage))
+                                    .foregroundStyle(Color.themeStageColor(for: stage))
                                 Text(stageAbbrev(stage))
                                     .font(.system(size: 9))
-                                    .foregroundStyle(Color.gruvFgDim)
+                                    .foregroundStyle(Color.themeFgDim)
                                     .multilineTextAlignment(.center)
                             }
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 8)
-                            .background(Color.gruvBg1)
+                            .background(Color.themeBg1)
                             .clipShape(RoundedRectangle(cornerRadius: 6))
                         }
                     }
@@ -135,7 +135,7 @@ struct MenuBarPopoverView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("LAST TOUCHED")
                             .font(.system(size: 10, weight: .semibold))
-                            .foregroundStyle(Color.gruvFgDim)
+                            .foregroundStyle(Color.themeFgDim)
                         MenuBarProjectRow(project: last)
                     }
                     .padding(10)
@@ -152,24 +152,24 @@ struct MenuBarPopoverView: View {
                 }
                 .buttonStyle(.plain)
                 .font(.system(size: 11))
-                .foregroundStyle(Color.gruvBlue)
+                .foregroundStyle(Color.themeBlue)
                 Spacer()
                 Button {
                     openSettings()
                 } label: {
                     Image(systemName: "gearshape")
-                        .foregroundStyle(Color.gruvFgDim)
+                        .foregroundStyle(Color.themeFgDim)
                 }
                 .buttonStyle(.plain)
                 Button("Quit") { NSApp.terminate(nil) }
                     .buttonStyle(.plain)
                     .font(.system(size: 11))
-                    .foregroundStyle(Color.gruvFgDim)
+                    .foregroundStyle(Color.themeFgDim)
             }
             .padding(10)
-            .background(Color.gruvBg1)
+            .background(Color.themeBg1)
         }
-        .background(Color.gruvBg)
+        .background(Color.themeBg)
         .frame(width: 320)
         .sheet(isPresented: $showNewProject) {
             NewProjectSheet()
@@ -200,27 +200,27 @@ struct MenuBarProjectRow: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(project.name)
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(Color.gruvFg)
+                    .foregroundStyle(Color.themeFg)
                 HStack(spacing: 4) {
                     Text(project.stage.rawValue)
                         .font(.system(size: 10))
-                        .foregroundStyle(Color.gruvStageColor(for: project.stage))
+                        .foregroundStyle(Color.themeStageColor(for: project.stage))
                     if project.isPOC {
                         Text("· POC")
                             .font(.system(size: 10))
-                            .foregroundStyle(Color.gruvPurple)
+                            .foregroundStyle(Color.themePurple)
                     }
                     if let account = project.accountName {
                         Text("· \(account)")
                             .font(.system(size: 10))
-                            .foregroundStyle(Color.gruvFgDim)
+                            .foregroundStyle(Color.themeFgDim)
                     }
                 }
             }
             Spacer()
             Image(systemName: "arrow.right")
                 .font(.system(size: 10))
-                .foregroundStyle(Color.gruvFgDim)
+                .foregroundStyle(Color.themeFgDim)
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 6)

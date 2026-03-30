@@ -21,7 +21,7 @@ struct EngagementsTabView: View {
                 }
                 .padding()
             }
-            .background(Color.gruvBg1)
+            .background(Color.themeBg1)
 
             Divider()
 
@@ -64,10 +64,10 @@ struct EngagementRowView: View {
             VStack(spacing: 4) {
                 Text(engagement.date.formatted(.dateTime.month(.abbreviated).day()))
                     .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(Color.gruvOrange)
+                    .foregroundStyle(Color.themeOrange)
                 Text(engagement.date.formatted(.dateTime.year()))
                     .font(.system(size: 10))
-                    .foregroundStyle(Color.gruvFgDim)
+                    .foregroundStyle(Color.themeFgDim)
             }
             .frame(width: 48)
             .padding(.top, 2)
@@ -75,7 +75,7 @@ struct EngagementRowView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(engagement.summary)
                     .font(.system(size: 13))
-                    .foregroundStyle(Color.gruvFg)
+                    .foregroundStyle(Color.themeFg)
                 if !taggedContacts.isEmpty {
                     TagWrapView(contacts: taggedContacts)
                 }
@@ -83,7 +83,7 @@ struct EngagementRowView: View {
             Spacer()
             Button(action: onDelete) {
                 Image(systemName: "trash")
-                    .foregroundStyle(Color.gruvRed)
+                    .foregroundStyle(Color.themeRed)
             }
             .buttonStyle(.plain)
             .opacity(0.6)
@@ -104,10 +104,10 @@ struct TagWrapView: View {
                     ForEach(rows[i]) { contact in
                         Text(contact.name)
                             .font(.system(size: 10))
-                            .foregroundStyle(Color.gruvAqua)
+                            .foregroundStyle(Color.themeAqua)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
-                            .background(Color.gruvBg2)
+                            .background(Color.themeBg2)
                             .clipShape(Capsule())
                     }
                 }

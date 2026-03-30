@@ -31,16 +31,16 @@ struct CheckpointsTabView: View {
                         HStack {
                             Text(stage.rawValue.uppercased())
                                 .font(.system(size: 10, weight: .semibold))
-                                .foregroundStyle(Color.gruvStageColor(for: stage))
+                                .foregroundStyle(Color.themeStageColor(for: stage))
                             Spacer()
                             let completed = checkpoints.filter(\.isCompleted).count
                             Text("\(completed)/\(checkpoints.count)")
                                 .font(.system(size: 10))
-                                .foregroundStyle(Color.gruvFgDim)
+                                .foregroundStyle(Color.themeFgDim)
                         }
                         .padding(.horizontal)
                         .padding(.vertical, 4)
-                        .background(Color.gruvBg1)
+                        .background(Color.themeBg1)
                     }
                 }
             }
@@ -60,17 +60,17 @@ struct CheckpointRowView: View {
         } label: {
             HStack(spacing: 10) {
                 Image(systemName: checkpoint.isCompleted ? "checkmark.circle.fill" : "circle")
-                    .foregroundStyle(checkpoint.isCompleted ? Color.gruvGreen : Color.gruvBg3)
+                    .foregroundStyle(checkpoint.isCompleted ? Color.themeGreen : Color.themeBg3)
                     .font(.system(size: 16))
                 Text(checkpoint.title)
                     .font(.system(size: 13))
-                    .foregroundStyle(checkpoint.isCompleted ? Color.gruvFgDim : Color.gruvFg)
-                    .strikethrough(checkpoint.isCompleted, color: Color.gruvFgDim)
+                    .foregroundStyle(checkpoint.isCompleted ? Color.themeFgDim : Color.themeFg)
+                    .strikethrough(checkpoint.isCompleted, color: Color.themeFgDim)
                 Spacer()
                 if let completedAt = checkpoint.completedAt {
                     Text(completedAt.formatted(date: .abbreviated, time: .omitted))
                         .font(.system(size: 10))
-                        .foregroundStyle(Color.gruvFgDim)
+                        .foregroundStyle(Color.themeFgDim)
                 }
             }
             .padding(.horizontal)

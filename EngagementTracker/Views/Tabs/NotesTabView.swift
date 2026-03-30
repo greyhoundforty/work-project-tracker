@@ -18,10 +18,10 @@ struct NotesTabView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     TextEditor(text: $newNoteContent)
                         .font(.system(size: 13))
-                        .foregroundStyle(Color.gruvFg)
+                        .foregroundStyle(Color.themeFg)
                         .frame(height: 100)
                         .padding(4)
-                        .background(Color.gruvBg2)
+                        .background(Color.themeBg2)
                         .clipShape(RoundedRectangle(cornerRadius: 6))
                     HStack {
                         Button("Cancel") {
@@ -33,12 +33,12 @@ struct NotesTabView: View {
                             saveNote()
                         }
                         .buttonStyle(.borderedProminent)
-                        .tint(Color.gruvAqua)
+                        .tint(Color.themeAqua)
                         .disabled(newNoteContent.trimmingCharacters(in: .whitespaces).isEmpty)
                     }
                 }
                 .padding()
-                .background(Color.gruvBg1)
+                .background(Color.themeBg1)
                 Divider()
             } else {
                 HStack {
@@ -50,7 +50,7 @@ struct NotesTabView: View {
                     }
                     .padding()
                 }
-                .background(Color.gruvBg1)
+                .background(Color.themeBg1)
                 Divider()
             }
 
@@ -96,16 +96,16 @@ struct NoteRowView: View {
         HStack(alignment: .top, spacing: 12) {
             Text(note.createdAt.formatted(.dateTime.month(.abbreviated).day().hour().minute()))
                 .font(.system(size: 10))
-                .foregroundStyle(Color.gruvFgDim)
+                .foregroundStyle(Color.themeFgDim)
                 .frame(width: 90, alignment: .leading)
                 .padding(.top, 2)
             Text(note.content)
                 .font(.system(size: 13))
-                .foregroundStyle(Color.gruvFg)
+                .foregroundStyle(Color.themeFg)
             Spacer()
             Button(action: onDelete) {
                 Image(systemName: "trash")
-                    .foregroundStyle(Color.gruvRed)
+                    .foregroundStyle(Color.themeRed)
             }
             .buttonStyle(.plain)
             .opacity(0.6)

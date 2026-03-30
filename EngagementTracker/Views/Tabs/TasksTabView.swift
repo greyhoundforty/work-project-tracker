@@ -24,13 +24,13 @@ struct TasksTabView: View {
                     .onSubmit { addTask() }
                 Button(action: addTask) {
                     Image(systemName: "plus.circle.fill")
-                        .foregroundStyle(Color.gruvAqua)
+                        .foregroundStyle(Color.themeAqua)
                 }
                 .disabled(newTaskTitle.trimmingCharacters(in: .whitespaces).isEmpty)
                 .buttonStyle(.plain)
             }
             .padding()
-            .background(Color.gruvBg1)
+            .background(Color.themeBg1)
 
             Divider()
 
@@ -48,7 +48,7 @@ struct TasksTabView: View {
                             HStack {
                                 Text(showCompleted ? "Hide Completed" : "Show Completed (\(completedTasks.count))")
                                     .font(.system(size: 11))
-                                    .foregroundStyle(Color.gruvFgDim)
+                                    .foregroundStyle(Color.themeFgDim)
                                 Spacer()
                             }
                             .padding()
@@ -98,19 +98,19 @@ struct TaskRowView: View {
                 try? context.save()
             } label: {
                 Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-                    .foregroundStyle(task.isCompleted ? Color.gruvGreen : Color.gruvBg3)
+                    .foregroundStyle(task.isCompleted ? Color.themeGreen : Color.themeBg3)
                     .font(.system(size: 16))
             }
             .buttonStyle(.plain)
 
             Text(task.title)
                 .font(.system(size: 13))
-                .foregroundStyle(task.isCompleted ? Color.gruvFgDim : Color.gruvFg)
-                .strikethrough(task.isCompleted, color: Color.gruvFgDim)
+                .foregroundStyle(task.isCompleted ? Color.themeFgDim : Color.themeFg)
+                .strikethrough(task.isCompleted, color: Color.themeFgDim)
             Spacer()
             Button(action: onDelete) {
                 Image(systemName: "trash")
-                    .foregroundStyle(Color.gruvRed)
+                    .foregroundStyle(Color.themeRed)
             }
             .buttonStyle(.plain)
             .opacity(0.6)
