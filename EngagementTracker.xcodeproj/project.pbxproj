@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0A74FC15E5823D9AA1BF85E6 /* CheckpointSeederTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F8CF0E178676902B3F1941 /* CheckpointSeederTests.swift */; };
+		3BB93D6C961ACD617B558695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5874993E636C9E4AAB5312EC /* Assets.xcassets */; };
 		4CBB53D9293C22A9F36C183B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0709E5045E8E31D72D0BA8E /* SettingsView.swift */; };
 		5250104FC3B8AAC191D734F3 /* EngagementTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F788AD6B2F2882F39C98AD /* EngagementTrackerApp.swift */; };
 		57D778A5F2FFD534A5F7A7D2 /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552059A7EDF684B9D86005BD /* SwiftData.framework */; };
@@ -17,6 +18,7 @@
 		70FA610E2294BA4A486D11C3 /* ProjectTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C50165EBA0FB0AF8AB4E47 /* ProjectTask.swift */; };
 		88DB35101CC8A902353099FE /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6566B913CAC1CB94744A4B45 /* AppState.swift */; };
 		8EEBDA6A623D08BA5FE535A7 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E731AD64C56074C9977ADD /* Project.swift */; };
+		93284E736D549176EF6C70B5 /* GruvboxColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F94D02CD74BCF5E60A842E /* GruvboxColors.swift */; };
 		94A041DCE2C87DF70AAB363C /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B4AF03BAA576689329F6A0 /* Note.swift */; };
 		9874DCCEA7AAAF922CC2D78B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D517FD1ECF85DF9C456686 /* ContentView.swift */; };
 		AAF5CF80F9AEA5E2CB305DBD /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = F749FEE3E002F243C7D09F6D /* Contact.swift */; };
@@ -40,6 +42,7 @@
 		32F788AD6B2F2882F39C98AD /* EngagementTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngagementTrackerApp.swift; sourceTree = "<group>"; };
 		4109D80A799ABFAFEF8F2AEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		552059A7EDF684B9D86005BD /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
+		5874993E636C9E4AAB5312EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		627193FC2257799E20E92E14 /* Checkpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkpoint.swift; sourceTree = "<group>"; };
 		62B4AF03BAA576689329F6A0 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		63C50165EBA0FB0AF8AB4E47 /* ProjectTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTask.swift; sourceTree = "<group>"; };
@@ -50,6 +53,7 @@
 		B0709E5045E8E31D72D0BA8E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C6E3A31D91687A72137F19BD /* CheckpointSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointSeeder.swift; sourceTree = "<group>"; };
 		CCE2A432222F09AE7920E6C9 /* Engagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Engagement.swift; sourceTree = "<group>"; };
+		D6F94D02CD74BCF5E60A842E /* GruvboxColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GruvboxColors.swift; sourceTree = "<group>"; };
 		E9073123893BB594FC91AA07 /* EngagementTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngagementTracker.entitlements; sourceTree = "<group>"; };
 		F5F8CF0E178676902B3F1941 /* CheckpointSeederTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointSeederTests.swift; sourceTree = "<group>"; };
 		F6D517FD1ECF85DF9C456686 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -107,7 +111,9 @@
 			children = (
 				26DE661E4CD74CB0DFFCE639 /* App */,
 				DE6DAB37A4575E93207B32A1 /* Models */,
+				4B98D037D0EEBF0A0FC66160 /* Theme */,
 				6C605FA38E56D15B4436EE53 /* Views */,
+				5874993E636C9E4AAB5312EC /* Assets.xcassets */,
 				E9073123893BB594FC91AA07 /* EngagementTracker.entitlements */,
 				4109D80A799ABFAFEF8F2AEA /* Info.plist */,
 			);
@@ -120,6 +126,14 @@
 				85FBCBFF52A3D3A090DA1163 /* MenuBarPopoverView.swift */,
 			);
 			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		4B98D037D0EEBF0A0FC66160 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				D6F94D02CD74BCF5E60A842E /* GruvboxColors.swift */,
+			);
+			path = Theme;
 			sourceTree = "<group>";
 		};
 		50988F6E980A399A6845A4D9 /* Settings */ = {
@@ -181,6 +195,7 @@
 			buildConfigurationList = 04478ECC994F44130027A331 /* Build configuration list for PBXNativeTarget "EngagementTracker" */;
 			buildPhases = (
 				04704546E3022CB6F79E351D /* Sources */,
+				A29FD0E8099BA6AFC70FB5A5 /* Resources */,
 				9EF50146F8FE0C2B3587E9B4 /* Frameworks */,
 			);
 			buildRules = (
@@ -246,6 +261,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		A29FD0E8099BA6AFC70FB5A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BB93D6C961ACD617B558695 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		04704546E3022CB6F79E351D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -259,6 +285,7 @@
 				681639735E96C7F2903DD59A /* Engagement.swift in Sources */,
 				5250104FC3B8AAC191D734F3 /* EngagementTrackerApp.swift in Sources */,
 				D58FC1BBADF35C2359D0E5F9 /* Enums.swift in Sources */,
+				93284E736D549176EF6C70B5 /* GruvboxColors.swift in Sources */,
 				BB8207BD2D9491D4D0560C96 /* MenuBarPopoverView.swift in Sources */,
 				94A041DCE2C87DF70AAB363C /* Note.swift in Sources */,
 				8EEBDA6A623D08BA5FE535A7 /* Project.swift in Sources */,
