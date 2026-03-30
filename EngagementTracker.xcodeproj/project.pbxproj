@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0578DC6A8B6E2941236A5EAD /* ProjectStageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B75283300A66FBEF2E2FF1 /* ProjectStageTests.swift */; };
 		0A74FC15E5823D9AA1BF85E6 /* CheckpointSeederTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F8CF0E178676902B3F1941 /* CheckpointSeederTests.swift */; };
 		12FDC86AE3BD3170229AFC17 /* CheckpointsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C120D36321FD114B0B12D0 /* CheckpointsTabView.swift */; };
 		3BB93D6C961ACD617B558695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5874993E636C9E4AAB5312EC /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 		681639735E96C7F2903DD59A /* Engagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE2A432222F09AE7920E6C9 /* Engagement.swift */; };
 		6FDCFFF80A71F9B9574BCA85 /* CheckpointSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E3A31D91687A72137F19BD /* CheckpointSeeder.swift */; };
 		70FA610E2294BA4A486D11C3 /* ProjectTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C50165EBA0FB0AF8AB4E47 /* ProjectTask.swift */; };
+		7B52BB4E76FFAFE1D8F557F1 /* SearchFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD6CCD5883650AF903F00EF /* SearchFilterTests.swift */; };
 		7C54EDA56C2F64CBD6CA3DC0 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EBC0A82C1D517978A4CD02 /* ProjectListView.swift */; };
 		86C363F02D5D5FBCC20779DF /* EngagementsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51116AAA7B466D42D7944FC6 /* EngagementsTabView.swift */; };
 		88DB35101CC8A902353099FE /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6566B913CAC1CB94744A4B45 /* AppState.swift */; };
@@ -65,6 +67,8 @@
 		667315A690EA2A742742EC15 /* ProjectDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailView.swift; sourceTree = "<group>"; };
 		82E86052E3162427C8589915 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		85FBCBFF52A3D3A090DA1163 /* MenuBarPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarPopoverView.swift; sourceTree = "<group>"; };
+		8AD6CCD5883650AF903F00EF /* SearchFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterTests.swift; sourceTree = "<group>"; };
+		91B75283300A66FBEF2E2FF1 /* ProjectStageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectStageTests.swift; sourceTree = "<group>"; };
 		A9E731AD64C56074C9977ADD /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		B0709E5045E8E31D72D0BA8E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C2F67B9AE879F56CCA52FF73 /* NotesTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTabView.swift; sourceTree = "<group>"; };
@@ -118,6 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				F5F8CF0E178676902B3F1941 /* CheckpointSeederTests.swift */,
+				91B75283300A66FBEF2E2FF1 /* ProjectStageTests.swift */,
+				8AD6CCD5883650AF903F00EF /* SearchFilterTests.swift */,
 			);
 			path = EngagementTrackerTests;
 			sourceTree = "<group>";
@@ -359,6 +365,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A74FC15E5823D9AA1BF85E6 /* CheckpointSeederTests.swift in Sources */,
+				0578DC6A8B6E2941236A5EAD /* ProjectStageTests.swift in Sources */,
+				7B52BB4E76FFAFE1D8F557F1 /* SearchFilterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
