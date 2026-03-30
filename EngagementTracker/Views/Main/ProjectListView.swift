@@ -40,7 +40,7 @@ struct ProjectListView: View {
                     }
                     .listRowBackground(
                         appState.selectedProject?.id == project.id
-                            ? Color.gruvAqua.opacity(0.15)
+                            ? Color.themeAqua.opacity(0.15)
                             : Color.clear
                     )
                     .listRowInsets(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
@@ -105,33 +105,33 @@ struct ProjectRowView: View {
             HStack {
                 Text(project.name)
                     .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(Color.gruvFg)
+                    .foregroundStyle(Color.themeFg)
                 if project.isPOC {
                     Text("POC")
                         .font(.system(size: 10, weight: .bold))
-                        .foregroundStyle(Color.gruvPurple)
+                        .foregroundStyle(Color.themePurple)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 1)
-                        .background(Color.gruvBg2)
+                        .background(Color.themeBg2)
                         .clipShape(Capsule())
                 }
                 Spacer()
                 if let value = project.estimatedValueFormatted {
                     Text(value)
                         .font(.system(size: 11))
-                        .foregroundStyle(Color.gruvGreen)
+                        .foregroundStyle(Color.themeGreen)
                 }
             }
             HStack(spacing: 6) {
                 if let account = project.accountName {
                     Text(account)
                         .font(.system(size: 11))
-                        .foregroundStyle(Color.gruvFgDim)
+                        .foregroundStyle(Color.themeFgDim)
                 }
                 Spacer()
                 Text(project.stage.rawValue)
                     .font(.system(size: 10, weight: .medium))
-                    .foregroundStyle(Color.gruvStageColor(for: project.stage))
+                    .foregroundStyle(Color.themeStageColor(for: project.stage))
             }
         }
         .padding(.vertical, 4)

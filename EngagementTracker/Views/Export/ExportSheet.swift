@@ -36,20 +36,20 @@ struct ExportSheet: View {
             HStack {
                 Text("Export Projects")
                     .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(Color.gruvFg)
+                    .foregroundStyle(Color.themeFg)
                 Spacer()
                 Button("Cancel") { dismiss() }
                     .keyboardShortcut(.escape, modifiers: [])
             }
             .padding()
-            .background(Color.gruvBg1)
+            .background(Color.themeBg1)
 
             Divider()
 
             VStack(alignment: .leading, spacing: 20) {
                 FormSection(title: "Scope") {
                     LabeledContent("Exporting", value: scopeLabel)
-                        .foregroundStyle(Color.gruvFg)
+                        .foregroundStyle(Color.themeFg)
                 }
 
                 FormSection(title: "Format") {
@@ -59,23 +59,23 @@ struct ExportSheet: View {
                         }
                     }
                     .pickerStyle(.radioGroup)
-                    .foregroundStyle(Color.gruvFg)
+                    .foregroundStyle(Color.themeFg)
 
                     if format == .json {
                         Text("One JSON file with all project data. Can be re-imported.")
                             .font(.system(size: 11))
-                            .foregroundStyle(Color.gruvFgDim)
+                            .foregroundStyle(Color.themeFgDim)
                     } else {
                         Text("One CSV per entity type (projects, contacts, tasks, notes, engagements) bundled as a ZIP. Open individual files in Excel.")
                             .font(.system(size: 11))
-                            .foregroundStyle(Color.gruvFgDim)
+                            .foregroundStyle(Color.themeFgDim)
                     }
                 }
 
                 if let error = exportError {
                     Text("Export failed: \(error)")
                         .font(.system(size: 12))
-                        .foregroundStyle(Color.gruvRed)
+                        .foregroundStyle(Color.themeRed)
                 }
 
                 Button(action: performExport) {
@@ -83,12 +83,12 @@ struct ExportSheet: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(Color.gruvAqua)
+                .tint(Color.themeAqua)
                 .disabled(isExporting)
             }
             .padding()
         }
-        .background(Color.gruvBg)
+        .background(Color.themeBg)
         .frame(width: 440)
     }
 

@@ -20,7 +20,7 @@ struct OverviewTabView: View {
                     OverviewInfoRow(label: "Stage") {
                         Text("● \(project.stage.rawValue)")
                             .font(.system(size: 12, weight: .semibold))
-                            .foregroundStyle(Color.gruvStageColor(for: project.stage))
+                            .foregroundStyle(Color.themeStageColor(for: project.stage))
                     }
                     if let oppID = project.opportunityID, !oppID.isEmpty {
                         OverviewInfoRow(label: "Opp ID", value: oppID)
@@ -36,30 +36,30 @@ struct OverviewTabView: View {
                         ForEach(ibmTeam) { contact in
                             HStack(spacing: 8) {
                                 Circle()
-                                    .fill(Color.gruvBg3)
+                                    .fill(Color.themeBg3)
                                     .frame(width: 28, height: 28)
                                     .overlay(
                                         Text(initials(for: contact.name))
                                             .font(.system(size: 11, weight: .semibold))
-                                            .foregroundStyle(Color.gruvFg)
+                                            .foregroundStyle(Color.themeFg)
                                     )
                                 Text(contact.name)
                                     .font(.system(size: 13))
-                                    .foregroundStyle(Color.gruvFg)
+                                    .foregroundStyle(Color.themeFg)
                                 if let role = contact.internalRole {
                                     Text(role.rawValue)
                                         .font(.system(size: 10))
-                                        .foregroundStyle(Color.gruvAqua)
+                                        .foregroundStyle(Color.themeAqua)
                                         .padding(.horizontal, 6)
                                         .padding(.vertical, 1)
-                                        .background(Color.gruvBg2)
+                                        .background(Color.themeBg2)
                                         .clipShape(Capsule())
                                 }
                                 Spacer()
                                 if let email = contact.email, !email.isEmpty {
                                     Text(email)
                                         .font(.system(size: 11))
-                                        .foregroundStyle(Color.gruvBlue)
+                                        .foregroundStyle(Color.themeBlue)
                                 }
                             }
                             .padding(.vertical, 2)
@@ -93,7 +93,7 @@ struct OverviewTabView: View {
             }
             .padding()
         }
-        .background(Color.gruvBg)
+        .background(Color.themeBg)
     }
 
     private func linkBinding(_ keyPath: ReferenceWritableKeyPath<Project, String?>) -> Binding<String> {
@@ -132,11 +132,11 @@ struct LinkRow: View {
             HStack(spacing: 6) {
                 Image(systemName: icon)
                     .font(.system(size: 12))
-                    .foregroundStyle(url != nil ? Color.gruvAqua : Color.gruvBg3)
+                    .foregroundStyle(url != nil ? Color.themeAqua : Color.themeBg3)
                     .frame(width: 18)
                 Text(label)
                     .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(Color.gruvFgDim)
+                    .foregroundStyle(Color.themeFgDim)
                 Spacer()
                 if let url {
                     Link(destination: url) {
@@ -146,14 +146,14 @@ struct LinkRow: View {
                             Image(systemName: "arrow.up.right.square")
                                 .font(.system(size: 11))
                         }
-                        .foregroundStyle(Color.gruvBlue)
+                        .foregroundStyle(Color.themeBlue)
                     }
                 }
             }
             TextField("Paste link…", text: $value)
                 .textFieldStyle(.roundedBorder)
                 .font(.system(size: 12))
-                .foregroundStyle(Color.gruvFg)
+                .foregroundStyle(Color.themeFg)
                 .onSubmit { onSave() }
         }
     }
@@ -169,11 +169,11 @@ struct OverviewCard<Content: View>: View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title.uppercased())
                 .font(.system(size: 10, weight: .semibold))
-                .foregroundStyle(Color.gruvFgDim)
+                .foregroundStyle(Color.themeFgDim)
             content
         }
         .padding()
-        .background(Color.gruvBg1)
+        .background(Color.themeBg1)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
@@ -191,7 +191,7 @@ struct OverviewInfoRow<Value: View>: View {
         HStack(alignment: .top, spacing: 0) {
             Text(label)
                 .font(.system(size: 12))
-                .foregroundStyle(Color.gruvFgDim)
+                .foregroundStyle(Color.themeFgDim)
                 .frame(width: 90, alignment: .leading)
             valueView
         }
@@ -204,6 +204,6 @@ extension OverviewInfoRow where Value == Text {
         self.label = label
         self.valueView = Text(value)
             .font(.system(size: 12))
-            .foregroundStyle(Color.gruvFg)
+            .foregroundStyle(Color.themeFg)
     }
 }

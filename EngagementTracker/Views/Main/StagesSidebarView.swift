@@ -19,7 +19,7 @@ struct StagesSidebarView: View {
                     icon: "folder",
                     badge: projects.filter(\.isActive).count,
                     isSelected: appState.selectedStage == nil && appState.selectedTag == nil,
-                    color: .gruvFg
+                    color: .themeFg
                 ) {
                     appState.selectedStage = nil
                     appState.selectedTag = nil
@@ -33,7 +33,7 @@ struct StagesSidebarView: View {
                         icon: stageIcon(stage),
                         badge: count(for: stage),
                         isSelected: appState.selectedStage == stage && appState.selectedTag == nil,
-                        color: Color.gruvStageColor(for: stage)
+                        color: Color.themeStageColor(for: stage)
                     ) {
                         appState.selectedStage = stage
                         appState.selectedTag = nil
@@ -47,7 +47,7 @@ struct StagesSidebarView: View {
                     icon: "checkmark.seal.fill",
                     badge: count(for: .won),
                     isSelected: appState.selectedStage == .won && appState.selectedTag == nil,
-                    color: .gruvGreen
+                    color: .themeGreen
                 ) {
                     appState.selectedStage = .won
                     appState.selectedTag = nil
@@ -57,7 +57,7 @@ struct StagesSidebarView: View {
                     icon: "xmark.seal.fill",
                     badge: count(for: .lost),
                     isSelected: appState.selectedStage == .lost && appState.selectedTag == nil,
-                    color: .gruvRed
+                    color: .themeRed
                 ) {
                     appState.selectedStage = .lost
                     appState.selectedTag = nil
@@ -72,7 +72,7 @@ struct StagesSidebarView: View {
                             icon: "tag",
                             badge: tagCount(tag),
                             isSelected: appState.selectedTag == tag,
-                            color: .gruvYellow
+                            color: .themeYellow
                         ) {
                             appState.selectedTag = tag
                             appState.selectedStage = nil
@@ -123,10 +123,10 @@ private struct SidebarRow: View {
                 if badge > 0 {
                     Text("\(badge)")
                         .font(.system(size: 11, weight: .medium))
-                        .foregroundStyle(Color.gruvFgDim)
+                        .foregroundStyle(Color.themeFgDim)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
-                        .background(Color.gruvBg2)
+                        .background(Color.themeBg2)
                         .clipShape(Capsule())
                 }
             }
@@ -136,7 +136,7 @@ private struct SidebarRow: View {
         .padding(.horizontal, 4)
         .background(
             RoundedRectangle(cornerRadius: 6)
-                .fill(isSelected ? Color.gruvAqua.opacity(0.2) : Color.clear)
+                .fill(isSelected ? Color.themeAqua.opacity(0.2) : Color.clear)
         )
     }
 }

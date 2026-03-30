@@ -30,18 +30,18 @@ struct NewProjectSheet: View {
             HStack {
                 Text("New Project")
                     .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(Color.gruvFg)
+                    .foregroundStyle(Color.themeFg)
                 Spacer()
                 Button("Cancel") { dismiss() }
                     .keyboardShortcut(.escape, modifiers: [])
                 Button("Create") { save() }
                     .buttonStyle(.borderedProminent)
-                    .tint(Color.gruvAqua)
+                    .tint(Color.themeAqua)
                     .disabled(!isValid)
                     .keyboardShortcut(.return, modifiers: .command)
             }
             .padding()
-            .background(Color.gruvBg1)
+            .background(Color.themeBg1)
 
             Divider()
 
@@ -89,10 +89,10 @@ struct NewProjectSheet: View {
                             TextField("e.g. 240000", text: $estimatedValueString)
                         }
                         Toggle("Has Target Close Date", isOn: $hasCloseDate)
-                            .foregroundStyle(Color.gruvFg)
+                            .foregroundStyle(Color.themeFg)
                         if hasCloseDate {
                             DatePicker("Close Date", selection: $targetCloseDate, displayedComponents: .date)
-                                .foregroundStyle(Color.gruvFg)
+                                .foregroundStyle(Color.themeFg)
                         }
                         LabeledField(label: "Tags (comma-separated)") {
                             TextField("Optional", text: $tagsString)
@@ -101,13 +101,13 @@ struct NewProjectSheet: View {
 
                     FormSection(title: "Flags") {
                         Toggle("This is a POC engagement", isOn: $isPOC)
-                            .foregroundStyle(Color.gruvFg)
+                            .foregroundStyle(Color.themeFg)
                     }
                 }
                 .padding()
             }
         }
-        .background(Color.gruvBg)
+        .background(Color.themeBg)
         .frame(width: 480)
     }
 
@@ -156,11 +156,11 @@ struct FormSection<Content: View>: View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title.uppercased())
                 .font(.system(size: 10, weight: .semibold))
-                .foregroundStyle(Color.gruvFgDim)
+                .foregroundStyle(Color.themeFgDim)
             content
         }
         .padding()
-        .background(Color.gruvBg1)
+        .background(Color.themeBg1)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
@@ -173,7 +173,7 @@ struct LabeledField<Content: View>: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label)
                 .font(.system(size: 11))
-                .foregroundStyle(Color.gruvFgDim)
+                .foregroundStyle(Color.themeFgDim)
             content
                 .textFieldStyle(.roundedBorder)
         }

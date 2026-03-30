@@ -21,7 +21,7 @@ struct ContactsTabView: View {
                 }
                 .padding()
             }
-            .background(Color.gruvBg1)
+            .background(Color.themeBg1)
 
             Divider()
 
@@ -37,7 +37,7 @@ struct ContactsTabView: View {
                             } header: {
                                 Text(type.rawValue.uppercased())
                                     .font(.system(size: 10, weight: .semibold))
-                                    .foregroundStyle(Color.gruvFgDim)
+                                    .foregroundStyle(Color.themeFgDim)
                                     .padding(.horizontal)
                                     .padding(.top, 8)
                             }
@@ -70,44 +70,44 @@ struct ContactRowView: View {
     var body: some View {
         HStack(spacing: 12) {
             Circle()
-                .fill(Color.gruvBg2)
+                .fill(Color.themeBg2)
                 .frame(width: 36, height: 36)
                 .overlay(
                     Text(initials(for: contact.name))
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(Color.gruvFg)
+                        .foregroundStyle(Color.themeFg)
                 )
 
             VStack(alignment: .leading, spacing: 2) {
                 HStack {
                     Text(contact.name)
                         .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(Color.gruvFg)
+                        .foregroundStyle(Color.themeFg)
                     if let role = contact.internalRole {
                         Text(role.rawValue)
                             .font(.system(size: 10))
-                            .foregroundStyle(Color.gruvAqua)
+                            .foregroundStyle(Color.themeAqua)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 1)
-                            .background(Color.gruvBg2)
+                            .background(Color.themeBg2)
                             .clipShape(Capsule())
                     }
                 }
                 if let title = contact.title {
                     Text(title)
                         .font(.system(size: 11))
-                        .foregroundStyle(Color.gruvFgDim)
+                        .foregroundStyle(Color.themeFgDim)
                 }
                 if let email = contact.email {
                     Text(email)
                         .font(.system(size: 11))
-                        .foregroundStyle(Color.gruvBlue)
+                        .foregroundStyle(Color.themeBlue)
                 }
             }
             Spacer()
             Button(action: onDelete) {
                 Image(systemName: "trash")
-                    .foregroundStyle(Color.gruvRed)
+                    .foregroundStyle(Color.themeRed)
             }
             .buttonStyle(.plain)
             .opacity(0.6)

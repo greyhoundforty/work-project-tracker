@@ -14,11 +14,11 @@ struct ContentView: View {
                 ProjectDetailView(project: project)
             } else {
                 ContentUnavailableView("Select a Project", systemImage: "briefcase", description: Text("Choose a project from the list."))
-                    .background(Color.gruvBg)
+                    .background(Color.themeBg)
             }
         }
         .frame(minWidth: 900, minHeight: 600)
-        .background(Color.gruvBg)
+        .background(Color.themeBg)
         .searchable(text: $appState.searchQuery, placement: .toolbar, prompt: "Search projects…")
         .toolbar {
             ToolbarItem(placement: .automatic) {
@@ -35,7 +35,7 @@ struct SettingsGearButton: View {
             openSettings()
         } label: {
             Image(systemName: "gearshape")
-                .foregroundStyle(Color.gruvFgDim)
+                .foregroundStyle(Color.themeFgDim)
         }
         .help("Settings")
     }

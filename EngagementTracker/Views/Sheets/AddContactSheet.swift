@@ -20,18 +20,18 @@ struct AddContactSheet: View {
             HStack {
                 Text("Add Contact")
                     .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(Color.gruvFg)
+                    .foregroundStyle(Color.themeFg)
                 Spacer()
                 Button("Cancel") { dismiss() }
                     .keyboardShortcut(.escape, modifiers: [])
                 Button("Add") { save() }
                     .buttonStyle(.borderedProminent)
-                    .tint(Color.gruvAqua)
+                    .tint(Color.themeAqua)
                     .disabled(!isValid)
                     .keyboardShortcut(.return, modifiers: .command)
             }
             .padding()
-            .background(Color.gruvBg1)
+            .background(Color.themeBg1)
 
             Divider()
 
@@ -66,7 +66,7 @@ struct AddContactSheet: View {
             }
             .padding()
         }
-        .background(Color.gruvBg)
+        .background(Color.themeBg)
         .frame(width: 420)
     }
 

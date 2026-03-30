@@ -27,13 +27,13 @@ struct ImportSheet: View {
             HStack {
                 Text("Import Projects")
                     .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(Color.gruvFg)
+                    .foregroundStyle(Color.themeFg)
                 Spacer()
                 Button("Cancel") { dismiss() }
                     .keyboardShortcut(.escape, modifiers: [])
             }
             .padding()
-            .background(Color.gruvBg1)
+            .background(Color.themeBg1)
 
             Divider()
 
@@ -43,10 +43,10 @@ struct ImportSheet: View {
                         FormSection(title: "Load File") {
                             Text("Select a previously exported JSON file, or a projects.csv file.")
                                 .font(.system(size: 12))
-                                .foregroundStyle(Color.gruvFgDim)
+                                .foregroundStyle(Color.themeFgDim)
                             Button("Choose File…") { pickFile() }
                                 .buttonStyle(.borderedProminent)
-                                .tint(Color.gruvAqua)
+                                .tint(Color.themeAqua)
                         }
                     } else {
                         // Preview
@@ -56,22 +56,22 @@ struct ImportSheet: View {
                                     HStack {
                                         Text(p.name)
                                             .font(.system(size: 13))
-                                            .foregroundStyle(Color.gruvFg)
+                                            .foregroundStyle(Color.themeFg)
                                         Spacer()
                                         Text(p.stage)
                                             .font(.system(size: 11))
-                                            .foregroundStyle(Color.gruvFgDim)
+                                            .foregroundStyle(Color.themeFgDim)
                                         if !p.contacts.isEmpty {
                                             Text("\(p.contacts.count) contacts")
                                                 .font(.system(size: 10))
-                                                .foregroundStyle(Color.gruvFgDim)
+                                                .foregroundStyle(Color.themeFgDim)
                                         }
                                     }
                                 }
 
                                 Toggle("Skip projects with duplicate names", isOn: $skipDuplicates)
                                     .font(.system(size: 12))
-                                    .foregroundStyle(Color.gruvFg)
+                                    .foregroundStyle(Color.themeFg)
                             }
                         }
 
@@ -80,13 +80,13 @@ struct ImportSheet: View {
                                 ForEach(failures, id: \.0) { name, error in
                                     HStack(alignment: .top) {
                                         Image(systemName: "exclamationmark.triangle")
-                                            .foregroundStyle(Color.gruvOrange)
+                                            .foregroundStyle(Color.themeOrange)
                                             .font(.system(size: 12))
                                         VStack(alignment: .leading, spacing: 2) {
                                             Text(name).font(.system(size: 12, weight: .semibold))
-                                                .foregroundStyle(Color.gruvFg)
+                                                .foregroundStyle(Color.themeFg)
                                             Text(error).font(.system(size: 11))
-                                                .foregroundStyle(Color.gruvFgDim)
+                                                .foregroundStyle(Color.themeFgDim)
                                         }
                                     }
                                 }
@@ -94,12 +94,12 @@ struct ImportSheet: View {
                         }
 
                         if let error = importError {
-                            Text(error).font(.system(size: 12)).foregroundStyle(Color.gruvRed)
+                            Text(error).font(.system(size: 12)).foregroundStyle(Color.themeRed)
                         }
 
                         if showDone {
                             Text("✓ Imported \(successCount) project(s) successfully.")
-                                .foregroundStyle(Color.gruvGreen)
+                                .foregroundStyle(Color.themeGreen)
                         }
 
                         if !successes.isEmpty && !showDone {
@@ -108,7 +108,7 @@ struct ImportSheet: View {
                                     .frame(maxWidth: .infinity)
                             }
                             .buttonStyle(.borderedProminent)
-                            .tint(Color.gruvAqua)
+                            .tint(Color.themeAqua)
                             .disabled(isImporting)
                         }
                     }
@@ -116,7 +116,7 @@ struct ImportSheet: View {
                 .padding()
             }
         }
-        .background(Color.gruvBg)
+        .background(Color.themeBg)
         .frame(width: 480, height: 500)
     }
 

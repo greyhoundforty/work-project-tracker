@@ -18,18 +18,18 @@ struct LogEngagementSheet: View {
             HStack {
                 Text("Log Engagement")
                     .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(Color.gruvFg)
+                    .foregroundStyle(Color.themeFg)
                 Spacer()
                 Button("Cancel") { dismiss() }
                     .keyboardShortcut(.escape, modifiers: [])
                 Button("Save") { save() }
                     .buttonStyle(.borderedProminent)
-                    .tint(Color.gruvOrange)
+                    .tint(Color.themeOrange)
                     .disabled(!isValid)
                     .keyboardShortcut(.return, modifiers: .command)
             }
             .padding()
-            .background(Color.gruvBg1)
+            .background(Color.themeBg1)
 
             Divider()
 
@@ -37,16 +37,16 @@ struct LogEngagementSheet: View {
                 VStack(alignment: .leading, spacing: 16) {
                     FormSection(title: "When") {
                         DatePicker("Date", selection: $date, displayedComponents: .date)
-                            .foregroundStyle(Color.gruvFg)
+                            .foregroundStyle(Color.themeFg)
                     }
 
                     FormSection(title: "Summary *") {
                         TextEditor(text: $summary)
                             .font(.system(size: 13))
-                            .foregroundStyle(Color.gruvFg)
+                            .foregroundStyle(Color.themeFg)
                             .frame(height: 100)
                             .padding(4)
-                            .background(Color.gruvBg2)
+                            .background(Color.themeBg2)
                             .clipShape(RoundedRectangle(cornerRadius: 6))
                     }
 
@@ -62,13 +62,13 @@ struct LogEngagementSheet: View {
                                 } label: {
                                     HStack {
                                         Image(systemName: selectedContactIDs.contains(contact.id) ? "checkmark.circle.fill" : "circle")
-                                            .foregroundStyle(selectedContactIDs.contains(contact.id) ? Color.gruvAqua : Color.gruvBg3)
+                                            .foregroundStyle(selectedContactIDs.contains(contact.id) ? Color.themeAqua : Color.themeBg3)
                                         Text(contact.name)
-                                            .foregroundStyle(Color.gruvFg)
+                                            .foregroundStyle(Color.themeFg)
                                         if let title = contact.title {
                                             Text("· \(title)")
                                                 .font(.system(size: 11))
-                                                .foregroundStyle(Color.gruvFgDim)
+                                                .foregroundStyle(Color.themeFgDim)
                                         }
                                         Spacer()
                                     }
@@ -82,7 +82,7 @@ struct LogEngagementSheet: View {
                 .padding()
             }
         }
-        .background(Color.gruvBg)
+        .background(Color.themeBg)
         .frame(width: 460)
     }
 

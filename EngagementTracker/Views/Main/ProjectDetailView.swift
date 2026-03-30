@@ -29,7 +29,7 @@ struct ProjectDetailView: View {
                     .tag("notes")
             }
         }
-        .background(Color.gruvBg)
+        .background(Color.themeBg)
     }
 }
 
@@ -47,13 +47,13 @@ struct ProjectDetailHeaderView: View {
             HStack {
                 Text(project.name)
                     .font(.system(size: 18, weight: .bold))
-                    .foregroundStyle(Color.gruvFg)
+                    .foregroundStyle(Color.themeFg)
                 Spacer()
                 Button {
                     showExport = true
                 } label: {
                     Image(systemName: "square.and.arrow.up")
-                        .foregroundStyle(Color.gruvBlue)
+                        .foregroundStyle(Color.themeBlue)
                 }
                 .buttonStyle(.plain)
                 .help("Export this project")
@@ -64,7 +64,7 @@ struct ProjectDetailHeaderView: View {
                     showDeleteConfirm = true
                 } label: {
                     Image(systemName: "trash")
-                        .foregroundStyle(Color.gruvRed)
+                        .foregroundStyle(Color.themeRed)
                 }
                 .buttonStyle(.plain)
                 .help("Delete project")
@@ -74,7 +74,7 @@ struct ProjectDetailHeaderView: View {
                         setStage(next)
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(Color.gruvStageColor(for: next))
+                    .tint(Color.themeStageColor(for: next))
                 }
             }
             HStack(spacing: 8) {
@@ -84,13 +84,13 @@ struct ProjectDetailHeaderView: View {
                 } label: {
                     Text("● \(project.stage.rawValue)")
                         .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(Color.gruvStageColor(for: project.stage))
+                        .foregroundStyle(Color.themeStageColor(for: project.stage))
                         .padding(.horizontal, 8)
                         .padding(.vertical, 3)
-                        .background(Color.gruvBg2)
+                        .background(Color.themeBg2)
                         .clipShape(Capsule())
                         .overlay(
-                            Capsule().stroke(Color.gruvBg3.opacity(0.5), lineWidth: 1)
+                            Capsule().stroke(Color.themeBg3.opacity(0.5), lineWidth: 1)
                         )
                 }
                 .buttonStyle(.plain)
@@ -103,21 +103,21 @@ struct ProjectDetailHeaderView: View {
                 }
 
                 if project.isPOC {
-                    TagPill(label: "POC", color: .gruvPurple)
+                    TagPill(label: "POC", color: .themePurple)
                 }
                 if let value = project.estimatedValueFormatted {
-                    TagPill(label: value, color: .gruvGreen)
+                    TagPill(label: value, color: .themeGreen)
                 }
                 if let account = project.accountName {
-                    TagPill(label: account, color: .gruvFgDim)
+                    TagPill(label: account, color: .themeFgDim)
                 }
                 if let closeDate = project.targetCloseDate {
-                    TagPill(label: "Close: \(closeDate.formatted(date: .abbreviated, time: .omitted))", color: .gruvFgDim)
+                    TagPill(label: "Close: \(closeDate.formatted(date: .abbreviated, time: .omitted))", color: .themeFgDim)
                 }
             }
         }
         .padding()
-        .background(Color.gruvBg1)
+        .background(Color.themeBg1)
         .alert("Delete \"\(project.name)\"?", isPresented: $showDeleteConfirm) {
             Button("Delete", role: .destructive) { deleteProject() }
             Button("Cancel", role: .cancel) {}
@@ -148,7 +148,7 @@ struct StagePickerPopover: View {
         VStack(alignment: .leading, spacing: 4) {
             Text("Move to stage")
                 .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(Color.gruvFgDim)
+                .foregroundStyle(Color.themeFgDim)
                 .padding(.horizontal, 12)
                 .padding(.top, 10)
 
@@ -161,12 +161,12 @@ struct StagePickerPopover: View {
                     HStack {
                         Text("● \(stage.rawValue)")
                             .font(.system(size: 13))
-                            .foregroundStyle(Color.gruvStageColor(for: stage))
+                            .foregroundStyle(Color.themeStageColor(for: stage))
                         Spacer()
                         if stage == current {
                             Image(systemName: "checkmark")
                                 .font(.system(size: 11))
-                                .foregroundStyle(Color.gruvFgDim)
+                                .foregroundStyle(Color.themeFgDim)
                         }
                     }
                     .padding(.horizontal, 12)
@@ -174,13 +174,13 @@ struct StagePickerPopover: View {
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .background(stage == current ? Color.gruvBg2 : Color.clear)
+                .background(stage == current ? Color.themeBg2 : Color.clear)
             }
 
             Spacer(minLength: 6)
         }
         .frame(width: 180)
-        .background(Color.gruvBg1)
+        .background(Color.themeBg1)
     }
 }
 
@@ -193,7 +193,7 @@ struct TagPill: View {
             .foregroundStyle(color)
             .padding(.horizontal, 8)
             .padding(.vertical, 3)
-            .background(Color.gruvBg2)
+            .background(Color.themeBg2)
             .clipShape(Capsule())
     }
 }

@@ -30,8 +30,8 @@
 		7C54EDA56C2F64CBD6CA3DC0 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EBC0A82C1D517978A4CD02 /* ProjectListView.swift */; };
 		86C363F02D5D5FBCC20779DF /* EngagementsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51116AAA7B466D42D7944FC6 /* EngagementsTabView.swift */; };
 		88DB35101CC8A902353099FE /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6566B913CAC1CB94744A4B45 /* AppState.swift */; };
+		A1B2C3D4E5F60011223344AA /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60011223344BB /* AppColors.swift */; };
 		8EEBDA6A623D08BA5FE535A7 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E731AD64C56074C9977ADD /* Project.swift */; };
-		93284E736D549176EF6C70B5 /* GruvboxColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F94D02CD74BCF5E60A842E /* GruvboxColors.swift */; };
 		94A041DCE2C87DF70AAB363C /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B4AF03BAA576689329F6A0 /* Note.swift */; };
 		9874DCCEA7AAAF922CC2D78B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D517FD1ECF85DF9C456686 /* ContentView.swift */; };
 		A64836B6A92B833A99A9B666 /* AddContactSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9EF2F993C7A6C3565201CE /* AddContactSheet.swift */; };
@@ -86,6 +86,7 @@
 		8AD6CCD5883650AF903F00EF /* SearchFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterTests.swift; sourceTree = "<group>"; };
 		91B75283300A66FBEF2E2FF1 /* ProjectStageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectStageTests.swift; sourceTree = "<group>"; };
 		A9E731AD64C56074C9977ADD /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60011223344BB /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		B0709E5045E8E31D72D0BA8E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C2F67B9AE879F56CCA52FF73 /* NotesTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTabView.swift; sourceTree = "<group>"; };
 		C460831A71EE682C70B7C21E /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
@@ -95,7 +96,6 @@
 		CE8DB8B45857A236547DA7BA /* LogEngagementSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEngagementSheet.swift; sourceTree = "<group>"; };
 		D03083ABE1EEC050DC136FBB /* StagesSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagesSidebarView.swift; sourceTree = "<group>"; };
 		D352B286BEC31D3217424D2A /* OverviewTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewTabView.swift; sourceTree = "<group>"; };
-		D6F94D02CD74BCF5E60A842E /* GruvboxColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GruvboxColors.swift; sourceTree = "<group>"; };
 		D84528E1FD06653556D61542 /* TasksTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksTabView.swift; sourceTree = "<group>"; };
 		E9073123893BB594FC91AA07 /* EngagementTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngagementTracker.entitlements; sourceTree = "<group>"; };
 		EF34B930FBCC51AB1BC2125A /* ExportModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportModelsTests.swift; sourceTree = "<group>"; };
@@ -209,7 +209,7 @@
 		4B98D037D0EEBF0A0FC66160 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
-				D6F94D02CD74BCF5E60A842E /* GruvboxColors.swift */,
+				A1B2C3D4E5F60011223344BB /* AppColors.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -380,6 +380,7 @@
 			files = (
 				A64836B6A92B833A99A9B666 /* AddContactSheet.swift in Sources */,
 				88DB35101CC8A902353099FE /* AppState.swift in Sources */,
+				A1B2C3D4E5F60011223344AA /* AppColors.swift in Sources */,
 				5FF40E7523D45D106CDB90F4 /* Checkpoint.swift in Sources */,
 				6FDCFFF80A71F9B9574BCA85 /* CheckpointSeeder.swift in Sources */,
 				12FDC86AE3BD3170229AFC17 /* CheckpointsTabView.swift in Sources */,
@@ -393,7 +394,6 @@
 				D6D9EF30977C497BAB34FBE5 /* ExportModels.swift in Sources */,
 				EE2A4CF7E2F18F2150E30F3F /* ExportService.swift in Sources */,
 				C545EC183BF1BA0BA2313AC9 /* ExportSheet.swift in Sources */,
-				93284E736D549176EF6C70B5 /* GruvboxColors.swift in Sources */,
 				21AD19CD97922EC2BDDBAD68 /* ImportService.swift in Sources */,
 				BF1E400013C32C47A9C25AB9 /* ImportSheet.swift in Sources */,
 				60835F6348A120DFEE9EB035 /* LogEngagementSheet.swift in Sources */,
