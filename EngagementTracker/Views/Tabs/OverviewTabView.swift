@@ -72,21 +72,21 @@ struct OverviewTabView: View {
                     LinkRow(
                         label: "ISC Opportunity",
                         icon: "link.badge.plus",
-                        value: $project.iscOpportunityLink,
+                        value: linkBinding(\.iscOpportunityLink),
                         onSave: { try? context.save() }
                     )
                     Divider().padding(.vertical, 4)
                     LinkRow(
                         label: "GTM Nav Account",
                         icon: "building.2",
-                        value: $project.gtmNavAccountLink,
+                        value: linkBinding(\.gtmNavAccountLink),
                         onSave: { try? context.save() }
                     )
                     Divider().padding(.vertical, 4)
                     LinkRow(
                         label: "OneDrive Folder",
                         icon: "folder.badge.questionmark",
-                        value: $project.oneDriveFolderLink,
+                        value: linkBinding(\.oneDriveFolderLink),
                         onSave: { try? context.save() }
                     )
                 }
@@ -94,6 +94,13 @@ struct OverviewTabView: View {
             .padding()
         }
         .background(Color.gruvBg)
+    }
+
+    private func linkBinding(_ keyPath: ReferenceWritableKeyPath<Project, String?>) -> Binding<String> {
+        Binding(
+            get: { project[keyPath: keyPath] ?? "" },
+            set: { project[keyPath: keyPath] = $0.isEmpty ? nil : $0 }
+        )
     }
 
     private func initials(for name: String) -> String {

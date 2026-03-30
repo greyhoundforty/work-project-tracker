@@ -17,9 +17,9 @@ enum ExportService {
             estimatedValueCents: model.estimatedValueCents,
             targetCloseDate: model.targetCloseDate,
             tags: model.tags,
-            iscOpportunityLink: model.iscOpportunityLink,
-            gtmNavAccountLink: model.gtmNavAccountLink,
-            oneDriveFolderLink: model.oneDriveFolderLink,
+            iscOpportunityLink: model.iscOpportunityLink ?? "",
+            gtmNavAccountLink: model.gtmNavAccountLink ?? "",
+            oneDriveFolderLink: model.oneDriveFolderLink ?? "",
             contacts: model.contacts.map { contact(from: $0) },
             tasks: model.tasks.sorted { $0.createdAt < $1.createdAt }.map { task(from: $0) },
             notes: model.notes.sorted { $0.createdAt < $1.createdAt }.map { note(from: $0) },
@@ -80,7 +80,7 @@ enum ExportService {
                 p.estimatedValueCents.map { String($0) } ?? "",
                 p.targetCloseDate.map { iso8601($0) } ?? "",
                 p.tags.joined(separator: ";"),
-                p.iscOpportunityLink, p.gtmNavAccountLink, p.oneDriveFolderLink
+                p.iscOpportunityLink ?? "", p.gtmNavAccountLink ?? "", p.oneDriveFolderLink ?? ""
             ]
             projRows.append(row.map(csvEscape).joined(separator: ","))
         }

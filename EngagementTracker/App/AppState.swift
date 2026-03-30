@@ -18,6 +18,10 @@ final class AppState {
     var themeMode: ThemeMode = ThemeMode(rawValue: UserDefaults.standard.string(forKey: "themeMode") ?? "system") ?? .system {
         didSet { UserDefaults.standard.set(themeMode.rawValue, forKey: "themeMode") }
     }
+    var templateFolderPath: String? {
+        get { UserDefaults.standard.string(forKey: "templateFolderPath") }
+        set { UserDefaults.standard.set(newValue, forKey: "templateFolderPath") }
+    }
 
     static func makeContainer(cloudSync: Bool) -> ModelContainer {
         let schema = Schema([

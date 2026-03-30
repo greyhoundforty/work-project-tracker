@@ -12,9 +12,9 @@ final class Project {
     var estimatedValueCents: Int?           // stored as cents to avoid Decimal SwiftData issues
     var targetCloseDate: Date?
     var tags: [String]
-    var iscOpportunityLink: String
-    var gtmNavAccountLink: String
-    var oneDriveFolderLink: String
+    var iscOpportunityLink: String?
+    var gtmNavAccountLink: String?
+    var oneDriveFolderLink: String?
     var isActive: Bool
     var createdAt: Date
     var updatedAt: Date
@@ -34,9 +34,9 @@ final class Project {
         estimatedValueCents: Int? = nil,
         targetCloseDate: Date? = nil,
         tags: [String] = [],
-        iscOpportunityLink: String = "",
-        gtmNavAccountLink: String = "",
-        oneDriveFolderLink: String = ""
+        iscOpportunityLink: String? = nil,
+        gtmNavAccountLink: String? = nil,
+        oneDriveFolderLink: String? = nil
     ) {
         self.id = UUID()
         self.name = name

@@ -42,4 +42,39 @@ struct SearchFilterTests {
         let project = Project(name: "Test", estimatedValueCents: nil)
         #expect(project.estimatedValueFormatted == nil)
     }
+
+    @Test func matchesOnTag() {
+        let project = Project(name: "Deal 001", tags: ["cloud", "security"])
+        let q = "cloud"
+        let matches = project.tags.contains { $0.lowercased().contains(q) }
+        #expect(matches == true)
+    }
+
+    @Test func matchesOnTagPartial() {
+        let project = Project(name: "Deal 001", tags: ["cloud-native", "security"])
+        let q = "native"
+        let matches = project.tags.contains { $0.lowercased().contains(q) }
+        #expect(matches == true)
+    }
+
+    @Test func noMatchOnAbsentTag() {
+        let project = Project(name: "Deal 001", tags: ["cloud", "security"])
+        let q = "networking"
+        let matches = project.tags.contains { $0.lowercased().contains(q) }
+        #expect(matches == false)
+    }
+
+    @Test func matchesOnStageRawValue() {
+        let project = makeProject(name: "Deal 001", stage: .proposal)
+        let q = "proposal"
+        let matches = project.stage.rawValue.lowercased().contains(q)
+        #expect(matches == true)
+    }
+
+    @Test func matchesOnStagePartial() {
+        let project = makeProject(name: "Deal 001", stage: .initialDelivery)
+        let q = "initial"
+        let matches = project.stage.rawValue.lowercased().contains(q)
+        #expect(matches == true)
+    }
 }

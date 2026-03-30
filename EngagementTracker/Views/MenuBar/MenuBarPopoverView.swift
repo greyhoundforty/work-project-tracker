@@ -16,7 +16,9 @@ struct MenuBarPopoverView: View {
         let q = appState.searchQuery.lowercased()
         return activeProjects.filter {
             $0.name.lowercased().contains(q) ||
-            ($0.accountName?.lowercased().contains(q) ?? false)
+            ($0.accountName?.lowercased().contains(q) ?? false) ||
+            $0.tags.contains { $0.lowercased().contains(q) } ||
+            $0.stage.rawValue.lowercased().contains(q)
         }
     }
 

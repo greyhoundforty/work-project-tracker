@@ -43,7 +43,7 @@ xcodebuild \
 description = "Backup SwiftData store to ~/Desktop/EngagementTracker-backups/"
 run = """
 BACKUP_DIR="$HOME/Desktop/EngagementTracker-backups"
-DB_DIR="$HOME/Library/Application Support/com.greyhoundforty.EngagementTracker"
+DB_DIR="$HOME/Library/Containers/com.greyhoundforty.EngagementTracker/Data/Library/Application Support"
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 DEST="$BACKUP_DIR/$TIMESTAMP"
 

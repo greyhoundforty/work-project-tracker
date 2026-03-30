@@ -23,7 +23,10 @@ struct ProjectListView: View {
         return byFilter.filter {
             $0.name.lowercased().contains(q) ||
             ($0.accountName?.lowercased().contains(q) ?? false) ||
-            ($0.opportunityID?.lowercased().contains(q) ?? false)
+            ($0.opportunityID?.lowercased().contains(q) ?? false) ||
+            $0.tags.contains { $0.lowercased().contains(q) } ||
+            $0.notes.contains { $0.content.lowercased().contains(q) } ||
+            $0.stage.rawValue.lowercased().contains(q)
         }
     }
 
