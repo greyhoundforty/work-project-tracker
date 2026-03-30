@@ -102,14 +102,7 @@ struct NoteRowView: View {
     let note: Note
     let onDelete: () -> Void
     @Binding var editingNoteID: UUID?
-    @State private var editedContent: String
-
-    init(note: Note, onDelete: @escaping () -> Void, editingNoteID: Binding<UUID?>) {
-        self.note = note
-        self.onDelete = onDelete
-        self._editingNoteID = editingNoteID
-        self._editedContent = State(initialValue: note.content)
-    }
+    @State private var editedContent: String = ""
 
     private var isEditing: Bool { editingNoteID == note.id }
 
@@ -146,6 +139,7 @@ struct NoteRowView: View {
                         Spacer()
                         Button("Save") {
                             note.content = editedContent
+                            note.project?.updatedAt = Date()
                             try? context.save()
                             editingNoteID = nil
                         }
