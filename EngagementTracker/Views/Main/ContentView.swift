@@ -19,6 +19,7 @@ struct ContentView: View {
         }
         .frame(minWidth: 900, minHeight: 600)
         .background(Color.gruvBg)
+        .searchable(text: $appState.searchQuery, placement: .toolbar, prompt: "Search projects…")
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 SettingsGearButton()

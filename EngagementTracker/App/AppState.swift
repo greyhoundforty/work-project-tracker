@@ -15,9 +15,8 @@ final class AppState {
         get { UserDefaults.standard.bool(forKey: "cloudSyncEnabled") }
         set { UserDefaults.standard.set(newValue, forKey: "cloudSyncEnabled") }
     }
-    var themeMode: ThemeMode {
-        get { ThemeMode(rawValue: UserDefaults.standard.string(forKey: "themeMode") ?? "system") ?? .system }
-        set { UserDefaults.standard.set(newValue.rawValue, forKey: "themeMode") }
+    var themeMode: ThemeMode = ThemeMode(rawValue: UserDefaults.standard.string(forKey: "themeMode") ?? "system") ?? .system {
+        didSet { UserDefaults.standard.set(themeMode.rawValue, forKey: "themeMode") }
     }
 
     static func makeContainer(cloudSync: Bool) -> ModelContainer {
