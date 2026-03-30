@@ -1,3 +1,31 @@
+[tasks.run]
+description = "Build and launch EngagementTracker without opening Xcode"
+run = """
+set -e
+
+# Kill any running instance first
+pkill -x EngagementTracker 2>/dev/null || true
+
+# Build
+xcodebuild \
+  -project EngagementTracker.xcodeproj \
+  -scheme EngagementTracker \
+  -destination 'platform=macOS,arch=arm64' \
+  -configuration Debug \
+  build 2>&1 | grep -E "error:|BUILD SUCCEEDED|BUILD FAILED"
+
+# Resolve the built products dir and launch
+APP_DIR=$(xcodebuild \
+  -project EngagementTracker.xcodeproj \
+  -scheme EngagementTracker \
+  -configuration Debug \
+  -showBuildSettings 2>/dev/null \
+  | awk '/BUILT_PRODUCTS_DIR/ { print $3; exit }')
+
+echo "Launching $APP_DIR/EngagementTracker.app"
+open "$APP_DIR/EngagementTracker.app"
+"""
+
 [tasks.build]
 description = "Build EngagementTracker via xcodebuild"
 run = """
