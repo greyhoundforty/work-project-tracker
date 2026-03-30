@@ -23,6 +23,7 @@
 		94A041DCE2C87DF70AAB363C /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B4AF03BAA576689329F6A0 /* Note.swift */; };
 		9874DCCEA7AAAF922CC2D78B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D517FD1ECF85DF9C456686 /* ContentView.swift */; };
 		AAF5CF80F9AEA5E2CB305DBD /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = F749FEE3E002F243C7D09F6D /* Contact.swift */; };
+		B98B91A72C4BEA36D7BAA0B0 /* NewProjectSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ED0540CA094AD0E4CE56E7 /* NewProjectSheet.swift */; };
 		BB8207BD2D9491D4D0560C96 /* MenuBarPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FBCBFF52A3D3A090DA1163 /* MenuBarPopoverView.swift */; };
 		D58FC1BBADF35C2359D0E5F9 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E86052E3162427C8589915 /* Enums.swift */; };
 		E19D3443C1B7DEC0D92F8DE6 /* ProjectDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667315A690EA2A742742EC15 /* ProjectDetailView.swift */; };
@@ -61,6 +62,7 @@
 		D03083ABE1EEC050DC136FBB /* StagesSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagesSidebarView.swift; sourceTree = "<group>"; };
 		D6F94D02CD74BCF5E60A842E /* GruvboxColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GruvboxColors.swift; sourceTree = "<group>"; };
 		E9073123893BB594FC91AA07 /* EngagementTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngagementTracker.entitlements; sourceTree = "<group>"; };
+		F2ED0540CA094AD0E4CE56E7 /* NewProjectSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProjectSheet.swift; sourceTree = "<group>"; };
 		F5F8CF0E178676902B3F1941 /* CheckpointSeederTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointSeederTests.swift; sourceTree = "<group>"; };
 		F6D517FD1ECF85DF9C456686 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F749FEE3E002F243C7D09F6D /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
@@ -129,6 +131,14 @@
 			path = EngagementTracker;
 			sourceTree = "<group>";
 		};
+		3D5AD49992A293C903758650 /* Sheets */ = {
+			isa = PBXGroup;
+			children = (
+				F2ED0540CA094AD0E4CE56E7 /* NewProjectSheet.swift */,
+			);
+			path = Sheets;
+			sourceTree = "<group>";
+		};
 		4038EF18883F7C075B65A5E7 /* MenuBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +177,7 @@
 				08844AC11DBC30898891BBCD /* Main */,
 				4038EF18883F7C075B65A5E7 /* MenuBar */,
 				50988F6E980A399A6845A4D9 /* Settings */,
+				3D5AD49992A293C903758650 /* Sheets */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -296,6 +307,7 @@
 				D58FC1BBADF35C2359D0E5F9 /* Enums.swift in Sources */,
 				93284E736D549176EF6C70B5 /* GruvboxColors.swift in Sources */,
 				BB8207BD2D9491D4D0560C96 /* MenuBarPopoverView.swift in Sources */,
+				B98B91A72C4BEA36D7BAA0B0 /* NewProjectSheet.swift in Sources */,
 				94A041DCE2C87DF70AAB363C /* Note.swift in Sources */,
 				8EEBDA6A623D08BA5FE535A7 /* Project.swift in Sources */,
 				E19D3443C1B7DEC0D92F8DE6 /* ProjectDetailView.swift in Sources */,

@@ -4,6 +4,7 @@ import SwiftData
 struct ProjectListView: View {
     @Environment(AppState.self) private var appState
     @Query private var allProjects: [Project]
+    @State private var showNewProject = false
 
     private var filtered: [Project] {
         let base = allProjects.filter(\.isActive)
@@ -35,6 +36,19 @@ struct ProjectListView: View {
             if filtered.isEmpty {
                 ContentUnavailableView("No Projects", systemImage: "briefcase", description: Text("Create a project to get started."))
             }
+        }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    showNewProject = true
+                } label: {
+                    Label("New Project", systemImage: "plus")
+                }
+                .keyboardShortcut("n", modifiers: .command)
+            }
+        }
+        .sheet(isPresented: $showNewProject) {
+            NewProjectSheet()
         }
     }
 }
