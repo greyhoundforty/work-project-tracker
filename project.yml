@@ -1,0 +1,45 @@
+name: EngagementTracker
+options:
+  bundleIdPrefix: com.greyhoundforty
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "16.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    ENABLE_HARDENED_RUNTIME: YES
+    PRODUCT_BUNDLE_IDENTIFIER: com.greyhoundforty.EngagementTracker
+
+targets:
+  EngagementTracker:
+    type: application
+    platform: macOS
+    sources:
+      - EngagementTracker
+    settings:
+      base:
+        PRODUCT_NAME: EngagementTracker
+        INFOPLIST_FILE: EngagementTracker/Info.plist
+        CODE_SIGN_STYLE: Automatic
+    entitlements:
+      path: EngagementTracker/EngagementTracker.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+        com.apple.security.files.user-selected.read-write: true
+    dependencies:
+      - sdk: SwiftData.framework
+
+  EngagementTrackerTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - EngagementTrackerTests
+    dependencies:
+      - target: EngagementTracker
+    settings:
+      base:
+        PRODUCT_NAME: EngagementTrackerTests
