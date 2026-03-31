@@ -51,7 +51,8 @@ final class AppState {
             Checkpoint.self,
             ProjectTask.self,
             Engagement.self,
-            Note.self
+            Note.self,
+            ProjectCustomField.self
         ])
         let config: ModelConfiguration
         if cloudSync {

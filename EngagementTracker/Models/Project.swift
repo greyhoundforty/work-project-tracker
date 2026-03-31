@@ -24,6 +24,7 @@ final class Project {
     @Relationship(deleteRule: .cascade) var tasks: [ProjectTask]
     @Relationship(deleteRule: .cascade) var engagements: [Engagement]
     @Relationship(deleteRule: .cascade) var notes: [Note]
+    @Relationship(deleteRule: .cascade) var customFields: [ProjectCustomField] = []
 
     init(
         name: String,
@@ -58,6 +59,7 @@ final class Project {
         self.tasks = []
         self.engagements = []
         self.notes = []
+        self.customFields = []
     }
 
     var estimatedValueFormatted: String? {
