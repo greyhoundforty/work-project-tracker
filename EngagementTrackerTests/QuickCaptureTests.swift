@@ -20,7 +20,7 @@ struct QuickCaptureTests {
     func engagementBumpsUpdatedAt() async throws {
         let project = Project(name: "Acme")
         let before = project.updatedAt
-        try await Task.sleep(nanoseconds: 5_000_000)
+        try await Task.sleep(nanoseconds: 10_000_000)
         _ = makeEngagement(summary: "x", date: Date(), for: project)
         #expect(project.updatedAt > before)
     }
@@ -49,7 +49,7 @@ struct QuickCaptureTests {
     func taskBumpsUpdatedAt() async throws {
         let project = Project(name: "Acme")
         let before = project.updatedAt
-        try await Task.sleep(nanoseconds: 5_000_000)
+        try await Task.sleep(nanoseconds: 10_000_000)
         _ = makeProjectTask(title: "x", dueDate: nil, for: project)
         #expect(project.updatedAt > before)
     }
@@ -76,7 +76,7 @@ struct QuickCaptureTests {
     func noteBumpsUpdatedAt() async throws {
         let project = Project(name: "Acme")
         let before = project.updatedAt
-        try await Task.sleep(nanoseconds: 5_000_000)
+        try await Task.sleep(nanoseconds: 10_000_000)
         _ = makeNote(title: nil, content: "x", for: project)
         #expect(project.updatedAt > before)
     }
