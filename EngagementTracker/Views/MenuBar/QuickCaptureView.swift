@@ -167,8 +167,8 @@ struct QuickCaptureView: View {
                     .pickerStyle(.menu)
                     .font(.system(size: 12))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .onChange(of: selectedProject) { _, _ in
-                        showProjectPicker = false
+                    .onChange(of: selectedProject) { old, new in
+                        if old != new { showProjectPicker = false }
                     }
                 } else {
                     HStack(spacing: 4) {
@@ -208,6 +208,14 @@ struct QuickCaptureView: View {
                 selectedProject = activeProjects.first
             }
         }
+        .onChange(of: activeProjects) { _, newValue in
+            if selectedProject == nil, let first = newValue.first {
+                selectedProject = first
+            }
+        }
+        .onChange(of: selectedProject) { old, new in
+            if old != new { showProjectPicker = false }
+        }
     }
 
     private func save() {
@@ -215,14 +223,16 @@ struct QuickCaptureView: View {
         switch captureType {
         case .engagement:
             let e = makeEngagement(summary: summary, date: engagementDate, for: project)
-            e.project = project
             modelContext.insert(e)
+            project.engagements.append(e)
+            try? modelContext.save()
             summary = ""
             engagementDate = Date()
         case .task:
             let t = makeProjectTask(title: taskTitle, dueDate: hasDueDate ? dueDate : nil, for: project)
-            t.project = project
             modelContext.insert(t)
+            project.tasks.append(t)
+            try? modelContext.save()
             taskTitle = ""
             hasDueDate = false
             dueDate = Date()
@@ -233,8 +243,9 @@ struct QuickCaptureView: View {
                 content: noteContent,
                 for: project
             )
-            n.project = project
             modelContext.insert(n)
+            project.notes.append(n)
+            try? modelContext.save()
             noteTitle = ""
             noteContent = ""
         }
