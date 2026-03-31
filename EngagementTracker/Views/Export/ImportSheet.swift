@@ -204,7 +204,7 @@ struct ImportSheet: View {
             }
 
             for n in exported.notes {
-                let note = Note(content: n.content)
+                let note = Note(title: n.title, content: n.content)
                 context.insert(note)
                 project.notes.append(note)
             }

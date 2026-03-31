@@ -39,7 +39,7 @@ enum ExportService {
     }
 
     static func note(from m: Note) -> ExportedNote {
-        ExportedNote(content: m.content, createdAt: m.createdAt)
+        ExportedNote(title: m.title, content: m.content, createdAt: m.createdAt)
     }
 
     static func engagement(from m: Engagement, contacts: [UUID: Contact]) -> ExportedEngagement {

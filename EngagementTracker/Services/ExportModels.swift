@@ -42,6 +42,7 @@ struct ExportedTask: Codable {
 }
 
 struct ExportedNote: Codable {
+    var title: String
     var content: String
     var createdAt: Date
 }
