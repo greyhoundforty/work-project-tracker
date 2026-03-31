@@ -18,8 +18,8 @@ struct NewProjectSheet: View {
     @State private var selectedTemplate: ProjectTemplate? = nil
 
     private var availableTemplates: [ProjectTemplate] {
-        guard let path = appState.templateFolderPath else { return [] }
-        return ProjectTemplate.load(from: path)
+        guard let url = appState.resolveTemplateFolderURL() else { return [] }
+        return ProjectTemplate.load(from: url)
     }
 
     var isValid: Bool { !name.trimmingCharacters(in: .whitespaces).isEmpty }
@@ -58,7 +58,7 @@ struct NewProjectSheet: View {
                             .onChange(of: selectedTemplate) { _, template in
                                 guard let t = template else { return }
                                 isPOC = t.isPOC
-                                tagsString = t.tags.filter { $0.hasPrefix("#") }.map { String($0.dropFirst()) }.joined(separator: ", ")
+                                tagsString = t.tags.joined(separator: ", ")
                                 initialStage = t.projectStage
                             }
                         }

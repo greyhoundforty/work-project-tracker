@@ -80,7 +80,7 @@ enum ExportService {
                 p.estimatedValueCents.map { String($0) } ?? "",
                 p.targetCloseDate.map { iso8601($0) } ?? "",
                 p.tags.joined(separator: ";"),
-                p.iscOpportunityLink ?? "", p.gtmNavAccountLink ?? "", p.oneDriveFolderLink ?? ""
+                p.iscOpportunityLink, p.gtmNavAccountLink, p.oneDriveFolderLink
             ]
             projRows.append(row.map(csvEscape).joined(separator: ","))
         }

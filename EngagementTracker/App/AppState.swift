@@ -19,9 +19,29 @@ final class AppState {
     var themeMode: ThemeMode = ThemeMode(rawValue: UserDefaults.standard.string(forKey: "themeMode") ?? "system") ?? .system {
         didSet { UserDefaults.standard.set(themeMode.rawValue, forKey: "themeMode") }
     }
-    var templateFolderPath: String? {
-        get { UserDefaults.standard.string(forKey: "templateFolderPath") }
-        set { UserDefaults.standard.set(newValue, forKey: "templateFolderPath") }
+    var templateFolderPath: String? = UserDefaults.standard.string(forKey: "templateFolderPath") {
+        didSet { UserDefaults.standard.set(templateFolderPath, forKey: "templateFolderPath") }
+    }
+    var templateFolderBookmark: Data? = UserDefaults.standard.data(forKey: "templateFolderBookmark") {
+        didSet { UserDefaults.standard.set(templateFolderBookmark, forKey: "templateFolderBookmark") }
+    }
+
+    func resolveTemplateFolderURL() -> URL? {
+        if let bookmarkData = templateFolderBookmark {
+            var isStale = false
+            if let url = try? URL(
+                resolvingBookmarkData: bookmarkData,
+                options: .withSecurityScope,
+                relativeTo: nil,
+                bookmarkDataIsStale: &isStale
+            ) {
+                if isStale {
+                    templateFolderBookmark = try? url.bookmarkData(options: .withSecurityScope)
+                }
+                return url
+            }
+        }
+        return templateFolderPath.map { URL(fileURLWithPath: $0) }
     }
 
     static func makeContainer(cloudSync: Bool) -> ModelContainer {
