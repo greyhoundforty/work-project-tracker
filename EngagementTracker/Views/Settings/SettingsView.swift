@@ -8,7 +8,6 @@ struct SettingsView: View {
 
     @State private var showResetDataAlert = false
     @State private var showResetAllAlert = false
-    @State private var isResetting = false
 
     private var loadedTemplates: [ProjectTemplate] {
         guard let url = appState.resolveTemplateFolderURL() else { return [] }
@@ -134,7 +133,6 @@ struct SettingsView: View {
                     Button("Reset Data…") {
                         showResetDataAlert = true
                     }
-                    .disabled(isResetting)
                     .tint(.red)
                 }
 
@@ -150,7 +148,6 @@ struct SettingsView: View {
                     Button("Reset All…") {
                         showResetAllAlert = true
                     }
-                    .disabled(isResetting)
                     .tint(.red)
                 }
             } header: {
@@ -159,7 +156,7 @@ struct SettingsView: View {
         }
         .formStyle(.grouped)
         .frame(width: 480, height: 600)
-        .alert("Reset All Data?", isPresented: $showResetDataAlert) {
+        .alert("Reset Data?", isPresented: $showResetDataAlert) {
             Button("Cancel", role: .cancel) {}
             Button("Delete All Data", role: .destructive) { resetData() }
         } message: {
@@ -174,21 +171,9 @@ struct SettingsView: View {
     }
 
     private func resetData() {
-        isResetting = true
-        let checkpoints = (try? modelContext.fetch(FetchDescriptor<Checkpoint>())) ?? []
-        checkpoints.forEach { modelContext.delete($0) }
-        let tasks = (try? modelContext.fetch(FetchDescriptor<ProjectTask>())) ?? []
-        tasks.forEach { modelContext.delete($0) }
-        let engagements = (try? modelContext.fetch(FetchDescriptor<Engagement>())) ?? []
-        engagements.forEach { modelContext.delete($0) }
-        let notes = (try? modelContext.fetch(FetchDescriptor<Note>())) ?? []
-        notes.forEach { modelContext.delete($0) }
-        let contacts = (try? modelContext.fetch(FetchDescriptor<Contact>())) ?? []
-        contacts.forEach { modelContext.delete($0) }
         let projects = (try? modelContext.fetch(FetchDescriptor<Project>())) ?? []
         projects.forEach { modelContext.delete($0) }
         try? modelContext.save()
-        isResetting = false
     }
 
     private func resetAll() {
