@@ -23,6 +23,28 @@ final class AppState {
         get { UserDefaults.standard.string(forKey: "templateFolderPath") }
         set { UserDefaults.standard.set(newValue, forKey: "templateFolderPath") }
     }
+    var templateFolderBookmark: Data? {
+        get { UserDefaults.standard.data(forKey: "templateFolderBookmark") }
+        set { UserDefaults.standard.set(newValue, forKey: "templateFolderBookmark") }
+    }
+
+    func resolveTemplateFolderURL() -> URL? {
+        if let bookmarkData = templateFolderBookmark {
+            var isStale = false
+            if let url = try? URL(
+                resolvingBookmarkData: bookmarkData,
+                options: .withSecurityScope,
+                relativeTo: nil,
+                bookmarkDataIsStale: &isStale
+            ) {
+                if isStale {
+                    templateFolderBookmark = try? url.bookmarkData(options: .withSecurityScope)
+                }
+                return url
+            }
+        }
+        return templateFolderPath.map { URL(fileURLWithPath: $0) }
+    }
 
     static func makeContainer(cloudSync: Bool) -> ModelContainer {
         let schema = Schema([

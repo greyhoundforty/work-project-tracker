@@ -12,8 +12,9 @@ struct ProjectTemplate: Codable, Identifiable, Hashable {
         ProjectStage(rawValue: stage) ?? .discovery
     }
 
-    static func load(from folderPath: String) -> [ProjectTemplate] {
-        let url = URL(fileURLWithPath: folderPath)
+    static func load(from url: URL) -> [ProjectTemplate] {
+        let accessing = url.startAccessingSecurityScopedResource()
+        defer { if accessing { url.stopAccessingSecurityScopedResource() } }
         guard let contents = try? FileManager.default.contentsOfDirectory(
             at: url, includingPropertiesForKeys: nil
         ) else { return [] }

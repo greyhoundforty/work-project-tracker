@@ -38,6 +38,7 @@ struct SettingsView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                         Button("Clear") {
                             appState.templateFolderPath = nil
+                            appState.templateFolderBookmark = nil
                         }
                         .buttonStyle(.borderless)
                     } else {
@@ -81,6 +82,7 @@ struct SettingsView: View {
         panel.prompt = "Select Folder"
         if panel.runModal() == .OK, let url = panel.url {
             appState.templateFolderPath = url.path
+            appState.templateFolderBookmark = try? url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
         }
     }
 }
