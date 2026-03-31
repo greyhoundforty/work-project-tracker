@@ -178,12 +178,12 @@ struct NewProjectSheet: View {
         }
         do {
             try context.save()
+            appState.selectedStage = project.stage
+            appState.selectedProject = project
+            dismiss()
         } catch {
             print("[NewProjectSheet] context.save() failed: \(error)")
         }
-        appState.selectedStage = project.stage
-        appState.selectedProject = project
-        dismiss()
     }
 
     private func parseCents(_ string: String) -> Int? {
