@@ -1,10 +1,12 @@
 import SwiftUI
 import SwiftData
+import MarkdownUI
 
 struct NotesTabView: View {
     @Environment(\.modelContext) private var context
     let project: Project
 
+    @State private var newNoteTitle: String = ""
     @State private var newNoteContent: String = ""
     @State private var isAddingNote: Bool = false
     @State private var editingNoteID: UUID? = nil
@@ -17,6 +19,12 @@ struct NotesTabView: View {
         VStack(spacing: 0) {
             if isAddingNote {
                 VStack(alignment: .leading, spacing: 8) {
+                    TextField("Title (optional)", text: $newNoteTitle)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(Color.themeFg)
+                        .padding(6)
+                        .background(Color.themeBg2)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
                     TextEditor(text: $newNoteContent)
                         .font(.system(size: 13))
                         .foregroundStyle(Color.themeFg)
@@ -26,6 +34,7 @@ struct NotesTabView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 6))
                     HStack {
                         Button("Cancel") {
+                            newNoteTitle = ""
                             newNoteContent = ""
                             isAddingNote = false
                         }
@@ -81,11 +90,16 @@ struct NotesTabView: View {
     private func saveNote() {
         let content = newNoteContent.trimmingCharacters(in: .whitespaces)
         guard !content.isEmpty else { return }
-        let note = Note(content: content)
+        let titleInput = newNoteTitle.trimmingCharacters(in: .whitespaces)
+        let note = Note(
+            title: titleInput.isEmpty ? defaultTitle(for: Date()) : titleInput,
+            content: content
+        )
         context.insert(note)
         project.notes.append(note)
         project.updatedAt = Date()
         try? context.save()
+        newNoteTitle = ""
         newNoteContent = ""
         isAddingNote = false
     }
@@ -95,6 +109,10 @@ struct NotesTabView: View {
         context.delete(note)
         try? context.save()
     }
+
+    private func defaultTitle(for date: Date) -> String {
+        date.formatted(.dateTime.month(.abbreviated).day().year())
+    }
 }
 
 struct NoteRowView: View {
@@ -102,12 +120,13 @@ struct NoteRowView: View {
     let note: Note
     let onDelete: () -> Void
     @Binding var editingNoteID: UUID?
+    @State private var editedTitle: String = ""
     @State private var editedContent: String = ""
 
     private var isEditing: Bool { editingNoteID == note.id }
 
-    private var attributedContent: AttributedString {
-        (try? AttributedString(markdown: note.content)) ?? AttributedString(note.content)
+    private func defaultTitle(for date: Date) -> String {
+        date.formatted(.dateTime.month(.abbreviated).day().year())
     }
 
     var body: some View {
@@ -120,6 +139,16 @@ struct NoteRowView: View {
 
             if isEditing {
                 VStack(alignment: .leading, spacing: 6) {
+                    TextField("Title (optional)", text: $editedTitle)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(Color.themeFg)
+                        .padding(6)
+                        .background(Color.themeBg)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6)
+                                .stroke(Color.themeAqua, lineWidth: 1.5)
+                        )
                     TextEditor(text: $editedContent)
                         .font(.system(size: 13))
                         .foregroundStyle(Color.themeFg)
@@ -133,11 +162,14 @@ struct NoteRowView: View {
                         )
                     HStack {
                         Button("Cancel") {
+                            editedTitle = note.title
                             editedContent = note.content
                             editingNoteID = nil
                         }
                         Spacer()
                         Button("Save") {
+                            let titleInput = editedTitle.trimmingCharacters(in: .whitespaces)
+                            note.title = titleInput.isEmpty ? defaultTitle(for: note.createdAt) : titleInput
                             note.content = editedContent
                             note.project?.updatedAt = Date()
                             try? context.save()
@@ -148,15 +180,21 @@ struct NoteRowView: View {
                     }
                 }
             } else {
-                Text(attributedContent)
-                    .font(.system(size: 13))
-                    .foregroundStyle(Color.themeFg)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        editedContent = note.content
-                        editingNoteID = note.id
-                    }
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(note.title.isEmpty ? defaultTitle(for: note.createdAt) : note.title)
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(Color.themeFg)
+                    Markdown(note.content)
+                        .markdownTheme(.engagementTracker)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    editedTitle = note.title
+                    editedContent = note.content
+                    editingNoteID = note.id
+                }
             }
 
             if !isEditing {
