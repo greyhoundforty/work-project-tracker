@@ -28,7 +28,8 @@ struct ProjectListView: View {
             ($0.opportunityID?.lowercased().contains(q) ?? false) ||
             $0.tags.contains { $0.lowercased().contains(q) } ||
             $0.notes.contains { $0.content.lowercased().contains(q) } ||
-            $0.stage.rawValue.lowercased().contains(q)
+            $0.stage.rawValue.lowercased().contains(q) ||
+            $0.customFields.contains { $0.value.lowercased().contains(q) }
         }
     }
 

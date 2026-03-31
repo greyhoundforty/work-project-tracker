@@ -18,7 +18,8 @@ struct MenuBarPopoverView: View {
             $0.name.lowercased().contains(q) ||
             ($0.accountName?.lowercased().contains(q) ?? false) ||
             $0.tags.contains { $0.lowercased().contains(q) } ||
-            $0.stage.rawValue.lowercased().contains(q)
+            $0.stage.rawValue.lowercased().contains(q) ||
+            $0.customFields.contains { $0.value.lowercased().contains(q) }
         }
     }
 
