@@ -2,11 +2,11 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace the limited `AttributedString(markdown:)` display path in `NoteRowView` with `MarkdownUI`'s `Markdown` view, giving notes full GitHub Flavored Markdown rendering (headers, code fences, tables, lists, blockquotes).
+**Goal:** Replace limited `AttributedString(markdown:)` display with `MarkdownUI` for full GFM rendering, and add a bold title field to notes (defaulting to the creation date if left blank).
 
-**Architecture:** Add `MarkdownUI` as an SPM dependency via Xcode, define a custom `Theme` extension that maps the app's existing `Color.themeXxx` tokens to MarkdownUI's styling API, then swap the single display line in `NoteRowView` to use `Markdown(note.content).markdownTheme(.engagementTracker)`.
+**Architecture:** `MarkdownUI` is already added as an SPM dependency (Task 1 complete). A custom `Theme` extension maps app color tokens to MarkdownUI styling. The `Note` model gains a `title: String` field (SwiftData lightweight migration via default value). `NotesTabView` and `NoteRowView` are updated to show a title input and bold title display.
 
-**Tech Stack:** Swift, SwiftUI, SwiftData, MarkdownUI 2.x (`https://github.com/gonzalezreal/swift-markdown-ui`)
+**Tech Stack:** Swift, SwiftUI, SwiftData, MarkdownUI 2.x
 
 ---
 
@@ -14,60 +14,73 @@
 
 | Action | Path | Responsibility |
 |---|---|---|
-| Modify (manual, Xcode) | `EngagementTracker.xcodeproj` | Add MarkdownUI SPM dependency |
-| Create | `EngagementTracker/Theme/MarkdownTheme.swift` | Custom `Theme` extension matching app palette |
-| Modify | `EngagementTracker/Views/Tabs/NotesTabView.swift` | Swap `Text(attributedContent)` → `Markdown(...)` |
+| ✅ Done | `EngagementTracker.xcodeproj` | MarkdownUI SPM dependency added |
+| Modify | `EngagementTracker/Models/Note.swift` | Add `title: String` field |
+| Create | `EngagementTracker/Theme/MarkdownTheme.swift` | Custom Theme matching app palette |
+| Modify | `EngagementTracker/Views/Tabs/NotesTabView.swift` | Title input + MarkdownUI display |
 
 ---
 
-### Task 1: Add MarkdownUI via Xcode SPM
+### Task 1: Add MarkdownUI SPM dependency ✅ COMPLETE
 
-> This step is manual — Xcode manages SPM for `.xcodeproj` files via its GUI.
+Already done manually via Xcode. `MarkdownUI` is linked to the `EngagementTracker` target.
+
+---
+
+### Task 2: Add title field to Note model
 
 **Files:**
-- Modify (via Xcode GUI): `EngagementTracker.xcodeproj`
+- Modify: `EngagementTracker/Models/Note.swift`
 
-- [ ] **Step 1: Open the project in Xcode**
+- [ ] **Step 1: Add `title` property to Note**
+
+Open `EngagementTracker/Models/Note.swift`. The full updated file:
+
+```swift
+import Foundation
+import SwiftData
+
+@Model
+final class Note {
+    var id: UUID
+    var title: String
+    var content: String
+    var createdAt: Date
+
+    var project: Project?
+
+    init(title: String = "", content: String) {
+        self.id = UUID()
+        self.title = title
+        self.content = content
+        self.createdAt = Date()
+    }
+}
+```
+
+The default value `""` on `title` tells SwiftData to use an empty string for existing records — no migration schema required.
+
+- [ ] **Step 2: Build to verify no errors**
+
+In Xcode press **⌘B**. Expected: build succeeds. SwiftData compiles the updated model.
+
+- [ ] **Step 3: Commit**
 
 ```bash
-open /Users/ryan/claude-projects/worktrees/feat-markdown-notes-section-40p/EngagementTracker.xcodeproj
-```
-
-- [ ] **Step 2: Add the package**
-
-In Xcode: **File → Add Package Dependencies…**
-
-Paste this URL into the search field:
-```
-https://github.com/gonzalezreal/swift-markdown-ui
-```
-
-Select version rule: **Up to Next Major Version**, starting from `2.0.2`.
-
-Click **Add Package**, then check **MarkdownUI** in the product list and click **Add Package** again to link it to the `EngagementTracker` target.
-
-- [ ] **Step 3: Verify the build still compiles**
-
-In Xcode press **⌘B**. Expected: build succeeds with no errors. The package resolves and links; no source changes yet.
-
-- [ ] **Step 4: Commit the updated project file**
-
-```bash
-cd /Users/ryan/claude-projects/worktrees/feat-markdown-notes-section-40p
-git add EngagementTracker.xcodeproj
-git commit -m "chore: add MarkdownUI SPM dependency"
+git add EngagementTracker/Models/Note.swift
+git commit -m "feat: add title field to Note model"
 ```
 
 ---
 
-### Task 2: Create custom MarkdownUI theme
+### Task 3: Create custom MarkdownUI theme
 
 **Files:**
 - Create: `EngagementTracker/Theme/MarkdownTheme.swift`
 
 - [ ] **Step 1: Create the theme file**
 
-Create `EngagementTracker/Theme/MarkdownTheme.swift` with this content:
+Create `EngagementTracker/Theme/MarkdownTheme.swift`:
 
 ```swift
 import SwiftUI
@@ -159,9 +172,9 @@ extension Theme {
 }
 ```
 
-- [ ] **Step 2: Build to verify the theme compiles**
+- [ ] **Step 2: Build to verify**
 
-In Xcode press **⌘B**. Expected: build succeeds. The theme extension compiles cleanly — no undefined color references, no MarkdownUI API mismatches.
+In Xcode press **⌘B**. Expected: build succeeds with no errors.
 
 - [ ] **Step 3: Commit**
 
@@ -172,94 +185,243 @@ git commit -m "feat: add engagementTracker MarkdownUI theme"
 
 ---
 
-### Task 3: Swap display path in NoteRowView
+### Task 4: Update NotesTabView and NoteRowView
 
 **Files:**
 - Modify: `EngagementTracker/Views/Tabs/NotesTabView.swift`
 
-- [ ] **Step 1: Add import and update NoteRowView**
+This task updates both the add/edit UI (title input) and the display (bold title + MarkdownUI content).
 
-Open `EngagementTracker/Views/Tabs/NotesTabView.swift`.
-
-At the top, add the import:
+**Helper used in both save paths:**
 ```swift
-import MarkdownUI
-```
-
-In `NoteRowView`, **remove** the `attributedContent` computed property (lines 109–111):
-```swift
-// DELETE this:
-private var attributedContent: AttributedString {
-    (try? AttributedString(markdown: note.content)) ?? AttributedString(note.content)
+private func defaultTitle(for date: Date) -> String {
+    date.formatted(.dateTime.month(.abbreviated).day().year())
 }
 ```
 
-In the `body`, find the display branch (the `else` block in the `if isEditing` check). **Replace**:
+- [ ] **Step 1: Update NotesTabView**
+
+In `NotesTabView`, add a `@State private var newNoteTitle: String = ""` alongside the existing `newNoteContent` state.
+
+Update the `isAddingNote` panel to include a title field above the TextEditor:
+
 ```swift
-Text(attributedContent)
-    .font(.system(size: 13))
-    .foregroundStyle(Color.themeFg)
-    .frame(maxWidth: .infinity, alignment: .leading)
-    .contentShape(Rectangle())
-    .onTapGesture {
-        editedContent = note.content
-        editingNoteID = note.id
+if isAddingNote {
+    VStack(alignment: .leading, spacing: 8) {
+        TextField("Title (optional)", text: $newNoteTitle)
+            .font(.system(size: 13, weight: .semibold))
+            .foregroundStyle(Color.themeFg)
+            .padding(6)
+            .background(Color.themeBg2)
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+        TextEditor(text: $newNoteContent)
+            .font(.system(size: 13))
+            .foregroundStyle(Color.themeFg)
+            .frame(height: 100)
+            .padding(4)
+            .background(Color.themeBg2)
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+        HStack {
+            Button("Cancel") {
+                newNoteTitle = ""
+                newNoteContent = ""
+                isAddingNote = false
+            }
+            Spacer()
+            Button("Save Note") {
+                saveNote()
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(Color.themeAqua)
+            .disabled(newNoteContent.trimmingCharacters(in: .whitespaces).isEmpty)
+        }
     }
+    .padding()
+    .background(Color.themeBg1)
+    Divider()
+}
 ```
 
-**With**:
+Update `saveNote()`:
+
 ```swift
-Markdown(note.content)
-    .markdownTheme(.engagementTracker)
-    .frame(maxWidth: .infinity, alignment: .leading)
-    .contentShape(Rectangle())
-    .onTapGesture {
-        editedContent = note.content
-        editingNoteID = note.id
+private func saveNote() {
+    let content = newNoteContent.trimmingCharacters(in: .whitespaces)
+    guard !content.isEmpty else { return }
+    let titleInput = newNoteTitle.trimmingCharacters(in: .whitespaces)
+    let note = Note(
+        title: titleInput.isEmpty ? defaultTitle(for: Date()) : titleInput,
+        content: content
+    )
+    context.insert(note)
+    project.notes.append(note)
+    project.updatedAt = Date()
+    try? context.save()
+    newNoteTitle = ""
+    newNoteContent = ""
+    isAddingNote = false
+}
+
+private func defaultTitle(for date: Date) -> String {
+    date.formatted(.dateTime.month(.abbreviated).day().year())
+}
+```
+
+- [ ] **Step 2: Update NoteRowView**
+
+Replace the entire `NoteRowView` struct. Key changes:
+- Add `@State private var editedTitle: String = ""`
+- Add title `TextField` in edit mode
+- Show `Text(note.title).bold()` above markdown content in display mode
+- Replace `Text(attributedContent)` with `Markdown(note.content).markdownTheme(.engagementTracker)`
+- Remove `attributedContent` computed property
+- Update the edit save action to handle empty title → date fallback
+- Add `import MarkdownUI` at top of file
+
+Full updated `NoteRowView`:
+
+```swift
+import MarkdownUI
+
+struct NoteRowView: View {
+    @Environment(\.modelContext) private var context
+    let note: Note
+    let onDelete: () -> Void
+    @Binding var editingNoteID: UUID?
+    @State private var editedTitle: String = ""
+    @State private var editedContent: String = ""
+
+    private var isEditing: Bool { editingNoteID == note.id }
+
+    private func defaultTitle(for date: Date) -> String {
+        date.formatted(.dateTime.month(.abbreviated).day().year())
     }
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Text(note.createdAt.formatted(.dateTime.month(.abbreviated).day().hour().minute()))
+                .font(.system(size: 10))
+                .foregroundStyle(Color.themeFgDim)
+                .frame(width: 90, alignment: .leading)
+                .padding(.top, 2)
+
+            if isEditing {
+                VStack(alignment: .leading, spacing: 6) {
+                    TextField("Title (optional)", text: $editedTitle)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(Color.themeFg)
+                        .padding(6)
+                        .background(Color.themeBg)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6)
+                                .stroke(Color.themeAqua, lineWidth: 1.5)
+                        )
+                    TextEditor(text: $editedContent)
+                        .font(.system(size: 13))
+                        .foregroundStyle(Color.themeFg)
+                        .frame(minHeight: 80)
+                        .padding(4)
+                        .background(Color.themeBg)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6)
+                                .stroke(Color.themeAqua, lineWidth: 1.5)
+                        )
+                    HStack {
+                        Button("Cancel") {
+                            editedTitle = note.title
+                            editedContent = note.content
+                            editingNoteID = nil
+                        }
+                        Spacer()
+                        Button("Save") {
+                            let titleInput = editedTitle.trimmingCharacters(in: .whitespaces)
+                            note.title = titleInput.isEmpty ? defaultTitle(for: note.createdAt) : titleInput
+                            note.content = editedContent
+                            note.project?.updatedAt = Date()
+                            try? context.save()
+                            editingNoteID = nil
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(Color.themeAqua)
+                    }
+                }
+            } else {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(note.title)
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(Color.themeFg)
+                    Markdown(note.content)
+                        .markdownTheme(.engagementTracker)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    editedTitle = note.title
+                    editedContent = note.content
+                    editingNoteID = note.id
+                }
+            }
+
+            if !isEditing {
+                Button(action: onDelete) {
+                    Image(systemName: "trash")
+                        .foregroundStyle(Color.themeRed)
+                }
+                .buttonStyle(.plain)
+                .opacity(0.6)
+            }
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 10)
+    }
+}
 ```
 
-- [ ] **Step 2: Build to verify no errors**
+- [ ] **Step 3: Build to verify**
 
-In Xcode press **⌘B**. Expected: build succeeds. No unused `attributedContent` references remain.
+In Xcode press **⌘B**. Expected: build succeeds with no errors or warnings about missing `title` on `Note`.
 
-- [ ] **Step 3: Run the app and verify manually**
+- [ ] **Step 4: Run the app and verify manually**
 
-Press **⌘R** to run. In a test project, create a note with the following content and save it:
+Press **⌘R**. Open a project, go to the Notes tab.
 
-```markdown
-# Heading one
-
-## Heading two
-
-Some **bold** and *italic* text.
-
-- Item one
-- Item two
-- Item three
-
-> A blockquote note
-
-`inline code` and a block:
-
-```swift
-let x = 42
+**Test A — title provided:**
+Click "Add Note", enter title `"Meeting notes"` and content:
 ```
+## Action items
 
-[A link](https://example.com)
+- Follow up with **Sarah** on pricing
+- Schedule *technical* demo
+
+> Don't forget to send the recap email
 ```
+Click Save. Expected: note shows bold title "Meeting notes", content renders with heading, list, bold/italic, and styled blockquote.
 
-Expected: The saved note displays with rendered headings, bold/italic, bullet list, styled blockquote with yellow left border, aqua-colored code, and a blue link. The TextEditor still shows raw markdown when you tap to edit.
+**Test B — no title:**
+Click "Add Note", leave title blank, enter any content, click Save. Expected: note title shows the current date (e.g., `"Mar 31, 2026"`) in bold.
 
-- [ ] **Step 4: Commit**
+**Test C — existing notes (migration):**
+Any notes created before this change should display with a date-based title (their `title` field is `""` — but wait, empty string won't auto-populate to date at display time since we only set it at save time).
+
+> **Note for implementer:** Existing notes will have `title = ""`. In the display, show the creation date as fallback when `note.title.isEmpty`:
+> ```swift
+> Text(note.title.isEmpty ? defaultTitle(for: note.createdAt) : note.title)
+>     .font(.system(size: 13, weight: .bold))
+>     .foregroundStyle(Color.themeFg)
+> ```
+
+- [ ] **Step 5: Commit**
 
 ```bash
 git add EngagementTracker/Views/Tabs/NotesTabView.swift
-git commit -m "feat: render notes with MarkdownUI, replacing AttributedString display"
+git commit -m "feat: add title field to notes UI, render content with MarkdownUI"
 ```
 
 ---
 
 ## Done
 
-After Task 3, the feature is complete. Open a PR against `main` referencing issue #7.
+After Task 4, the feature is complete. Open a PR against `main` referencing issue #7.
