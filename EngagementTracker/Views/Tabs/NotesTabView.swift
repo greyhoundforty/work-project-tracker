@@ -92,7 +92,7 @@ struct NotesTabView: View {
         guard !content.isEmpty else { return }
         let titleInput = newNoteTitle.trimmingCharacters(in: .whitespaces)
         let note = Note(
-            title: titleInput.isEmpty ? defaultTitle(for: Date()) : titleInput,
+            title: titleInput.isEmpty ? nil : titleInput,
             content: content
         )
         context.insert(note)
@@ -162,14 +162,14 @@ struct NoteRowView: View {
                         )
                     HStack {
                         Button("Cancel") {
-                            editedTitle = note.title
+                            editedTitle = note.title ?? ""
                             editedContent = note.content
                             editingNoteID = nil
                         }
                         Spacer()
                         Button("Save") {
                             let titleInput = editedTitle.trimmingCharacters(in: .whitespaces)
-                            note.title = titleInput.isEmpty ? defaultTitle(for: note.createdAt) : titleInput
+                            note.title = titleInput.isEmpty ? nil : titleInput
                             note.content = editedContent
                             note.project?.updatedAt = Date()
                             try? context.save()
@@ -181,7 +181,7 @@ struct NoteRowView: View {
                 }
             } else {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(note.title.isEmpty ? defaultTitle(for: note.createdAt) : note.title)
+                    Text(note.title.flatMap { $0.isEmpty ? nil : $0 } ?? defaultTitle(for: note.createdAt))
                         .font(.system(size: 13, weight: .bold))
                         .foregroundStyle(Color.themeFg)
                     Markdown(note.content)
@@ -191,7 +191,7 @@ struct NoteRowView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    editedTitle = note.title
+                    editedTitle = note.title ?? ""
                     editedContent = note.content
                     editingNoteID = note.id
                 }

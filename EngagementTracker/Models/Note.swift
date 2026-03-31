@@ -4,13 +4,13 @@ import SwiftData
 @Model
 final class Note {
     var id: UUID
-    var title: String
+    var title: String?
     var content: String
     var createdAt: Date
 
     var project: Project?
 
-    init(title: String = "", content: String) {
+    init(title: String? = nil, content: String) {
         self.id = UUID()
         self.title = title
         self.content = content
