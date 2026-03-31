@@ -51,6 +51,7 @@
 		EE2A4CF7E2F18F2150E30F3F /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C460831A71EE682C70B7C21E /* ExportService.swift */; };
 		EEF7F5F603C898F5E74BBDCF /* ProjectTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF4A8F4550B111F2858A1D6 /* ProjectTemplate.swift */; };
 		59527EDD28B844E3841E39C8 /* ProjectCustomField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75CE4DEC5964B369DA0EDB7 /* ProjectCustomField.swift */; };
+		A1B2C3D4E5F6A7B8C9D0E1F2 /* TemplatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7B8C9D0E1F2A3 /* TemplatePickerView.swift */; };
 		93960536CB174C2CBC16E6C9 /* ProjectCustomFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C5DCC6F46458394F8AE97 /* ProjectCustomFieldTests.swift */; };
 		FC9CFD95ECF54205F54B8CF8 /* StagesSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083ABE1EEC050DC136FBB /* StagesSidebarView.swift */; };
 /* End PBXBuildFile section */
@@ -111,6 +112,7 @@
 		E9073123893BB594FC91AA07 /* EngagementTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngagementTracker.entitlements; sourceTree = "<group>"; };
 		EF34B930FBCC51AB1BC2125A /* ExportModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportModelsTests.swift; sourceTree = "<group>"; };
 		F2ED0540CA094AD0E4CE56E7 /* NewProjectSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProjectSheet.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A7B8C9D0E1F2A3 /* TemplatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatePickerView.swift; sourceTree = "<group>"; };
 		F4C120D36321FD114B0B12D0 /* CheckpointsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointsTabView.swift; sourceTree = "<group>"; };
 		F5F8CF0E178676902B3F1941 /* CheckpointSeederTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointSeederTests.swift; sourceTree = "<group>"; };
 		F6D517FD1ECF85DF9C456686 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				0B9EF2F993C7A6C3565201CE /* AddContactSheet.swift */,
 				CE8DB8B45857A236547DA7BA /* LogEngagementSheet.swift */,
 				F2ED0540CA094AD0E4CE56E7 /* NewProjectSheet.swift */,
+				B2C3D4E5F6A7B8C9D0E1F2A3 /* TemplatePickerView.swift */,
 			);
 			path = Sheets;
 			sourceTree = "<group>";
@@ -431,6 +434,7 @@
 				70FA610E2294BA4A486D11C3 /* ProjectTask.swift in Sources */,
 				59527EDD28B844E3841E39C8 /* ProjectCustomField.swift in Sources */,
 				EEF7F5F603C898F5E74BBDCF /* ProjectTemplate.swift in Sources */,
+				A1B2C3D4E5F6A7B8C9D0E1F2 /* TemplatePickerView.swift in Sources */,
 				4CBB53D9293C22A9F36C183B /* SettingsView.swift in Sources */,
 				FC9CFD95ECF54205F54B8CF8 /* StagesSidebarView.swift in Sources */,
 				49FB6145297DE1323DA76A9C /* TasksTabView.swift in Sources */,

@@ -1,3 +1,4 @@
+// EngagementTracker/Views/Sheets/NewProjectSheet.swift
 import SwiftUI
 import SwiftData
 
@@ -6,6 +7,12 @@ struct NewProjectSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AppState.self) private var appState
 
+    private enum Step { case templatePicker, form }
+
+    @State private var step: Step = .templatePicker
+    @State private var selectedTemplate: ProjectTemplate? = nil
+
+    // Form fields
     @State private var name: String = ""
     @State private var accountName: String = ""
     @State private var opportunityID: String = ""
@@ -15,7 +22,7 @@ struct NewProjectSheet: View {
     @State private var hasCloseDate: Bool = false
     @State private var tagsString: String = ""
     @State private var initialStage: ProjectStage = .discovery
-    @State private var selectedTemplate: ProjectTemplate? = nil
+    @State private var customFieldValues: [String] = []
 
     private var availableTemplates: [ProjectTemplate] {
         guard let url = appState.resolveTemplateFolderURL() else { return [] }
@@ -25,8 +32,20 @@ struct NewProjectSheet: View {
     var isValid: Bool { !name.trimmingCharacters(in: .whitespaces).isEmpty }
 
     var body: some View {
+        if step == .templatePicker, !availableTemplates.isEmpty {
+            TemplatePickerView(
+                templates: availableTemplates,
+                selected: $selectedTemplate,
+                onContinue: { applyTemplateAndAdvance() },
+                onCancel: { dismiss() }
+            )
+        } else {
+            formView
+        }
+    }
+
+    private var formView: some View {
         VStack(alignment: .leading, spacing: 0) {
-            // Title bar
             HStack {
                 Text("New Project")
                     .font(.system(size: 16, weight: .bold))
@@ -47,23 +66,6 @@ struct NewProjectSheet: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    if !availableTemplates.isEmpty {
-                        FormSection(title: "Template") {
-                            Picker("Apply Template", selection: $selectedTemplate) {
-                                Text("None").tag(Optional<ProjectTemplate>.none)
-                                ForEach(availableTemplates) { template in
-                                    Text(template.name).tag(Optional(template))
-                                }
-                            }
-                            .onChange(of: selectedTemplate) { _, template in
-                                guard let t = template else { return }
-                                isPOC = t.isPOC
-                                tagsString = t.tags.joined(separator: ", ")
-                                initialStage = t.projectStage
-                            }
-                        }
-                    }
-
                     FormSection(title: "Project") {
                         LabeledField(label: "Name *") {
                             TextField("Required", text: $name)
@@ -103,12 +105,35 @@ struct NewProjectSheet: View {
                         Toggle("This is a POC engagement", isOn: $isPOC)
                             .foregroundStyle(Color.themeFg)
                     }
+
+                    if let template = selectedTemplate, !template.customFields.isEmpty {
+                        FormSection(title: "Template Fields") {
+                            ForEach(Array(template.customFields.enumerated()), id: \.offset) { index, field in
+                                LabeledField(label: field.label) {
+                                    TextField(field.placeholder ?? "", text: Binding(
+                                        get: { index < customFieldValues.count ? customFieldValues[index] : "" },
+                                        set: { if index < customFieldValues.count { customFieldValues[index] = $0 } }
+                                    ))
+                                }
+                            }
+                        }
+                    }
                 }
                 .padding()
             }
         }
         .background(Color.themeBg)
         .frame(width: 480)
+    }
+
+    private func applyTemplateAndAdvance() {
+        if let t = selectedTemplate {
+            isPOC = t.isPOC
+            tagsString = t.tags.joined(separator: ", ")
+            initialStage = t.projectStage
+            customFieldValues = Array(repeating: "", count: t.customFields.count)
+        }
+        step = .form
     }
 
     private func save() {
@@ -135,6 +160,16 @@ struct NewProjectSheet: View {
                 let task = ProjectTask(title: title)
                 project.tasks.append(task)
                 context.insert(task)
+            }
+            template.customFields.enumerated().forEach { index, fieldDef in
+                let field = ProjectCustomField(
+                    label: fieldDef.label,
+                    value: index < customFieldValues.count ? customFieldValues[index] : "",
+                    sortOrder: index
+                )
+                field.project = project
+                project.customFields.append(field)
+                context.insert(field)
             }
         }
         try? context.save()
