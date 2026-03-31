@@ -112,11 +112,11 @@ enum ExportService {
         files["tasks.csv"] = taskRows.joined(separator: "\n")
 
         // notes.csv
-        let noteHeaders = ["projectName","content","createdAt"]
+        let noteHeaders = ["projectName","title","content","createdAt"]
         var noteRows = [noteHeaders.joined(separator: ",")]
         for p in projects {
             for n in p.notes {
-                let row = [p.name, n.content, iso8601(n.createdAt)]
+                let row = [p.name, n.title, n.content, iso8601(n.createdAt)]
                 noteRows.append(row.map(csvEscape).joined(separator: ","))
             }
         }
