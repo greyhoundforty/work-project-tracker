@@ -24,23 +24,27 @@ struct NewProjectSheet: View {
     @State private var initialStage: ProjectStage = .discovery
     @State private var customFieldValues: [String] = []
 
-    private var availableTemplates: [ProjectTemplate] {
-        guard let url = appState.resolveTemplateFolderURL() else { return [] }
-        return ProjectTemplate.load(from: url)
-    }
+    @State private var availableTemplates: [ProjectTemplate] = []
 
     var isValid: Bool { !name.trimmingCharacters(in: .whitespaces).isEmpty }
 
     var body: some View {
-        if step == .templatePicker, !availableTemplates.isEmpty {
-            TemplatePickerView(
-                templates: availableTemplates,
-                selected: $selectedTemplate,
-                onContinue: { applyTemplateAndAdvance() },
-                onCancel: { dismiss() }
-            )
-        } else {
-            formView
+        Group {
+            if step == .templatePicker, !availableTemplates.isEmpty {
+                TemplatePickerView(
+                    templates: availableTemplates,
+                    selected: $selectedTemplate,
+                    onContinue: { applyTemplateAndAdvance() },
+                    onCancel: { dismiss() }
+                )
+            } else {
+                formView
+            }
+        }
+        .onAppear {
+            if let url = appState.resolveTemplateFolderURL() {
+                availableTemplates = ProjectTemplate.load(from: url)
+            }
         }
     }
 
@@ -172,7 +176,11 @@ struct NewProjectSheet: View {
                 context.insert(field)
             }
         }
-        try? context.save()
+        do {
+            try context.save()
+        } catch {
+            print("[NewProjectSheet] context.save() failed: \(error)")
+        }
         appState.selectedStage = project.stage
         appState.selectedProject = project
         dismiss()
