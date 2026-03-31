@@ -1,0 +1,13 @@
+{
+  "name": "Long Term Project",
+  "isPOC": false,
+  "stage": "Discovery",
+  "tags": ["long-term", "project"],
+  "taskTitles": [
+    "Define project scope",
+    "Identify stakeholders",
+    "Set milestone schedule",
+    "Conduct quarterly review",
+    "Prepare status report"
+  ]
+}

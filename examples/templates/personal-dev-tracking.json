@@ -1,0 +1,12 @@
+{
+  "name": "Personal Dev Tracking",
+  "isPOC": false,
+  "stage": "Discovery",
+  "tags": ["personal", "development"],
+  "taskTitles": [
+    "Define learning goals",
+    "Set up local environment",
+    "Document progress",
+    "Review and retrospect"
+  ]
+}

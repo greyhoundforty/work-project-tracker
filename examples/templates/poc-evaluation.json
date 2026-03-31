@@ -1,0 +1,13 @@
+{
+  "name": "POC Evaluation",
+  "isPOC": true,
+  "stage": "Discovery",
+  "tags": ["poc", "evaluation"],
+  "taskTitles": [
+    "Define success criteria",
+    "Stand up evaluation environment",
+    "Run proof-of-concept",
+    "Document results",
+    "Prepare POC readout"
+  ]
+}
