@@ -1,3 +1,4 @@
+// EngagementTracker/Views/MenuBar/MenuBarPopoverView.swift
 import SwiftUI
 import SwiftData
 
@@ -7,7 +8,6 @@ struct MenuBarPopoverView: View {
     @Query(sort: \Project.updatedAt, order: .reverse) private var allProjects: [Project]
 
     @State private var showNewProject = false
-    @State private var showLogEngagement = false
 
     private var activeProjects: [Project] { allProjects.filter(\.isActive) }
 
@@ -74,28 +74,8 @@ struct MenuBarPopoverView: View {
                 }
                 .frame(maxHeight: 260)
             } else {
-                // Quick actions
-                HStack(spacing: 8) {
-                    Button {
-                        showNewProject = true
-                    } label: {
-                        Label("New Project", systemImage: "plus")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(Color.themeAqua)
-
-                    Button {
-                        showLogEngagement = true
-                    } label: {
-                        Label("Log Engagement", systemImage: "bolt")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.bordered)
-                    .tint(Color.themeOrange)
-                    .disabled(activeProjects.isEmpty)
-                }
-                .padding(10)
+                // Quick capture
+                QuickCaptureView()
 
                 Divider()
 
@@ -155,12 +135,21 @@ struct MenuBarPopoverView: View {
                 .foregroundStyle(Color.themeBlue)
                 Spacer()
                 Button {
+                    showNewProject = true
+                } label: {
+                    Image(systemName: "plus")
+                        .foregroundStyle(Color.themeFgDim)
+                }
+                .buttonStyle(.plain)
+                .help("New Project")
+                Button {
                     openSettings()
                 } label: {
                     Image(systemName: "gearshape")
                         .foregroundStyle(Color.themeFgDim)
                 }
                 .buttonStyle(.plain)
+                .help("Settings")
                 Button("Quit") { NSApp.terminate(nil) }
                     .buttonStyle(.plain)
                     .font(.system(size: 11))
@@ -173,11 +162,6 @@ struct MenuBarPopoverView: View {
         .frame(width: 320)
         .sheet(isPresented: $showNewProject) {
             NewProjectSheet()
-        }
-        .sheet(isPresented: $showLogEngagement) {
-            if let last = activeProjects.first {
-                LogEngagementSheet(project: last)
-            }
         }
     }
 
