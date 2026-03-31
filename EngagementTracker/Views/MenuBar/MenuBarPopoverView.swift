@@ -149,6 +149,7 @@ struct MenuBarPopoverView: View {
                         .foregroundStyle(Color.themeFgDim)
                 }
                 .buttonStyle(.plain)
+                .help("Settings")
                 Button("Quit") { NSApp.terminate(nil) }
                     .buttonStyle(.plain)
                     .font(.system(size: 11))
