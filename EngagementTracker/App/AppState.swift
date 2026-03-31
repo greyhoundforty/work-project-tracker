@@ -19,13 +19,11 @@ final class AppState {
     var themeMode: ThemeMode = ThemeMode(rawValue: UserDefaults.standard.string(forKey: "themeMode") ?? "system") ?? .system {
         didSet { UserDefaults.standard.set(themeMode.rawValue, forKey: "themeMode") }
     }
-    var templateFolderPath: String? {
-        get { UserDefaults.standard.string(forKey: "templateFolderPath") }
-        set { UserDefaults.standard.set(newValue, forKey: "templateFolderPath") }
+    var templateFolderPath: String? = UserDefaults.standard.string(forKey: "templateFolderPath") {
+        didSet { UserDefaults.standard.set(templateFolderPath, forKey: "templateFolderPath") }
     }
-    var templateFolderBookmark: Data? {
-        get { UserDefaults.standard.data(forKey: "templateFolderBookmark") }
-        set { UserDefaults.standard.set(newValue, forKey: "templateFolderBookmark") }
+    var templateFolderBookmark: Data? = UserDefaults.standard.data(forKey: "templateFolderBookmark") {
+        didSet { UserDefaults.standard.set(templateFolderBookmark, forKey: "templateFolderBookmark") }
     }
 
     func resolveTemplateFolderURL() -> URL? {

@@ -4,6 +4,11 @@ import AppKit
 struct SettingsView: View {
     @Environment(AppState.self) private var appState
 
+    private var loadedTemplates: [ProjectTemplate] {
+        guard let url = appState.resolveTemplateFolderURL() else { return [] }
+        return ProjectTemplate.load(from: url)
+    }
+
     var body: some View {
         @Bindable var appState = appState
         Form {
@@ -54,6 +59,46 @@ struct SettingsView: View {
                 Text("JSON template files in this folder appear as options when creating a new project.")
                     .font(.system(size: 11))
                     .foregroundStyle(.secondary)
+
+                if !loadedTemplates.isEmpty {
+                    VStack(spacing: 0) {
+                        HStack {
+                            Text("NAME").frame(maxWidth: .infinity, alignment: .leading)
+                            Text("STAGE").frame(width: 110, alignment: .leading)
+                            Text("POC").frame(width: 36, alignment: .center)
+                            Text("TASKS").frame(width: 44, alignment: .trailing)
+                        }
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(Color.themeFgDim)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+
+                        Divider()
+
+                        ForEach(loadedTemplates) { template in
+                            HStack {
+                                Text(template.name)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Text(template.stage)
+                                    .foregroundStyle(.secondary)
+                                    .frame(width: 110, alignment: .leading)
+                                Image(systemName: template.isPOC ? "checkmark" : "minus")
+                                    .foregroundStyle(template.isPOC ? Color.themeGreen : Color.themeFgDim)
+                                    .frame(width: 36, alignment: .center)
+                                Text("\(template.taskTitles.count)")
+                                    .foregroundStyle(.secondary)
+                                    .frame(width: 44, alignment: .trailing)
+                            }
+                            .font(.system(size: 11))
+                            .foregroundStyle(Color.themeFg)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            Divider()
+                        }
+                    }
+                    .background(Color.themeBg2)
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                }
             } header: {
                 Text("Templates")
             }
@@ -71,7 +116,7 @@ struct SettingsView: View {
             }
         }
         .formStyle(.grouped)
-        .frame(width: 420, height: 380)
+        .frame(width: 480, height: 520)
     }
 
     private func chooseTemplateFolder() {
