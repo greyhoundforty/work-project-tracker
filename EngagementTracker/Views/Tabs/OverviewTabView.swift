@@ -349,7 +349,7 @@ struct CustomFieldRow: View {
                 .font(.system(size: 12))
                 .foregroundStyle(Color.themeFgDim)
                 .frame(width: 90, alignment: .leading)
-            TextField("", text: $field.value)
+            TextField("Enter value", text: $field.value)
                 .font(.system(size: 12))
                 .foregroundStyle(Color.themeFg)
                 .textFieldStyle(.roundedBorder)
