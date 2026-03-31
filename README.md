@@ -102,6 +102,21 @@ xcodegen generate
 
 > **Note:** If you add files manually without xcodegen (e.g. during a worktree session), add the file references directly to `project.pbxproj` — see any existing model file as a template for the three required entries (PBXBuildFile, PBXFileReference, PBXGroup, PBXSourcesBuildPhase).
 
+## Quick capture (menu bar)
+
+Click the briefcase icon in the menu bar to open the popover. When no search query is active, the top of the popover is a quick-capture panel for adding records without opening the main window.
+
+**Capture types** (segmented control):
+- **Engagement** — summary text + date (defaults to today)
+- **Task** — title + optional due date
+- **Note** — optional title + content
+
+The panel defaults to the most recently updated active project. Tap **change** to pick a different project from a dropdown. The Save button is enabled only when the required field for the selected type is non-empty.
+
+After saving, the fields reset and the panel stays open for follow-up captures. The project selection and capture type are retained across saves.
+
+Full project creation (New Project) is still available via the **+** button in the popover footer.
+
 ## Importing test data
 
 A test project file is included at `docs/test-projects.json`. Import it via the **↓ toolbar button** in the project list to populate the app with sample data across all pipeline stages.
