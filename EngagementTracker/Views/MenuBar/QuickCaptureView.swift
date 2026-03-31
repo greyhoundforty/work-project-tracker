@@ -167,9 +167,6 @@ struct QuickCaptureView: View {
                     .pickerStyle(.menu)
                     .font(.system(size: 12))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .onChange(of: selectedProject) { old, new in
-                        if old != new { showProjectPicker = false }
-                    }
                 } else {
                     HStack(spacing: 4) {
                         Circle()
@@ -222,14 +219,14 @@ struct QuickCaptureView: View {
         guard let project = selectedProject else { return }
         switch captureType {
         case .engagement:
-            let e = makeEngagement(summary: summary, date: engagementDate, for: project)
+            let e = makeEngagement(summary: summary.trimmingCharacters(in: .whitespacesAndNewlines), date: engagementDate, for: project)
             modelContext.insert(e)
             project.engagements.append(e)
             try? modelContext.save()
             summary = ""
             engagementDate = Date()
         case .task:
-            let t = makeProjectTask(title: taskTitle, dueDate: hasDueDate ? dueDate : nil, for: project)
+            let t = makeProjectTask(title: taskTitle.trimmingCharacters(in: .whitespacesAndNewlines), dueDate: hasDueDate ? dueDate : nil, for: project)
             modelContext.insert(t)
             project.tasks.append(t)
             try? modelContext.save()
