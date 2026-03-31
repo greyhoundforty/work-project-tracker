@@ -8,7 +8,7 @@ A macOS app for tracking client projects and sales engagements through their ful
 
 **Project lifecycle tracking** — Projects move through a fixed pipeline: Discovery → Initial Delivery → Refine → Proposal → Won/Lost. Stage-specific checkpoints keep each phase on track and auto-advance as milestones are completed.
 
-**Contact management** — Track everyone involved: customers, internal team members (IBM), and business partners. Contacts are linked to engagement logs so you always know who was in the room.
+**Contact management** — Track everyone involved: customers, internal team members, and business partners. Contacts are linked to engagement logs so you always know who was in the room.
 
 **Engagement logs** — Timestamped notes on every interaction. Log a call, meeting, or email with a summary and the contacts who participated. The full history stays attached to the project.
 
