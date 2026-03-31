@@ -1,8 +1,14 @@
 import SwiftUI
+import SwiftData
 import AppKit
 
 struct SettingsView: View {
     @Environment(AppState.self) private var appState
+    @Environment(\.modelContext) private var modelContext
+
+    @State private var showResetDataAlert = false
+    @State private var showResetAllAlert = false
+    @State private var isResetting = false
 
     private var loadedTemplates: [ProjectTemplate] {
         guard let url = appState.resolveTemplateFolderURL() else { return [] }
@@ -114,9 +120,83 @@ struct SettingsView: View {
             } header: {
                 Text("Sync")
             }
+
+            Section {
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Reset Data")
+                            .foregroundStyle(.red)
+                        Text("Permanently delete all projects and their data.")
+                            .font(.system(size: 11))
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    Button("Reset Data…") {
+                        showResetDataAlert = true
+                    }
+                    .disabled(isResetting)
+                    .tint(.red)
+                }
+
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Reset All")
+                            .foregroundStyle(.red)
+                        Text("Delete all data and restore settings to defaults.")
+                            .font(.system(size: 11))
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    Button("Reset All…") {
+                        showResetAllAlert = true
+                    }
+                    .disabled(isResetting)
+                    .tint(.red)
+                }
+            } header: {
+                Text("Danger Zone")
+            }
         }
         .formStyle(.grouped)
-        .frame(width: 480, height: 520)
+        .frame(width: 480, height: 600)
+        .alert("Reset All Data?", isPresented: $showResetDataAlert) {
+            Button("Cancel", role: .cancel) {}
+            Button("Delete All Data", role: .destructive) { resetData() }
+        } message: {
+            Text("This will permanently delete all projects and their associated data. This cannot be undone.")
+        }
+        .alert("Reset Everything?", isPresented: $showResetAllAlert) {
+            Button("Cancel", role: .cancel) {}
+            Button("Reset Everything", role: .destructive) { resetAll() }
+        } message: {
+            Text("This will permanently delete all projects and reset all settings to defaults. This cannot be undone.")
+        }
+    }
+
+    private func resetData() {
+        isResetting = true
+        let checkpoints = (try? modelContext.fetch(FetchDescriptor<Checkpoint>())) ?? []
+        checkpoints.forEach { modelContext.delete($0) }
+        let tasks = (try? modelContext.fetch(FetchDescriptor<ProjectTask>())) ?? []
+        tasks.forEach { modelContext.delete($0) }
+        let engagements = (try? modelContext.fetch(FetchDescriptor<Engagement>())) ?? []
+        engagements.forEach { modelContext.delete($0) }
+        let notes = (try? modelContext.fetch(FetchDescriptor<Note>())) ?? []
+        notes.forEach { modelContext.delete($0) }
+        let contacts = (try? modelContext.fetch(FetchDescriptor<Contact>())) ?? []
+        contacts.forEach { modelContext.delete($0) }
+        let projects = (try? modelContext.fetch(FetchDescriptor<Project>())) ?? []
+        projects.forEach { modelContext.delete($0) }
+        try? modelContext.save()
+        isResetting = false
+    }
+
+    private func resetAll() {
+        resetData()
+        appState.templateFolderPath = nil
+        appState.templateFolderBookmark = nil
+        appState.themeMode = .system
+        appState.isCloudSyncEnabled = false
     }
 
     private func chooseTemplateFolder() {
@@ -127,7 +207,11 @@ struct SettingsView: View {
         panel.prompt = "Select Folder"
         if panel.runModal() == .OK, let url = panel.url {
             appState.templateFolderPath = url.path
-            appState.templateFolderBookmark = try? url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
+            appState.templateFolderBookmark = try? url.bookmarkData(
+                options: .withSecurityScope,
+                includingResourceValuesForKeys: nil,
+                relativeTo: nil
+            )
         }
     }
 }
