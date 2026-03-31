@@ -1,4 +1,10 @@
+// EngagementTracker/Models/ProjectTemplate.swift
 import Foundation
+
+struct TemplateCustomField: Codable, Hashable {
+    let label: String
+    let placeholder: String?
+}
 
 struct ProjectTemplate: Codable, Identifiable, Hashable {
     var id: String { name }
@@ -7,9 +13,24 @@ struct ProjectTemplate: Codable, Identifiable, Hashable {
     let tags: [String]
     let stage: String
     let taskTitles: [String]
+    let customFields: [TemplateCustomField]
 
     var projectStage: ProjectStage {
         ProjectStage(rawValue: stage) ?? .discovery
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case name, isPOC, tags, stage, taskTitles, customFields
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        name         = try c.decode(String.self,          forKey: .name)
+        isPOC        = try c.decode(Bool.self,            forKey: .isPOC)
+        tags         = try c.decode([String].self,        forKey: .tags)
+        stage        = try c.decode(String.self,          forKey: .stage)
+        taskTitles   = try c.decode([String].self,        forKey: .taskTitles)
+        customFields = try c.decodeIfPresent([TemplateCustomField].self, forKey: .customFields) ?? []
     }
 
     static func load(from url: URL) -> [ProjectTemplate] {
