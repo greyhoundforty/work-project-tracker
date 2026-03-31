@@ -1,0 +1,14 @@
+{
+  "name": "Personal Development",
+  "isPOC": false,
+  "stage": "Discovery",
+  "tags": ["personal", "learning"],
+  "taskTitles": [
+    "Define learning goals",
+    "Gather resources and references",
+    "Set a practice schedule",
+    "Build a small proof project",
+    "Review progress against goals",
+    "Share or publish learnings"
+  ]
+}

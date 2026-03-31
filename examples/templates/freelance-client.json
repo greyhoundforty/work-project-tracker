@@ -1,0 +1,16 @@
+{
+  "name": "Freelance Client Project",
+  "isPOC": false,
+  "stage": "Discovery",
+  "tags": ["freelance", "client"],
+  "taskTitles": [
+    "Send project proposal",
+    "Get contract signed",
+    "Schedule kickoff call",
+    "Deliver first milestone",
+    "Collect feedback",
+    "Deliver final deliverable",
+    "Send invoice",
+    "Get client sign-off"
+  ]
+}
