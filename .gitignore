@@ -89,3 +89,9 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# Generated icon PNGs (rebuilt by scripts/generate-icons.sh)
+EngagementTracker/Assets.xcassets/AppIcon.appiconset/*.png
+
+# Local env (secrets)
+.env
