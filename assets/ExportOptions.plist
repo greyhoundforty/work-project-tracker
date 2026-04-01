@@ -9,7 +9,7 @@
     <key>signingCertificate</key>
     <string>Developer ID Application</string>
     <key>teamID</key>
-    <string>REPLACE_WITH_TEAM_ID</string>
+    <string>S6AT3QA6PJ</string>
     <key>stripSwiftSymbols</key>
     <true/>
 </dict>
