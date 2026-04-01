@@ -1,0 +1,50 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brainGrad" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#FB923C"/>
+      <stop offset="100%" stop-color="#DC2626"/>
+    </linearGradient>
+    <linearGradient id="trayGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#92400E"/>
+      <stop offset="100%" stop-color="#451A03"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="#1C1917"/>
+
+  <!-- Brain: left lobe -->
+  <ellipse cx="410" cy="390" rx="195" ry="170" fill="url(#brainGrad)"/>
+  <!-- Brain: right lobe -->
+  <ellipse cx="614" cy="390" rx="195" ry="170" fill="url(#brainGrad)"/>
+  <!-- Fill center gap between lobes -->
+  <rect x="410" y="228" width="204" height="304" fill="url(#brainGrad)"/>
+  <!-- Center sulcus (dividing line between lobes) -->
+  <line x1="512" y1="236" x2="512" y2="530" stroke="#7C2D12" stroke-width="16" stroke-linecap="round"/>
+
+  <!-- Brain stem connecting to inbox tray -->
+  <rect x="462" y="518" width="100" height="64" rx="10" fill="url(#brainGrad)"/>
+
+  <!-- Inbox tray body -->
+  <rect x="296" y="562" width="432" height="152" rx="24" fill="url(#trayGrad)"/>
+  <!-- Tray shelf line -->
+  <rect x="320" y="674" width="384" height="14" rx="7" fill="#FED7AA" opacity="0.45"/>
+
+  <!-- Wires in from left -->
+  <line x1="80"  y1="312" x2="238" y2="362" stroke="#F97316" stroke-width="22" stroke-linecap="round"/>
+  <line x1="56"  y1="430" x2="218" y2="430" stroke="#F97316" stroke-width="22" stroke-linecap="round"/>
+  <line x1="80"  y1="548" x2="238" y2="498" stroke="#F97316" stroke-width="22" stroke-linecap="round"/>
+  <!-- Input node dots -->
+  <circle cx="54"  cy="312" r="26" fill="#FDBA74"/>
+  <circle cx="30"  cy="430" r="26" fill="#FDBA74"/>
+  <circle cx="54"  cy="548" r="26" fill="#FDBA74"/>
+
+  <!-- Wires out to right -->
+  <line x1="786" y1="362" x2="944" y2="312" stroke="#F97316" stroke-width="22" stroke-linecap="round"/>
+  <line x1="806" y1="430" x2="968" y2="430" stroke="#F97316" stroke-width="22" stroke-linecap="round"/>
+  <line x1="786" y1="498" x2="944" y2="548" stroke="#F97316" stroke-width="22" stroke-linecap="round"/>
+  <!-- Output node dots -->
+  <circle cx="970" cy="312" r="26" fill="#FDBA74"/>
+  <circle cx="994" cy="430" r="26" fill="#FDBA74"/>
+  <circle cx="970" cy="548" r="26" fill="#FDBA74"/>
+</svg>
