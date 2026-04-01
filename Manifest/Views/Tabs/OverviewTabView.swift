@@ -27,29 +27,6 @@ struct OverviewTabView: View {
                         OverviewInfoRow(label: "Tags", value: projectTags.map { String($0.dropFirst()) }.joined(separator: ", "))
                     }
 
-                    Divider().padding(.vertical, 6)
-
-                    HStack(spacing: 16) {
-                        LinkIconButton(
-                            label: "ISC Opportunity",
-                            icon: "link.badge.plus",
-                            value: linkBinding(\.iscOpportunityLink),
-                            onSave: { try? context.save() }
-                        )
-                        LinkIconButton(
-                            label: "GTM Nav Account",
-                            icon: "building.2",
-                            value: linkBinding(\.gtmNavAccountLink),
-                            onSave: { try? context.save() }
-                        )
-                        LinkIconButton(
-                            label: "OneDrive Folder",
-                            icon: "folder.badge.questionmark",
-                            value: linkBinding(\.oneDriveFolderLink),
-                            onSave: { try? context.save() }
-                        )
-                        Spacer()
-                    }
                 }
 
                 if !project.customFields.isEmpty {
@@ -64,12 +41,6 @@ struct OverviewTabView: View {
         .background(Color.themeBg)
     }
 
-    private func linkBinding(_ keyPath: ReferenceWritableKeyPath<Project, String?>) -> Binding<String> {
-        Binding(
-            get: { project[keyPath: keyPath] ?? "" },
-            set: { project[keyPath: keyPath] = $0.isEmpty ? nil : $0 }
-        )
-    }
 }
 
 // MARK: - Engagement Calendar
