@@ -35,7 +35,7 @@ A macOS app for tracking client projects and sales engagements through their ful
 git clone https://github.com/greyhoundforty/work-project-tracker.git
 cd work-project-tracker
 xcodegen generate
-open EngagementTracker.xcodeproj
+open Manifest.xcodeproj
 ```
 
 Press `⌘R` to build and run.
@@ -46,7 +46,7 @@ Press `⌘R` to build and run.
 mise run build        # Debug build
 mise run test         # Run unit tests
 mise run clean        # Clean build products
-mise run db-backup    # Backup SwiftData store to ~/Desktop/EngagementTracker-backups/
+mise run db-backup    # Backup SwiftData store to ~/Desktop/Manifest-backups/
 ```
 
 ## Using templates
