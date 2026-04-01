@@ -1,0 +1,20 @@
+{
+  "name": "freelance-client",
+  "isPOC": false,
+  "tags": ["freelance", "client"],
+  "stage": "Discovery",
+  "taskTitles": [
+    "Proposal sent",
+    "Contract signed",
+    "Kickoff meeting held",
+    "Milestone 1 delivered",
+    "Feedback collected",
+    "Final deliverable sent",
+    "Invoice sent",
+    "Sign-off received"
+  ],
+  "customFields": [
+    { "label": "Contract Number", "placeholder": "e.g. CNT-2026-001" },
+    { "label": "Client Contact", "placeholder": "Name or email" }
+  ]
+}

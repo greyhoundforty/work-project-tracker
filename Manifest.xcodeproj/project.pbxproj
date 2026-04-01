@@ -12,6 +12,7 @@
 		0997AA780365DA64C9439832 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA5B153F00C0BDB1AA6E825 /* ProjectListView.swift */; };
 		0A4547AD426C3602C18A1AEC /* StagesSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0884C4FD2ABA08B97C04E869 /* StagesSidebarView.swift */; };
 		0D215AB01C685AA0F1136F0F /* MenuBarPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA501912E431E1A46BD55976 /* MenuBarPopoverView.swift */; };
+		1918D073CACEF51C7A99FEBD /* BundledTemplates in Resources */ = {isa = PBXBuildFile; fileRef = 6617AD2282FBE82F80F9B74A /* BundledTemplates */; };
 		19DE684C0AE826BF945AAA07 /* AddContactSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8932190D7C24585D578B8B2 /* AddContactSheet.swift */; };
 		29C838DD777FC2DFC52CCF8D /* QuickCaptureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08368E7014C868CC8100AFD1 /* QuickCaptureTests.swift */; };
 		2DB8BAFB9AE3555284F6A3CB /* Checkpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B528D2156322E2CF046FAF7 /* Checkpoint.swift */; };
@@ -83,6 +84,7 @@
 		4E36DF9C11B977B5039A8C9D /* ExportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportSheet.swift; sourceTree = "<group>"; };
 		59D3682E60B34FDA25DDFC67 /* ImportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportSheet.swift; sourceTree = "<group>"; };
 		61C03B1EDD7EEA4353006E93 /* EngagementTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngagementTracker.entitlements; sourceTree = "<group>"; };
+		6617AD2282FBE82F80F9B74A /* BundledTemplates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BundledTemplates; path = EngagementTracker/BundledTemplates; sourceTree = SOURCE_ROOT; };
 		74079A4BFB58795C8D1C2C86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7A696B66A5725B6558327067 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7D85318EEF237EB2F7075875 /* MarkdownTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTheme.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				C1F6648457BFCA1336C0F0F9 /* Theme */,
 				B239C1B96586CFCABB8B9296 /* Views */,
 				7A696B66A5725B6558327067 /* Assets.xcassets */,
+				6617AD2282FBE82F80F9B74A /* BundledTemplates */,
 				61C03B1EDD7EEA4353006E93 /* EngagementTracker.entitlements */,
 				74079A4BFB58795C8D1C2C86 /* Info.plist */,
 			);
@@ -392,6 +395,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				956672D6ABD3572230E5CE0B /* Assets.xcassets in Resources */,
+				1918D073CACEF51C7A99FEBD /* BundledTemplates in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
