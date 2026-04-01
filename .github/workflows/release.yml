@@ -25,7 +25,7 @@ jobs:
           CERT_PATH="$RUNNER_TEMP/cert.p12"
           KEYCHAIN_PASSWORD=$(uuidgen)
 
-          echo "$CERT_P12" | base64 --decode -o "$CERT_PATH"
+          echo "$CERT_P12" | base64 --decode > "$CERT_PATH"
 
           security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
           security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
@@ -34,7 +34,7 @@ jobs:
             -P "$CERT_PASSWORD" \
             -A -t cert -f pkcs12 \
             -k "$KEYCHAIN_PATH"
-          security list-keychain -d user -s "$KEYCHAIN_PATH"
+          security list-keychain -d user -s "$KEYCHAIN_PATH" $(security list-keychains -d user | tr -d '"')
           security set-key-partition-list \
             -S apple-tool:,apple: \
             -s -k "$KEYCHAIN_PASSWORD" \
@@ -53,3 +53,10 @@ jobs:
         with:
           files: build/Manifest-*.dmg
           generate_release_notes: true
+          fail_on_unmatched_files: true
+
+      - name: Clean up keychain and certificate
+        if: always()
+        run: |
+          security delete-keychain "$RUNNER_TEMP/build.keychain" || true
+          rm -f "$RUNNER_TEMP/cert.p12"
