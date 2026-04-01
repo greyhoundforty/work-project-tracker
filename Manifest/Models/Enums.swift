@@ -26,14 +26,22 @@ enum ProjectStage: String, Codable, CaseIterable, Identifiable {
 }
 
 enum ContactType: String, Codable, CaseIterable {
-    case external       = "External (Customer)"
-    case ibmInternal    = "Internal (IBM)"
-    case businessPartner = "Business Partner"
-}
+    case external = "External"
+    case `internal` = "Internal"
 
-enum InternalRole: String, Codable, CaseIterable {
-    case ae      = "Account Executive"
-    case se      = "Solutions Engineer"
-    case manager = "Manager"
-    case other   = "Other"
+    // Handles data stored with old raw values from previous app versions
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let raw = try container.decode(String.self)
+        switch raw {
+        case "External", "External (Customer)":
+            self = .external
+        case "Internal", "Internal (IBM)":
+            self = .internal
+        case "Business Partner":
+            self = .external
+        default:
+            self = .external
+        }
+    }
 }
