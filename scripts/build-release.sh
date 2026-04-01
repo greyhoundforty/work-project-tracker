@@ -47,15 +47,15 @@ if grep -q "REPLACE_WITH_TEAM_ID" "$EXPORT_OPTS"; then
   echo "  Edit $EXPORT_OPTS and replace REPLACE_WITH_TEAM_ID with your 10-char team ID."
   exit 1
 fi
-if [ ! -f "$BG" ]; then
-  echo "Error: DMG background not found at $BG"
-  echo "  Run: scripts/generate-icons.sh"
-  exit 1
-fi
 
-# ── 1. Generate icons (ensures appiconset is populated) ──────────────────────
+# ── 1. Generate icons (ensures appiconset and dmg-background.png are populated) ──
 echo "==> Generating icons..."
 bash "$SCRIPT_DIR/generate-icons.sh"
+
+if [ ! -f "$BG" ]; then
+  echo "Error: DMG background not found at $BG after generate-icons.sh"
+  exit 1
+fi
 
 # ── 2. Archive ────────────────────────────────────────────────────────────────
 echo "==> Archiving $SCHEME $VERSION..."
