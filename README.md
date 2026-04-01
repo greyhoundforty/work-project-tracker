@@ -1,14 +1,14 @@
 # Manifest
 
-A macOS app for tracking client projects and sales engagements through their full lifecycle. Runs as a menu bar popover for quick capture and a full dock window for project management. Local-first via SwiftData with optional iCloud sync.
+A macOS app for tracking client projects and engagements through their full lifecycle. Runs as a menu bar popover for quick capture and a full dock window for project management. Local-first via SwiftData with optional iCloud sync.
 
 ![Manifest in action](work-tracker-demo.gif)
 
 ## What it does
 
-**Project lifecycle tracking** — Projects move through a fixed pipeline: Discovery → Initial Delivery → Refine → Proposal → Won/Lost. Stage-specific checkpoints keep each phase on track and auto-advance as milestones are completed.
+**Project lifecycle tracking** — Projects move through a fixed pipeline: Discovery → Initial Delivery → Refine → Proposal → Won/Lost. Stage-specific checkpoints keep each phase on track.
 
-**Contact management** — Track everyone involved: customers, internal team members, and business partners. Contacts are linked to engagement logs so you always know who was in the room.
+**Contact management** — Track everyone involved: internal team members and external contacts. Contacts can include a free-form role, title, email, and notes (preferred contact method, office hours, etc.). Contacts are linked to engagement logs so you always know who was in the room.
 
 **Engagement logs** — Timestamped notes on every interaction. Log a call, meeting, or email with a summary and the contacts who participated. The full history stays attached to the project.
 
@@ -20,16 +20,19 @@ A macOS app for tracking client projects and sales engagements through their ful
 
 **Export and import** — Export projects to JSON or CSV for backup or sharing. Import JSON bundles or CSV files to restore or migrate data. A test dataset is included at `examples/test-projects.json`.
 
-**Project templates** — Define JSON template files in a folder of your choosing. When creating a new project, templates pre-fill stage, tags, isPOC, and create an initial task list. Three example templates are included in `examples/templates/`.
+**Project templates** — Define JSON template files in a folder of your choosing. When creating a new project, templates pre-fill stage, tags, isPOC, and create an initial task list with custom fields. Three example templates are included in `examples/templates/`.
 
-## Requirements
+## Install
+
+Download the latest `.dmg` from [Releases](https://github.com/greyhoundforty/work-project-tracker/releases), open it, and drag **Manifest.app** to your Applications folder.
+
+## Requirements (building from source)
 
 - macOS 14.0+
 - Xcode 16+
 - [xcodegen](https://github.com/yonaskolb/XcodeGen) — `brew install xcodegen`
-- [mise](https://mise.jdx.dev) (optional, for terminal build tasks) — `brew install mise`
 
-## Getting started
+## Building from source
 
 ```bash
 git clone https://github.com/greyhoundforty/work-project-tracker.git
@@ -39,15 +42,6 @@ open Manifest.xcodeproj
 ```
 
 Press `⌘R` to build and run.
-
-### Terminal builds (mise)
-
-```bash
-mise run build        # Debug build
-mise run test         # Run unit tests
-mise run clean        # Clean build products
-mise run db-backup    # Backup SwiftData store to ~/Desktop/Manifest-backups/
-```
 
 ## Using templates
 
@@ -67,11 +61,15 @@ mise run db-backup    # Backup SwiftData store to ~/Desktop/Manifest-backups/
     "Deliver first milestone",
     "Send invoice",
     "Get client sign-off"
+  ],
+  "customFields": [
+    { "label": "Contract Link", "placeholder": "Paste URL…" },
+    { "label": "Budget", "placeholder": "e.g. $5,000" }
   ]
 }
 ```
 
-3. When creating a new project, the template picker appears at the top of the sheet. Selecting one pre-fills stage, tags, and isPOC, and creates initial tasks on save.
+3. When creating a new project, the template picker appears at the top of the sheet. Selecting one pre-fills stage, tags, and isPOC, creates initial tasks, and adds any custom fields to the project overview.
 
 Three example templates are in `examples/templates/` — copy them to any folder and point Settings at it to get started.
 
