@@ -77,4 +77,34 @@ struct SearchFilterTests {
         let matches = project.stage.rawValue.lowercased().contains(q)
         #expect(matches == true)
     }
+
+    @Test func matchesOnCustomFieldValue() {
+        let project = Project(name: "Deal 001")
+        let field = ProjectCustomField(label: "Contract Number", value: "CNT-2026-001", sortOrder: 0)
+        field.project = project
+        project.customFields.append(field)
+        let q = "cnt-2026"
+        let matches = project.customFields.contains { $0.value.lowercased().contains(q) }
+        #expect(matches == true)
+    }
+
+    @Test func noMatchOnAbsentCustomFieldValue() {
+        let project = Project(name: "Deal 001")
+        let field = ProjectCustomField(label: "Contract Number", value: "CNT-2026-001", sortOrder: 0)
+        field.project = project
+        project.customFields.append(field)
+        let q = "xyz"
+        let matches = project.customFields.contains { $0.value.lowercased().contains(q) }
+        #expect(matches == false)
+    }
+
+    @Test func emptyCustomFieldValueDoesNotMatch() {
+        let project = Project(name: "Deal 001")
+        let field = ProjectCustomField(label: "Contract Number", value: "", sortOrder: 0)
+        field.project = project
+        project.customFields.append(field)
+        let q = "contract"
+        let matches = project.customFields.contains { $0.value.lowercased().contains(q) }
+        #expect(matches == false)
+    }
 }

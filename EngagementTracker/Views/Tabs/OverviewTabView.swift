@@ -52,6 +52,10 @@ struct OverviewTabView: View {
                     }
                 }
 
+                if !project.customFields.isEmpty {
+                    CustomFieldsCard(project: project)
+                }
+
                 // Engagement calendar
                 EngagementCalendarView(engagements: project.engagements)
             }
@@ -313,5 +317,43 @@ extension OverviewInfoRow where Value == Text {
         self.valueView = Text(value)
             .font(.system(size: 12))
             .foregroundStyle(Color.themeFg)
+    }
+}
+
+// MARK: - Custom Fields Card
+
+struct CustomFieldsCard: View {
+    @Bindable var project: Project
+    @Environment(\.modelContext) private var context
+
+    private var sortedFields: [ProjectCustomField] {
+        project.customFields.sorted { $0.sortOrder < $1.sortOrder }
+    }
+
+    var body: some View {
+        OverviewCard(title: "Template Fields") {
+            ForEach(sortedFields) { field in
+                CustomFieldRow(field: field, onSave: { try? context.save() })
+            }
+        }
+    }
+}
+
+struct CustomFieldRow: View {
+    @Bindable var field: ProjectCustomField
+    let onSave: () -> Void
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 0) {
+            Text(field.label)
+                .font(.system(size: 12))
+                .foregroundStyle(Color.themeFgDim)
+                .frame(width: 90, alignment: .leading)
+            TextField("Enter value", text: $field.value)
+                .font(.system(size: 12))
+                .foregroundStyle(Color.themeFg)
+                .textFieldStyle(.roundedBorder)
+                .onSubmit { onSave() }
+        }
     }
 }
