@@ -93,5 +93,8 @@ fastlane/test_output
 # Generated icon PNGs (rebuilt by scripts/generate-icons.sh)
 EngagementTracker/Assets.xcassets/AppIcon.appiconset/*.png
 
+# Release build output
+build/
+
 # Local env (secrets)
 .env

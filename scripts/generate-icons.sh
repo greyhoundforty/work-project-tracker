@@ -15,6 +15,13 @@ if ! command -v rsvg-convert &>/dev/null; then
   exit 1
 fi
 
+for f in "$SVG" "$BG_SVG"; do
+  if [ ! -f "$f" ]; then
+    echo "Error: required source file not found: $f"
+    exit 1
+  fi
+done
+
 mkdir -p "$ICONSET" "$APPICONSET"
 
 rasterize() {
