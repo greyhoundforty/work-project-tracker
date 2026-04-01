@@ -1,8 +1,8 @@
-# Engagement Tracker
+# Manifest
 
 A macOS app for tracking client projects and sales engagements through their full lifecycle. Runs as a menu bar popover for quick capture and a full dock window for project management. Local-first via SwiftData with optional iCloud sync.
 
-![Engagement Tracker in action](work-tracker-demo.gif)
+![Manifest in action](work-tracker-demo.gif)
 
 ## What it does
 
