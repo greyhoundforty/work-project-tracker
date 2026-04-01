@@ -98,3 +98,6 @@ build/
 
 # Local env (secrets)
 .env
+
+# Old project directory replaced by Manifest.xcodeproj
+EngagementTracker.xcodeproj/
