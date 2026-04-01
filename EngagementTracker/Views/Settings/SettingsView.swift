@@ -10,8 +10,14 @@ struct SettingsView: View {
     @State private var showResetAllAlert = false
 
     private var loadedTemplates: [ProjectTemplate] {
-        guard let url = appState.resolveTemplateFolderURL() else { return [] }
-        return ProjectTemplate.load(from: url)
+        var templates = ProjectTemplate.loadBundled()
+        if let url = appState.resolveTemplateFolderURL() {
+            let userTemplates = ProjectTemplate.load(from: url)
+            let userNames = Set(userTemplates.map(\.name))
+            templates = templates.filter { !userNames.contains($0.name) } + userTemplates
+        }
+        templates.sort { $0.name < $1.name }
+        return templates
     }
 
     var body: some View {
@@ -72,6 +78,7 @@ struct SettingsView: View {
                             Text("STAGE").frame(width: 110, alignment: .leading)
                             Text("POC").frame(width: 36, alignment: .center)
                             Text("TASKS").frame(width: 44, alignment: .trailing)
+                            Text("SOURCE").frame(width: 60, alignment: .trailing)
                         }
                         .font(.system(size: 10, weight: .semibold))
                         .foregroundStyle(Color.themeFgDim)
@@ -93,6 +100,16 @@ struct SettingsView: View {
                                 Text("\(template.taskTitles.count)")
                                     .foregroundStyle(.secondary)
                                     .frame(width: 44, alignment: .trailing)
+                                Group {
+                                    if template.isBuiltIn {
+                                        Text("Built-in")
+                                            .foregroundStyle(.secondary)
+                                    } else {
+                                        Text("Custom")
+                                            .foregroundStyle(.tertiary)
+                                    }
+                                }
+                                .frame(width: 60, alignment: .trailing)
                             }
                             .font(.system(size: 11))
                             .foregroundStyle(Color.themeFg)

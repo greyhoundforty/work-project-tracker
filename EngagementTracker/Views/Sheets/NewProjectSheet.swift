@@ -41,11 +41,7 @@ struct NewProjectSheet: View {
                 formView
             }
         }
-        .onAppear {
-            if let url = appState.resolveTemplateFolderURL() {
-                availableTemplates = ProjectTemplate.load(from: url)
-            }
-        }
+        .onAppear { loadTemplates() }
     }
 
     private var formView: some View {
@@ -184,6 +180,17 @@ struct NewProjectSheet: View {
         } catch {
             print("[NewProjectSheet] context.save() failed: \(error)")
         }
+    }
+
+    private func loadTemplates() {
+        var templates = ProjectTemplate.loadBundled()
+        if let url = appState.resolveTemplateFolderURL() {
+            let userTemplates = ProjectTemplate.load(from: url)
+            let userNames = Set(userTemplates.map(\.name))
+            templates = templates.filter { !userNames.contains($0.name) } + userTemplates
+        }
+        templates.sort { $0.name < $1.name }
+        availableTemplates = templates
     }
 
     private func parseCents(_ string: String) -> Int? {

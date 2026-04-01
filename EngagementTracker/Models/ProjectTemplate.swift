@@ -8,6 +8,7 @@ struct TemplateCustomField: Codable, Hashable {
 
 struct ProjectTemplate: Codable, Identifiable, Hashable {
     var id: String { name }
+    var isBuiltIn: Bool = false
     let name: String
     let isPOC: Bool
     let tags: [String]
@@ -31,6 +32,20 @@ struct ProjectTemplate: Codable, Identifiable, Hashable {
         stage        = try c.decode(String.self,          forKey: .stage)
         taskTitles   = try c.decode([String].self,        forKey: .taskTitles)
         customFields = try c.decodeIfPresent([TemplateCustomField].self, forKey: .customFields) ?? []
+    }
+
+    static func loadBundled() -> [ProjectTemplate] {
+        guard let urls = Bundle.main.urls(
+            forResourcesWithExtension: "json",
+            subdirectory: "BundledTemplates"
+        ) else { return [] }
+        return urls.compactMap { url -> ProjectTemplate? in
+            guard let data = try? Data(contentsOf: url),
+                  var template = try? JSONDecoder().decode(ProjectTemplate.self, from: data)
+            else { return nil }
+            template.isBuiltIn = true
+            return template
+        }.sorted { $0.name < $1.name }
     }
 
     static func load(from url: URL) -> [ProjectTemplate] {

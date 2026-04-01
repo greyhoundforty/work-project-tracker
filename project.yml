@@ -22,7 +22,12 @@ targets:
     type: application
     platform: macOS
     sources:
-      - EngagementTracker
+      - path: EngagementTracker
+        excludes:
+          - BundledTemplates
+      - path: EngagementTracker/BundledTemplates
+        type: folder
+        buildPhase: resources
     settings:
       base:
         PRODUCT_NAME: Manifest

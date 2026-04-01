@@ -1,0 +1,14 @@
+{
+  "name": "Base Project",
+  "isPOC": false,
+  "stage": "Discovery",
+  "tags": [],
+  "taskTitles": [
+    "Define project goals",
+    "Identify key stakeholders",
+    "Set milestones",
+    "Review progress at midpoint",
+    "Document outcomes",
+    "Close out project"
+  ]
+}
