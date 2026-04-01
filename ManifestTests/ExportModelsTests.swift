@@ -39,12 +39,13 @@ struct ExportModelsTests {
         #expect(decoded.exportVersion == "1")
     }
 
-    @Test("ExportedContact encodes internalRole as optional string")
+    @Test("ExportedContact encodes type as string")
     func contactEncoding() throws {
         let c = ExportedContact(name: "Jane", title: "AE", email: "jane@ibm.com",
-                                type: "Internal (IBM)", internalRole: "Account Executive")
+                                type: "Internal")
         let data = try JSONEncoder().encode(c)
         let decoded = try JSONDecoder().decode(ExportedContact.self, from: data)
-        #expect(decoded.internalRole == "Account Executive")
+        #expect(decoded.type == "Internal")
+        #expect(decoded.name == "Jane")
     }
 }

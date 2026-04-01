@@ -177,8 +177,7 @@ struct ImportSheet: View {
             for c in exported.contacts {
                 let contact = Contact(
                     name: c.name, title: c.title, email: c.email,
-                    type: ContactType(rawValue: c.type) ?? .external,
-                    internalRole: c.internalRole.flatMap { InternalRole(rawValue: $0) }
+                    type: ContactType(rawValue: c.type) ?? .external
                 )
                 context.insert(contact)
                 project.contacts.append(contact)

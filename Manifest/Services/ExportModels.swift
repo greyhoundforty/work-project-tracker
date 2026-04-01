@@ -31,7 +31,6 @@ struct ExportedContact: Codable {
     var title: String?
     var email: String?
     var type: String                 // raw value of ContactType
-    var internalRole: String?        // raw value of InternalRole, nil for non-IBM
 }
 
 struct ExportedTask: Codable {

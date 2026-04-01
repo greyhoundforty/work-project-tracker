@@ -21,9 +21,9 @@ struct ExportServiceTests {
             oneDriveFolderLink: "https://onedrive.example.com",
             contacts: [
                 ExportedContact(name: "Alice Smith", title: "CTO",
-                                email: "alice@contoso.com", type: "External (Customer)", internalRole: nil),
+                                email: "alice@contoso.com", type: "External"),
                 ExportedContact(name: "Bob Jones", title: nil,
-                                email: "bob@ibm.com", type: "Internal (IBM)", internalRole: "Solutions Engineer")
+                                email: "bob@ibm.com", type: "Internal")
             ],
             tasks: [ExportedTask(title: "Send BOM", isCompleted: false,
                                  completedAt: nil, createdAt: Date())],

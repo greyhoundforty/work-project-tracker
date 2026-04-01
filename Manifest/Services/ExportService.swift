@@ -30,7 +30,7 @@ enum ExportService {
 
     static func contact(from m: Contact) -> ExportedContact {
         ExportedContact(name: m.name, title: m.title, email: m.email,
-                        type: m.type.rawValue, internalRole: m.internalRole?.rawValue)
+                        type: m.type.rawValue)
     }
 
     static func task(from m: ProjectTask) -> ExportedTask {
@@ -87,12 +87,11 @@ enum ExportService {
         files["projects.csv"] = projRows.joined(separator: "\n")
 
         // contacts.csv
-        let contactHeaders = ["projectName","name","title","email","type","internalRole"]
+        let contactHeaders = ["projectName","name","title","email","type"]
         var contactRows = [contactHeaders.joined(separator: ",")]
         for p in projects {
             for c in p.contacts {
-                let row = [p.name, c.name, c.title ?? "", c.email ?? "",
-                           c.type, c.internalRole ?? ""]
+                let row = [p.name, c.name, c.title ?? "", c.email ?? "", c.type]
                 contactRows.append(row.map(csvEscape).joined(separator: ","))
             }
         }
