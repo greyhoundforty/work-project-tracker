@@ -1,4 +1,4 @@
-name: EngagementTracker
+name: Manifest
 options:
   bundleIdPrefix: com.greyhoundforty
   deploymentTarget:
@@ -18,31 +18,32 @@ settings:
     ENABLE_HARDENED_RUNTIME: YES
 
 targets:
-  EngagementTracker:
+  Manifest:
     type: application
     platform: macOS
     sources:
       - EngagementTracker
     settings:
       base:
-        PRODUCT_NAME: EngagementTracker
+        PRODUCT_NAME: Manifest
         INFOPLIST_FILE: EngagementTracker/Info.plist
         CODE_SIGN_STYLE: Automatic
-        PRODUCT_BUNDLE_IDENTIFIER: com.greyhoundforty.EngagementTracker
+        PRODUCT_BUNDLE_IDENTIFIER: com.greyhoundforty.Manifest
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     entitlements:
       path: EngagementTracker/EngagementTracker.entitlements
     dependencies:
       - sdk: SwiftData.framework
       - package: MarkdownUI
 
-  EngagementTrackerTests:
+  ManifestTests:
     type: bundle.unit-test
     platform: macOS
     sources:
       - EngagementTrackerTests
     dependencies:
-      - target: EngagementTracker
+      - target: Manifest
     settings:
       base:
-        PRODUCT_NAME: EngagementTrackerTests
+        PRODUCT_NAME: ManifestTests
         GENERATE_INFOPLIST_FILE: YES

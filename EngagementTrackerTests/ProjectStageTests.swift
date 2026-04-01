@@ -1,5 +1,5 @@
 import Testing
-@testable import EngagementTracker
+@testable import Manifest
 
 @Suite("ProjectStage")
 struct ProjectStageTests {
