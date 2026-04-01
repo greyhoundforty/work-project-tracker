@@ -24,7 +24,19 @@ struct SettingsView: View {
         @Bindable var appState = appState
         Form {
             Section {
-                LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.2")
+                HStack(spacing: 12) {
+                    if let appIcon = NSImage(named: NSImage.applicationIconName) {
+                        Image(nsImage: appIcon)
+                            .resizable()
+                            .frame(width: 48, height: 48)
+                    }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Manifest")
+                            .font(.system(size: 14, weight: .semibold))
+                        LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.2.2")
+                    }
+                }
+                .padding(.vertical, 4)
             } header: {
                 Text("About")
             }
