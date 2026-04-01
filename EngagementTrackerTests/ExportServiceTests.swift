@@ -1,7 +1,7 @@
 // EngagementTrackerTests/ExportServiceTests.swift
 import Foundation
 import Testing
-@testable import EngagementTracker
+@testable import Manifest
 
 @Suite("ExportService")
 struct ExportServiceTests {

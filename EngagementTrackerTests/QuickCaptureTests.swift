@@ -1,6 +1,6 @@
 import Testing
 import Foundation
-@testable import EngagementTracker
+@testable import Manifest
 
 @Suite("QuickCapture save helpers")
 struct QuickCaptureTests {
