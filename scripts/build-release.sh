@@ -32,6 +32,9 @@ ARCHIVE="$BUILD_DIR/Manifest.xcarchive"
 EXPORT_DIR="$BUILD_DIR/export"
 EXPORT_OPTS="$ROOT/assets/ExportOptions.plist"
 BG="$ROOT/assets/dmg-background.png"
+# Reads from EngagementTracker/Info.plist — the source directory was intentionally
+# not renamed (only the app product name changed to Manifest). Update this path
+# if the source directory is ever renamed.
 VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$ROOT/EngagementTracker/Info.plist")
 DMG_PATH="$BUILD_DIR/Manifest-${VERSION}.dmg"
 

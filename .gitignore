@@ -93,6 +93,9 @@ fastlane/test_output
 # Generated icon PNGs (rebuilt by scripts/generate-icons.sh)
 EngagementTracker/Assets.xcassets/AppIcon.appiconset/*.png
 
+# Generated DMG background (rebuilt by scripts/generate-icons.sh)
+assets/dmg-background.png
+
 # Release build output
 build/
 
