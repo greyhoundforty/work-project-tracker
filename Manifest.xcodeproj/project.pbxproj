@@ -20,6 +20,7 @@
 		3FEEB36AFE6F97D95165DA16 /* MarkdownTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D85318EEF237EB2F7075875 /* MarkdownTheme.swift */; };
 		420271DCE218901858C3A569 /* ImportServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E54FEC100AE9C1823E2582D /* ImportServiceTests.swift */; };
 		4251710703919351644D2D4D /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = DE1F31DE0BF9F8ABD1122E66 /* MarkdownUI */; };
+		4636F8159C833F234F894B40 /* BundledTemplatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C83A9087F40E2D86FA6EBE1 /* BundledTemplatesTests.swift */; };
 		48A47242CDC0D12B2FB06517 /* TasksTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8035D9B42A7E583F38C7A2DE /* TasksTabView.swift */; };
 		4ECA196BF99FE5CD19E4CCD6 /* TemplatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248565DD72199637CBF4CDD3 /* TemplatePickerView.swift */; };
 		51DB8815305C1898F00381B0 /* SearchFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859D53562F3B1D7447B382D9 /* SearchFilterTests.swift */; };
@@ -76,6 +77,7 @@
 		248565DD72199637CBF4CDD3 /* TemplatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatePickerView.swift; sourceTree = "<group>"; };
 		2BAF7C5C5F5844356C4429C6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2C1582ABA74BCB864819CF96 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		2C83A9087F40E2D86FA6EBE1 /* BundledTemplatesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundledTemplatesTests.swift; sourceTree = "<group>"; };
 		307EB7CB69475969B1FAFC96 /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
 		32F7E4B44192DAF4F0EAF012 /* CheckpointSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointSeeder.swift; sourceTree = "<group>"; };
 		395CDFC3DF65067AF7E4A85A /* ExportModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportModels.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 		EAB18D4DBBA65DCDB44EE63E /* EngagementTrackerTests */ = {
 			isa = PBXGroup;
 			children = (
+				2C83A9087F40E2D86FA6EBE1 /* BundledTemplatesTests.swift */,
 				05981DA9F5B84C992F7D0D3F /* CheckpointSeederTests.swift */,
 				2028F567909E715C1B09B926 /* ExportModelsTests.swift */,
 				E675CB66E77B07E1BE496CE3 /* ExportServiceTests.swift */,
@@ -449,6 +452,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4636F8159C833F234F894B40 /* BundledTemplatesTests.swift in Sources */,
 				0853B892A514880D4AE52333 /* CheckpointSeederTests.swift in Sources */,
 				EA57E28024D00A4201287E8B /* ExportModelsTests.swift in Sources */,
 				97EB4F70AE3829A5F470F52B /* ExportServiceTests.swift in Sources */,
