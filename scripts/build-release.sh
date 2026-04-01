@@ -59,6 +59,8 @@ bash "$SCRIPT_DIR/generate-icons.sh"
 
 # ── 2. Archive ────────────────────────────────────────────────────────────────
 echo "==> Archiving $SCHEME $VERSION..."
+XCODE_LOG=$(mktemp /tmp/xcodebuild-archive.XXXXXX.log)
+set +e
 xcodebuild archive \
   -project "$PROJECT" \
   -scheme "$SCHEME" \
@@ -67,13 +69,15 @@ xcodebuild archive \
   CODE_SIGN_IDENTITY="$CODESIGN_IDENTITY" \
   CODE_SIGN_STYLE=Manual \
   DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
-  2>&1 | tee /tmp/xcodebuild-archive.log
-if [ "${PIPESTATUS[0]}" -ne 0 ]; then
-  echo "Error: xcodebuild archive failed"
+  2>&1 | tee "$XCODE_LOG"
+XCODE_STATUS=${PIPESTATUS[0]}
+set -e
+grep -E "error:|warning:|BUILD SUCCEEDED|BUILD FAILED" "$XCODE_LOG" || true
+rm -f "$XCODE_LOG"
+if [ "$XCODE_STATUS" -ne 0 ]; then
+  echo "Error: xcodebuild archive failed (exit $XCODE_STATUS)"
   exit 1
 fi
-grep -E "error:|warning:|BUILD SUCCEEDED|BUILD FAILED" /tmp/xcodebuild-archive.log || true
-rm -f /tmp/xcodebuild-archive.log
 
 # ── 3. Export signed .app ─────────────────────────────────────────────────────
 echo "==> Exporting signed app..."
