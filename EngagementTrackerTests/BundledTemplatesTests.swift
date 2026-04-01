@@ -31,12 +31,12 @@ struct BundledTemplatesTests {
     }
 
     @Test("user-loaded templates have isBuiltIn = false")
-    func userLoadedIsNotBuiltIn() {
+    func userLoadedIsNotBuiltIn() throws {
         // Encode a bundled template and decode it back — simulates what load(from:) does
         // isBuiltIn is not in CodingKeys so decode always produces false
-        let template = ProjectTemplate.loadBundled().first!
-        let data = try! JSONEncoder().encode(template)
-        let decoded = try! JSONDecoder().decode(ProjectTemplate.self, from: data)
+        let template = try #require(ProjectTemplate.loadBundled().first)
+        let data = try JSONEncoder().encode(template)
+        let decoded = try JSONDecoder().decode(ProjectTemplate.self, from: data)
         #expect(decoded.isBuiltIn == false)
     }
 }

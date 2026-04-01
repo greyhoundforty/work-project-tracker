@@ -15,8 +15,8 @@ struct SettingsView: View {
             let userTemplates = ProjectTemplate.load(from: url)
             let userNames = Set(userTemplates.map(\.name))
             templates = templates.filter { !userNames.contains($0.name) } + userTemplates
-            templates.sort { $0.name < $1.name }
         }
+        templates.sort { $0.name < $1.name }
         return templates
     }
 
