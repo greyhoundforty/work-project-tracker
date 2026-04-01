@@ -45,7 +45,7 @@ struct ContactsTabView: View {
                     }
 
                     if project.contacts.isEmpty {
-                        ContentUnavailableView("No Contacts", systemImage: "person.2", description: Text("Add customer, IBM, or partner contacts."))
+                        ContentUnavailableView("No Contacts", systemImage: "person.2", description: Text("Add internal or external contacts."))
                             .padding()
                     }
                 }
@@ -83,8 +83,8 @@ struct ContactRowView: View {
                     Text(contact.name)
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(Color.themeFg)
-                    if let role = contact.internalRole {
-                        Text(role.rawValue)
+                    if let role = contact.role, !role.isEmpty {
+                        Text(role)
                             .font(.system(size: 10))
                             .foregroundStyle(Color.themeAqua)
                             .padding(.horizontal, 6)
@@ -102,6 +102,12 @@ struct ContactRowView: View {
                     Text(email)
                         .font(.system(size: 11))
                         .foregroundStyle(Color.themeBlue)
+                }
+                if let notes = contact.notes, !notes.isEmpty {
+                    Text(notes)
+                        .font(.system(size: 11))
+                        .foregroundStyle(Color.themeFgDim)
+                        .lineLimit(2)
                 }
             }
             Spacer()
