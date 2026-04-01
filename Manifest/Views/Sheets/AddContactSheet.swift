@@ -8,10 +8,11 @@ struct AddContactSheet: View {
     let project: Project
 
     @State private var name: String = ""
+    @State private var role: String = ""
     @State private var title: String = ""
     @State private var email: String = ""
+    @State private var notes: String = ""
     @State private var type: ContactType = .external
-    @State private var internalRole: InternalRole = .ae
 
     var isValid: Bool { !name.trimmingCharacters(in: .whitespaces).isEmpty }
 
@@ -43,18 +44,14 @@ struct AddContactSheet: View {
                         }
                     }
                     .pickerStyle(.radioGroup)
-                    if type == .ibmInternal {
-                        Picker("Role", selection: $internalRole) {
-                            ForEach(InternalRole.allCases, id: \.self) { r in
-                                Text(r.rawValue).tag(r)
-                            }
-                        }
-                    }
                 }
 
                 FormSection(title: "Contact Details") {
                     LabeledField(label: "Name *") {
                         TextField("Required", text: $name)
+                    }
+                    LabeledField(label: "Role") {
+                        TextField("e.g. Account Executive, Designer…", text: $role)
                     }
                     LabeledField(label: "Title / Position") {
                         TextField("Optional", text: $title)
@@ -62,6 +59,19 @@ struct AddContactSheet: View {
                     LabeledField(label: "Email") {
                         TextField("Optional", text: $email)
                     }
+                }
+
+                FormSection(title: "Notes") {
+                    TextEditor(text: $notes)
+                        .font(.system(size: 12))
+                        .foregroundStyle(Color.themeFg)
+                        .frame(minHeight: 72)
+                        .scrollContentBackground(.hidden)
+                        .background(Color.themeBg2)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                    Text("Preferred contact method, office hours, etc.")
+                        .font(.system(size: 11))
+                        .foregroundStyle(Color.themeFgDim)
                 }
             }
             .padding()
@@ -73,10 +83,11 @@ struct AddContactSheet: View {
     private func save() {
         let contact = Contact(
             name: name.trimmingCharacters(in: .whitespaces),
+            role: role.isEmpty ? nil : role,
             title: title.isEmpty ? nil : title,
             email: email.isEmpty ? nil : email,
-            type: type,
-            internalRole: type == .ibmInternal ? internalRole : nil
+            notes: notes.isEmpty ? nil : notes,
+            type: type
         )
         context.insert(contact)
         project.contacts.append(contact)
