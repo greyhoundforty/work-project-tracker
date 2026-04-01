@@ -1,48 +1,48 @@
 [tasks.run]
-description = "Build and launch EngagementTracker without opening Xcode"
+description = "Build and launch Manifest without opening Xcode"
 run = """
 set -e
 
 # Kill any running instance first
-pkill -x EngagementTracker 2>/dev/null || true
+pkill -x Manifest 2>/dev/null || true
 
 # Build
 xcodebuild \
-  -project EngagementTracker.xcodeproj \
-  -scheme EngagementTracker \
+  -project Manifest.xcodeproj \
+  -scheme Manifest \
   -destination 'platform=macOS,arch=arm64' \
   -configuration Debug \
   build 2>&1 | grep -E "error:|BUILD SUCCEEDED|BUILD FAILED"
 
 # Resolve the built products dir and launch
 APP_DIR=$(xcodebuild \
-  -project EngagementTracker.xcodeproj \
-  -scheme EngagementTracker \
+  -project Manifest.xcodeproj \
+  -scheme Manifest \
   -configuration Debug \
   -showBuildSettings 2>/dev/null \
   | awk '/BUILT_PRODUCTS_DIR/ { print $3; exit }')
 
-echo "Launching $APP_DIR/EngagementTracker.app"
-open "$APP_DIR/EngagementTracker.app"
+echo "Launching $APP_DIR/Manifest.app"
+open "$APP_DIR/Manifest.app"
 """
 
 [tasks.build]
-description = "Build EngagementTracker via xcodebuild"
+description = "Build Manifest via xcodebuild"
 run = """
 xcodebuild \
-  -project EngagementTracker.xcodeproj \
-  -scheme EngagementTracker \
+  -project Manifest.xcodeproj \
+  -scheme Manifest \
   -destination 'platform=macOS,arch=arm64' \
   -configuration Debug \
   build
 """
 
 [tasks.clean]
-description = "Clean EngagementTracker build products"
+description = "Clean Manifest build products"
 run = """
 xcodebuild \
-  -project EngagementTracker.xcodeproj \
-  -scheme EngagementTracker \
+  -project Manifest.xcodeproj \
+  -scheme Manifest \
   clean
 """
 
@@ -50,8 +50,8 @@ xcodebuild \
 description = "Clean then build"
 run = """
 xcodebuild \
-  -project EngagementTracker.xcodeproj \
-  -scheme EngagementTracker \
+  -project Manifest.xcodeproj \
+  -scheme Manifest \
   -destination 'platform=macOS,arch=arm64' \
   -configuration Debug \
   clean build
@@ -61,17 +61,17 @@ xcodebuild \
 description = "Run unit tests"
 run = """
 xcodebuild \
-  -project EngagementTracker.xcodeproj \
-  -scheme EngagementTrackerTests \
+  -project Manifest.xcodeproj \
+  -scheme ManifestTests \
   -destination 'platform=macOS,arch=arm64' \
   test
 """
 
 [tasks."db-backup"]
-description = "Backup SwiftData store to ~/Desktop/EngagementTracker-backups/"
+description = "Backup SwiftData store to ~/Desktop/Manifest-backups/"
 run = """
-BACKUP_DIR="$HOME/Desktop/EngagementTracker-backups"
-DB_DIR="$HOME/Library/Containers/com.greyhoundforty.EngagementTracker/Data/Library/Application Support"
+BACKUP_DIR="$HOME/Desktop/Manifest-backups"
+DB_DIR="$HOME/Library/Containers/com.greyhoundforty.Manifest/Data/Library/Application Support"
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 DEST="$BACKUP_DIR/$TIMESTAMP"
 
@@ -84,3 +84,7 @@ else
   echo "No database directory found at $DB_DIR (app may not have been run yet)"
 fi
 """
+
+[tasks.package]
+description = "Build, sign, notarize, and package Manifest as a DMG"
+run = "scripts/build-release.sh"

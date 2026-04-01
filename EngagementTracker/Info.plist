@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleName</key>
-    <string>EngagementTracker</string>
+    <string>Manifest</string>
     <key>CFBundleDisplayName</key>
-    <string>Engagement Tracker</string>
+    <string>Manifest</string>
     <key>CFBundleIdentifier</key>
-    <string>com.greyhoundforty.EngagementTracker</string>
+    <string>com.greyhoundforty.Manifest</string>
     <key>CFBundleVersion</key>
     <string>1</string>
     <key>CFBundleShortVersionString</key>
