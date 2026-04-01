@@ -32,10 +32,26 @@ ARCHIVE="$BUILD_DIR/Manifest.xcarchive"
 EXPORT_DIR="$BUILD_DIR/export"
 EXPORT_OPTS="$ROOT/assets/ExportOptions.plist"
 BG="$ROOT/assets/dmg-background.png"
-VERSION=$(defaults read "$ROOT/EngagementTracker/Info.plist" CFBundleShortVersionString)
+VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$ROOT/EngagementTracker/Info.plist")
 DMG_PATH="$BUILD_DIR/Manifest-${VERSION}.dmg"
 
 mkdir -p "$BUILD_DIR"
+
+# Prerequisite file checks
+if [ ! -f "$EXPORT_OPTS" ]; then
+  echo "Error: ExportOptions.plist not found at $EXPORT_OPTS"
+  exit 1
+fi
+if grep -q "REPLACE_WITH_TEAM_ID" "$EXPORT_OPTS"; then
+  echo "Error: ExportOptions.plist still contains placeholder team ID."
+  echo "  Edit $EXPORT_OPTS and replace REPLACE_WITH_TEAM_ID with your 10-char team ID."
+  exit 1
+fi
+if [ ! -f "$BG" ]; then
+  echo "Error: DMG background not found at $BG"
+  echo "  Run: scripts/generate-icons.sh"
+  exit 1
+fi
 
 # ── 1. Generate icons (ensures appiconset is populated) ──────────────────────
 echo "==> Generating icons..."
@@ -51,7 +67,13 @@ xcodebuild archive \
   CODE_SIGN_IDENTITY="$CODESIGN_IDENTITY" \
   CODE_SIGN_STYLE=Manual \
   DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
-  | grep -E "error:|warning:|BUILD SUCCEEDED|BUILD FAILED" || true
+  2>&1 | tee /tmp/xcodebuild-archive.log
+if [ "${PIPESTATUS[0]}" -ne 0 ]; then
+  echo "Error: xcodebuild archive failed"
+  exit 1
+fi
+grep -E "error:|warning:|BUILD SUCCEEDED|BUILD FAILED" /tmp/xcodebuild-archive.log || true
+rm -f /tmp/xcodebuild-archive.log
 
 # ── 3. Export signed .app ─────────────────────────────────────────────────────
 echo "==> Exporting signed app..."
