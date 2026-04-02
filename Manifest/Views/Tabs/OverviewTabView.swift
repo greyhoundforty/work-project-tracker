@@ -65,19 +65,6 @@ private struct ProjectLinksCard: View {
     var body: some View {
         OverviewCard(title: "Quick Links") {
             VStack(spacing: 6) {
-                // Column headers
-                HStack(spacing: 8) {
-                    Text("Name")
-                        .font(.system(size: 10, weight: .semibold))
-                        .foregroundStyle(Color.themeFgDim)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Text("URL")
-                        .font(.system(size: 10, weight: .semibold))
-                        .foregroundStyle(Color.themeFgDim)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Color.clear.frame(width: 20)
-                }
-
                 ForEach(sortedLinks) { link in
                     ProjectLinkRow(link: link, onSave: { try? context.save() }, onClear: {
                         link.name = ""
@@ -108,6 +95,12 @@ private struct ProjectLinkRow: View {
     let onSave: () -> Void
     let onClear: () -> Void
 
+    @State private var isEditing = false
+
+    private var isFilled: Bool {
+        !link.url.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
     private var resolvedURL: URL? {
         let s = link.url.trimmingCharacters(in: .whitespaces)
         guard !s.isEmpty else { return nil }
@@ -116,33 +109,72 @@ private struct ProjectLinkRow: View {
     }
 
     var body: some View {
-        HStack(spacing: 8) {
-            TextField("Name", text: $link.name)
-                .font(.system(size: 12))
-                .textFieldStyle(.roundedBorder)
-                .frame(maxWidth: .infinity)
-                .onSubmit { onSave() }
-
-            TextField("https://", text: $link.url)
-                .font(.system(size: 12))
-                .textFieldStyle(.roundedBorder)
-                .frame(maxWidth: .infinity)
-                .onSubmit { onSave() }
-
-            // Open button — only active when URL is valid
-            Button {
-                if let url = resolvedURL {
-                    NSWorkspace.shared.open(url)
+        if isFilled && !isEditing {
+            // Display mode: rendered clickable link
+            HStack(spacing: 8) {
+                Button {
+                    if let url = resolvedURL { NSWorkspace.shared.open(url) }
+                } label: {
+                    Text(link.name.isEmpty ? link.url : link.name)
+                        .font(.system(size: 12))
+                        .foregroundStyle(Color.themeAqua)
+                        .underline()
+                        .lineLimit(1)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
-            } label: {
-                Image(systemName: "arrow.up.right.square")
-                    .font(.system(size: 13))
-                    .foregroundStyle(resolvedURL != nil ? Color.themeAqua : Color.themeBg3)
+                .buttonStyle(.plain)
+                .help(link.url)
+
+                Button { isEditing = true } label: {
+                    Image(systemName: "pencil")
+                        .font(.system(size: 11))
+                        .foregroundStyle(Color.themeFgDim)
+                }
+                .buttonStyle(.plain)
+                .help("Edit link")
+
+                Button { onClear(); isEditing = false } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 11))
+                        .foregroundStyle(Color.themeFgDim)
+                }
+                .buttonStyle(.plain)
+                .help("Clear link")
             }
-            .buttonStyle(.plain)
-            .disabled(resolvedURL == nil)
-            .help(resolvedURL != nil ? "Open \(link.name.isEmpty ? "link" : link.name)" : "Enter a URL to open")
+            .frame(height: 22)
+        } else {
+            // Edit mode: text fields
+            HStack(spacing: 8) {
+                TextField("Name", text: $link.name)
+                    .font(.system(size: 12))
+                    .textFieldStyle(.roundedBorder)
+                    .frame(maxWidth: .infinity)
+                    .onSubmit { commitEdit() }
+
+                TextField("https://", text: $link.url)
+                    .font(.system(size: 12))
+                    .textFieldStyle(.roundedBorder)
+                    .frame(maxWidth: .infinity)
+                    .onSubmit { commitEdit() }
+
+                if isFilled {
+                    Button { commitEdit() } label: {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 13))
+                            .foregroundStyle(Color.themeAqua)
+                    }
+                    .buttonStyle(.plain)
+                    .help("Done")
+                } else {
+                    Color.clear.frame(width: 20)
+                }
+            }
         }
+    }
+
+    private func commitEdit() {
+        onSave()
+        if isFilled { isEditing = false }
     }
 }
 
