@@ -11,5 +11,8 @@
     "Build a small proof project",
     "Review progress against goals",
     "Share or publish learnings"
+  ],
+  "customFields": [
+    { "label": "Stage", "key": "stage", "type": "stage-picker", "options": ["Planning", "In Progress", "On Hold", "Done"] }
   ]
 }

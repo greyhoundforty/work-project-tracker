@@ -1,5 +1,5 @@
 {
-  "name": "freelance-client",
+  "name": "Freelance Client",
   "isPOC": false,
   "tags": ["freelance", "client"],
   "stage": "Discovery",
@@ -14,7 +14,24 @@
     "Sign-off received"
   ],
   "customFields": [
-    { "label": "Contract Number", "placeholder": "e.g. CNT-2026-001" },
-    { "label": "Client Contact", "placeholder": "Name or email" }
+    { "label": "Client / Company", "key": "accountName", "type": "text", "placeholder": "Optional" },
+    { "label": "Contract Number", "type": "text", "placeholder": "e.g. CNT-2026-001" },
+    { "label": "Client Contact", "type": "text", "placeholder": "Name or email" },
+    { "label": "Stage", "key": "stage", "type": "stage-picker", "options": ["Discovery", "Proposal", "Initial Delivery", "Refine", "Won", "Lost"] }
+  ],
+  "checkpoints": [
+    { "title": "Initial consultation held", "stage": "Discovery" },
+    { "title": "Scope of work agreed", "stage": "Discovery" },
+    { "title": "NDA signed (if required)", "stage": "Discovery" },
+    { "title": "Proposal drafted", "stage": "Proposal" },
+    { "title": "Proposal sent to client", "stage": "Proposal" },
+    { "title": "Contract signed by both parties", "stage": "Proposal" },
+    { "title": "Kickoff meeting held", "stage": "Initial Delivery" },
+    { "title": "First milestone delivered", "stage": "Initial Delivery" },
+    { "title": "Client feedback received", "stage": "Refine" },
+    { "title": "Revisions completed", "stage": "Refine" },
+    { "title": "Final deliverable accepted", "stage": "Won" },
+    { "title": "Invoice sent", "stage": "Won" },
+    { "title": "Payment received", "stage": "Won" }
   ]
 }
