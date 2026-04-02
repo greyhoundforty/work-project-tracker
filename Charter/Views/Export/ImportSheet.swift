@@ -100,6 +100,10 @@ struct ImportSheet: View {
                         if showDone {
                             Text("✓ Imported \(successCount) project(s) successfully.")
                                 .foregroundStyle(Color.themeGreen)
+                            Button("Done") { dismiss() }
+                                .buttonStyle(.borderedProminent)
+                                .tint(Color.themeAqua)
+                                .frame(maxWidth: .infinity)
                         }
 
                         if !successes.isEmpty && !showDone {
