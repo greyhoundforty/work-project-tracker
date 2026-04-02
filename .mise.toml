@@ -88,32 +88,3 @@ fi
 [tasks.package]
 description = "Build, sign, notarize, and package Manifest as a DMG"
 run = "scripts/build-release.sh"
-
-[tasks.release]
-description = "Bump patch version from latest git tag and run release.sh"
-run = """
-set -euo pipefail
-
-# Get latest tag, strip leading 'v'
-LATEST=$(git tag --sort=-version:refname | grep -E '^v?[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
-
-if [[ -z "$LATEST" ]]; then
-  echo "Error: no semver tags found. Create an initial tag first (e.g. git tag v0.1.0)"
-  exit 1
-fi
-
-CLEAN="${LATEST#v}"
-
-MAJOR=$(echo "$CLEAN" | cut -d. -f1)
-MINOR=$(echo "$CLEAN" | cut -d. -f2)
-PATCH=$(echo "$CLEAN" | cut -d. -f3)
-
-NEW_PATCH=$((PATCH + 1))
-NEW_VERSION="${MAJOR}.${MINOR}.${NEW_PATCH}"
-
-echo "Current tag : $LATEST"
-echo "New version : $NEW_VERSION"
-echo ""
-
-./scripts/release.sh "$NEW_VERSION"
-"""
