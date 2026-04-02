@@ -1,0 +1,363 @@
+{
+  "exportDate" : "2026-04-02T16:29:56Z",
+  "exportVersion" : "1",
+  "projects" : [
+    {
+      "accountName" : "Acme Corporation",
+      "checkpoints" : [
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Initial Delivery",
+          "title" : "Solution \/ BOM draft started"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Refine",
+          "title" : "Customer feedback received"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Discovery",
+          "title" : "Discovery call scheduled"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Proposal",
+          "title" : "Proposal drafted"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Lost",
+          "title" : "Close reason documented"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Won",
+          "title" : "Contract \/ order signed"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 1,
+          "stage" : "Refine",
+          "title" : "BOM \/ solution revised"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 1,
+          "stage" : "Discovery",
+          "title" : "Discovery call completed"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 1,
+          "stage" : "Proposal",
+          "title" : "Internal review complete"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 1,
+          "stage" : "Initial Delivery",
+          "title" : "Initial BOM delivered"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 2,
+          "stage" : "Refine",
+          "title" : "Technical deep-dive completed"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 2,
+          "stage" : "Initial Delivery",
+          "title" : "Architecture overview shared"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 2,
+          "stage" : "Discovery",
+          "title" : "Stakeholders identified"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 2,
+          "stage" : "Proposal",
+          "title" : "Proposal delivered to customer"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 3,
+          "stage" : "Discovery",
+          "title" : "Pain points documented"
+        }
+      ],
+      "contacts" : [
+
+      ],
+      "engagements" : [
+
+      ],
+      "estimatedValueCents" : 38000000,
+      "gtmNavAccountLink" : "https:\/\/gtm.example.com\/acme",
+      "isPOC" : false,
+      "iscOpportunityLink" : "https:\/\/isc.example.com\/opp\/00142",
+      "name" : "Acme Corp Cloud Modernisation",
+      "notes" : [
+
+      ],
+      "oneDriveFolderLink" : "",
+      "opportunityID" : "OPP-2026-00142",
+      "stage" : "Proposal",
+      "tags" : [
+        "#vpc",
+        "#iks",
+        "#transit-gateway"
+      ],
+      "targetCloseDate" : "2026-06-30T00:00:00Z",
+      "tasks" : [
+
+      ]
+    },
+    {
+      "checkpoints" : [
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Refine",
+          "title" : "Customer feedback received"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Initial Delivery",
+          "title" : "Solution \/ BOM draft started"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Lost",
+          "title" : "Close reason documented"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Won",
+          "title" : "Contract \/ order signed"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Proposal",
+          "title" : "Proposal drafted"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Discovery",
+          "title" : "Discovery call scheduled"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 1,
+          "stage" : "Refine",
+          "title" : "BOM \/ solution revised"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 1,
+          "stage" : "Initial Delivery",
+          "title" : "Initial BOM delivered"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 1,
+          "stage" : "Proposal",
+          "title" : "Internal review complete"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 1,
+          "stage" : "Discovery",
+          "title" : "Discovery call completed"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 2,
+          "stage" : "Refine",
+          "title" : "Technical deep-dive completed"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 2,
+          "stage" : "Discovery",
+          "title" : "Stakeholders identified"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 2,
+          "stage" : "Initial Delivery",
+          "title" : "Architecture overview shared"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 2,
+          "stage" : "Proposal",
+          "title" : "Proposal delivered to customer"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 3,
+          "stage" : "Discovery",
+          "title" : "Pain points documented"
+        }
+      ],
+      "contacts" : [
+
+      ],
+      "engagements" : [
+
+      ],
+      "gtmNavAccountLink" : "",
+      "isPOC" : false,
+      "iscOpportunityLink" : "",
+      "name" : "Learn Swift Concurrency",
+      "notes" : [
+
+      ],
+      "oneDriveFolderLink" : "",
+      "stage" : "Discovery",
+      "tags" : [
+        "#personal",
+        "#learning",
+        "#swift"
+      ],
+      "tasks" : [
+
+      ]
+    },
+    {
+      "accountName" : "Redfern Design Studio",
+      "checkpoints" : [
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Refine",
+          "title" : "Customer feedback received"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Discovery",
+          "title" : "Discovery call scheduled"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Won",
+          "title" : "Contract \/ order signed"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Lost",
+          "title" : "Close reason documented"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Initial Delivery",
+          "title" : "Solution \/ BOM draft started"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 0,
+          "stage" : "Proposal",
+          "title" : "Proposal drafted"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 1,
+          "stage" : "Refine",
+          "title" : "BOM \/ solution revised"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 1,
+          "stage" : "Proposal",
+          "title" : "Internal review complete"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 1,
+          "stage" : "Discovery",
+          "title" : "Discovery call completed"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 1,
+          "stage" : "Initial Delivery",
+          "title" : "Initial BOM delivered"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 2,
+          "stage" : "Refine",
+          "title" : "Technical deep-dive completed"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 2,
+          "stage" : "Proposal",
+          "title" : "Proposal delivered to customer"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 2,
+          "stage" : "Initial Delivery",
+          "title" : "Architecture overview shared"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 2,
+          "stage" : "Discovery",
+          "title" : "Stakeholders identified"
+        },
+        {
+          "isCompleted" : false,
+          "sortOrder" : 3,
+          "stage" : "Discovery",
+          "title" : "Pain points documented"
+        }
+      ],
+      "contacts" : [
+
+      ],
+      "engagements" : [
+
+      ],
+      "estimatedValueCents" : 850000,
+      "gtmNavAccountLink" : "",
+      "isPOC" : false,
+      "iscOpportunityLink" : "",
+      "name" : "Redfern Design — Brand Refresh",
+      "notes" : [
+
+      ],
+      "oneDriveFolderLink" : "",
+      "stage" : "Initial Delivery",
+      "tags" : [
+        "#freelance",
+        "#design"
+      ],
+      "targetCloseDate" : "2026-05-15T00:00:00Z",
+      "tasks" : [
+
+      ]
+    }
+  ]
+}
