@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+# mise description="Generate all macOS app icon sizes from a 1024x1024 PNG"
+# Usage: mise run gen-icons /path/to/icon-1024.png
+set -euo pipefail
+
+SOURCE="${1:-}"
+if [[ -z "$SOURCE" ]]; then
+  echo "Usage: mise run gen-icons /path/to/icon-1024.png"
+  exit 1
+fi
+
+if [[ ! -f "$SOURCE" ]]; then
+  echo "Error: file not found: $SOURCE"
+  exit 1
+fi
+
+# Verify source is 1024x1024
+WIDTH=$(sips -g pixelWidth "$SOURCE" | awk '/pixelWidth/ { print $2 }')
+HEIGHT=$(sips -g pixelHeight "$SOURCE" | awk '/pixelHeight/ { print $2 }')
+if [[ "$WIDTH" != "1024" || "$HEIGHT" != "1024" ]]; then
+  echo "Error: source image must be 1024x1024 (got ${WIDTH}x${HEIGHT})"
+  exit 1
+fi
+
+ICONSET="build/AppIcon.iconset"
+mkdir -p "$ICONSET"
+
+echo "→ Generating icon sizes from $SOURCE"
+
+sips -z 16   16   "$SOURCE" --out "$ICONSET/icon_16x16.png"       > /dev/null
+sips -z 32   32   "$SOURCE" --out "$ICONSET/icon_16x16@2x.png"    > /dev/null
+sips -z 32   32   "$SOURCE" --out "$ICONSET/icon_32x32.png"       > /dev/null
+sips -z 64   64   "$SOURCE" --out "$ICONSET/icon_32x32@2x.png"    > /dev/null
+sips -z 128  128  "$SOURCE" --out "$ICONSET/icon_128x128.png"     > /dev/null
+sips -z 256  256  "$SOURCE" --out "$ICONSET/icon_128x128@2x.png"  > /dev/null
+sips -z 256  256  "$SOURCE" --out "$ICONSET/icon_256x256.png"     > /dev/null
+sips -z 512  512  "$SOURCE" --out "$ICONSET/icon_256x256@2x.png"  > /dev/null
+sips -z 512  512  "$SOURCE" --out "$ICONSET/icon_512x512.png"     > /dev/null
+cp "$SOURCE"                    "$ICONSET/icon_512x512@2x.png"
+
+echo "→ Compiling AppIcon.icns"
+iconutil -c icns "$ICONSET" --output build/AppIcon.icns
+
+echo ""
+echo "Done. Files written to build/AppIcon.iconset/"
+echo "      .icns written to   build/AppIcon.icns"
+echo ""
+echo "Next steps:"
+echo "  1. Open Manifest/Assets.xcassets/AppIcon in Xcode"
+echo "  2. Drag each PNG from build/AppIcon.iconset/ into the matching slot"
+echo "  OR drag build/AppIcon.icns directly onto the AppIcon asset"

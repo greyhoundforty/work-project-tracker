@@ -104,3 +104,4 @@ build/
 
 # Old project directory replaced by Manifest.xcodeproj
 EngagementTracker.xcodeproj/
+build/
