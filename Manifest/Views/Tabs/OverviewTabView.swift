@@ -11,7 +11,7 @@ struct OverviewTabView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
 
-                // Top row: Project Info + Quick Links side by side
+                // Top row: Project Info + Quick Links side by side, equal height
                 HStack(alignment: .top, spacing: 12) {
                     OverviewCard(title: "Project Info") {
                         OverviewInfoRow(label: "Account", value: project.accountName ?? "—")
@@ -27,11 +27,14 @@ struct OverviewTabView: View {
                         if !projectTags.isEmpty {
                             OverviewInfoRow(label: "Tags", value: projectTags.map { String($0.dropFirst()) }.joined(separator: ", "))
                         }
+                        Spacer(minLength: 0)
                     }
-                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxHeight: .infinity)
 
                     ProjectLinksCard(project: project)
+                        .frame(maxHeight: .infinity)
                 }
+                .fixedSize(horizontal: false, vertical: true)
 
                 if !project.customFields.isEmpty {
                     CustomFieldsCard(project: project)
@@ -53,7 +56,7 @@ private struct ProjectLinksCard: View {
     @Bindable var project: Project
     @Environment(\.modelContext) private var context
 
-    private let maxLinks = 4
+    private let maxLinks = 3
 
     private var sortedLinks: [ProjectLink] {
         project.links.sorted { $0.sortOrder < $1.sortOrder }
