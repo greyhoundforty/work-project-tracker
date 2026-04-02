@@ -500,20 +500,21 @@
 		574DAF82F64BF713019678EE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Manifest/Manifest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = Manifest/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = manifest;
+				INFOPLIST_KEY_CFBundleDisplayName = Charter;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 0.2.7;
-				PRODUCT_BUNDLE_IDENTIFIER = com.greyhoundforty.Manifest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.greyhoundforty.Charter;
 				PRODUCT_NAME = Manifest;
 				SDKROOT = macosx;
 			};
@@ -663,20 +664,21 @@
 		D3874B44D4FD0EDC6D9E39CE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Manifest/Manifest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = Manifest/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = manifest;
+				INFOPLIST_KEY_CFBundleDisplayName = Charter;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 0.2.7;
-				PRODUCT_BUNDLE_IDENTIFIER = com.greyhoundforty.Manifest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.greyhoundforty.Charter;
 				PRODUCT_NAME = Manifest;
 				SDKROOT = macosx;
 			};

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="32" height="32" viewBox="0 0 32 32">
+
+  <!-- Charter wax-seal mark -->
+  <!-- size=32  bg=#1A2340  ring=#E8A530  C=#E8A530 -->
+
+  <defs>
+    <!-- Squircle clip (macOS icon shape) -->
+    <clipPath id="sq">
+      <rect width="32" height="32" rx="7.04" ry="7.04"/>
+    </clipPath>
+    <!-- Subtle depth gradient (brightens top-left, darkens bottom-right) -->
+    <radialGradient id="depth" cx="35%" cy="30%" r="65%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.10"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect id="bg" width="32" height="32"
+        rx="7.04" fill="#1A2340"/>
+
+  <!-- Seal mark -->
+  <g id="seal" clip-path="url(#sq)">
+
+    <!-- Outer ring -->
+    <circle cx="16.00" cy="16.00" r="13.44"
+            stroke="#E8A530" stroke-width="0.70" fill="none"/>
+
+    <!-- Inner ring (slightly transparent) -->
+    <circle cx="16.00" cy="16.00" r="11.68"
+            stroke="#E8A530" stroke-width="0.42" fill="none" opacity="0.55"/>
+
+    <!-- Radial tick marks (8 × evenly spaced, cardinal + diagonal) -->
+    <line x1="16.00" y1="4.32" x2="16.00" y2="2.56" stroke="#E8A530" stroke-width="0.64" opacity="0.6"/>
+    <line x1="24.26" y1="7.74" x2="25.50" y2="6.50" stroke="#E8A530" stroke-width="0.64" opacity="0.6"/>
+    <line x1="27.68" y1="16.00" x2="29.44" y2="16.00" stroke="#E8A530" stroke-width="0.64" opacity="0.6"/>
+    <line x1="24.26" y1="24.26" x2="25.50" y2="25.50" stroke="#E8A530" stroke-width="0.64" opacity="0.6"/>
+    <line x1="16.00" y1="27.68" x2="16.00" y2="29.44" stroke="#E8A530" stroke-width="0.64" opacity="0.6"/>
+    <line x1="7.74" y1="24.26" x2="6.50" y2="25.50" stroke="#E8A530" stroke-width="0.64" opacity="0.6"/>
+    <line x1="4.32" y1="16.00" x2="2.56" y2="16.00" stroke="#E8A530" stroke-width="0.64" opacity="0.6"/>
+    <line x1="7.74" y1="7.74" x2="6.50" y2="6.50" stroke="#E8A530" stroke-width="0.64" opacity="0.6"/>
+
+    <!-- Pip dots between ticks (8 × on midpoint ring) -->
+    <circle cx="20.81" cy="4.40" r="0.24" fill="#E8A530" opacity="0.35"/>
+    <circle cx="27.60" cy="11.19" r="0.24" fill="#E8A530" opacity="0.35"/>
+    <circle cx="27.60" cy="20.81" r="0.24" fill="#E8A530" opacity="0.35"/>
+    <circle cx="20.81" cy="27.60" r="0.24" fill="#E8A530" opacity="0.35"/>
+    <circle cx="11.19" cy="27.60" r="0.24" fill="#E8A530" opacity="0.35"/>
+    <circle cx="4.40" cy="20.81" r="0.24" fill="#E8A530" opacity="0.35"/>
+    <circle cx="4.40" cy="11.19" r="0.24" fill="#E8A530" opacity="0.35"/>
+    <circle cx="11.19" cy="4.40" r="0.24" fill="#E8A530" opacity="0.35"/>
+
+    <!-- C letterform: bold arc, 82° gap opening on the right -->
+    <path d="M 21.47 11.25 A 7.24 7.24 0 1 0 21.47 20.75"
+          stroke="#E8A530" stroke-width="3.20"
+          stroke-linecap="round" fill="none"/>
+
+  </g>
+
+  <!-- Depth overlay (applies gradient on top of everything) -->
+  <rect width="32" height="32"
+        rx="7.04" fill="url(#depth)"/>
+
+</svg>
