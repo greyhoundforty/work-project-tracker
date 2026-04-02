@@ -14,7 +14,6 @@
 		18815C8DE80C4D6E60D445DF /* MenuBarPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB07E5C58865B14412FB7BB /* MenuBarPopoverView.swift */; };
 		1D25C0F0FB8C945482CA70D9 /* ProjectTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EA4C475CF13BDC9B064BD /* ProjectTemplate.swift */; };
 		1EB249A23CCD3672FFB906E6 /* ProjectCustomField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E83DAB93A1F61577AFEC5AA /* ProjectCustomField.swift */; };
-		A1B2C3D4E5F6A7B8C9D0E1F2 /* ProjectLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7B8C9D0E1F2A3 /* ProjectLink.swift */; };
 		2447C958C18B1D75E72616B6 /* ContactsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD6FE6A679A6B05F37C6E51 /* ContactsTabView.swift */; };
 		269C6C9134F315B7950565B3 /* LogEngagementSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E151B361F6E14D906322F2 /* LogEngagementSheet.swift */; };
 		271B36AEFA0DDD427795C8F5 /* NewProjectSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DF2AEE30E3C7BE50C4D8EB /* NewProjectSheet.swift */; };
@@ -37,6 +36,7 @@
 		8F27FE05A97562EC2827003B /* StagesSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776AB8C9FA6B248C195CF6B3 /* StagesSidebarView.swift */; };
 		8FE951BD175BD895D3B841E6 /* ProjectTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A03C4E2C1AEE259CAF5323 /* ProjectTask.swift */; };
 		9CFB4FF3D3F36589D3F76088 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84895A5B2A35EFCE4C28D0A9 /* Enums.swift */; };
+		A1B2C3D4E5F6A7B8C9D0E1F2 /* ProjectLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7B8C9D0E1F2A3 /* ProjectLink.swift */; };
 		A99A8445551D5A83A6436E6B /* MarkdownTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4C0B26C03C32D6AC179D0F /* MarkdownTheme.swift */; };
 		AD353BD1A4DE85B62C48FD3C /* AddContactSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814EA9547F43526F136A69E /* AddContactSheet.swift */; };
 		B2AE174E23B8B804F6E63785 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B017E6C3DB3F2D5A501A6B8 /* ImportService.swift */; };
@@ -89,7 +89,6 @@
 		776AB8C9FA6B248C195CF6B3 /* StagesSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagesSidebarView.swift; sourceTree = "<group>"; };
 		7814EA9547F43526F136A69E /* AddContactSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactSheet.swift; sourceTree = "<group>"; };
 		7E83DAB93A1F61577AFEC5AA /* ProjectCustomField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCustomField.swift; sourceTree = "<group>"; };
-		B2C3D4E5F6A7B8C9D0E1F2A3 /* ProjectLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLink.swift; sourceTree = "<group>"; };
 		82534F00A1CBC465876FB300 /* Engagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Engagement.swift; sourceTree = "<group>"; };
 		84895A5B2A35EFCE4C28D0A9 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		84F455E8D50EE84EC9478B9A /* Manifest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Manifest.entitlements; sourceTree = "<group>"; };
@@ -102,6 +101,7 @@
 		9C5E31B230ED8B2D15FA5002 /* ExportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportSheet.swift; sourceTree = "<group>"; };
 		AA53F958F3267A092A4811B2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B0B84175BABBFAE08FAC3234 /* ImportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportSheet.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A7B8C9D0E1F2A3 /* ProjectLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLink.swift; sourceTree = "<group>"; };
 		C375B30DA67EAD4CB91E1581 /* CheckpointsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointsTabView.swift; sourceTree = "<group>"; };
 		C48441493E15036124A33115 /* TasksTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksTabView.swift; sourceTree = "<group>"; };
 		CD2AB22C5EDC755E5900E852 /* ProjectDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailView.swift; sourceTree = "<group>"; };
@@ -500,12 +500,14 @@
 		574DAF82F64BF713019678EE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Manifest/Manifest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = Manifest/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = manifest;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -661,12 +663,14 @@
 		D3874B44D4FD0EDC6D9E39CE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Manifest/Manifest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = Manifest/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = manifest;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
