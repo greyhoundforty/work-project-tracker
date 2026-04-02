@@ -35,7 +35,7 @@ struct ExportSheet: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 Text("Export Projects")
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.title3.bold())
                     .foregroundStyle(Color.themeFg)
                 Spacer()
                 Button("Cancel") { dismiss() }

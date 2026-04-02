@@ -54,7 +54,8 @@ targets:
         CODE_SIGN_STYLE: Automatic
         PRODUCT_BUNDLE_IDENTIFIER: com.greyhoundforty.Charter
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
-        MARKETING_VERSION: "0.2.2"
+        ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: NO
+        MARKETING_VERSION: "0.2.8"
         CURRENT_PROJECT_VERSION: "1"
     entitlements:
       path: Charter/Charter.entitlements
