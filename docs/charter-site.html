@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Charter — The Bridge from Idea to Launch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Tokens ──────────────────────────────────────────────────────────── */
+    :root {
+      --navy:      #1A2340;
+      --navy-mid:  #253156;
+      --navy-deep: #0E1520;
+      --amber:     #E8A530;
+      --amber-l:   #F5C468;
+      --amber-dim: rgba(232,165,48,0.15);
+      --chalk:     #F4F1EB;
+      --chalk-d:   #E8E4DA;
+      --slate:     #6B7280;
+      --white:     #FFFFFF;
+      --parchment: #FDF8EF;
+
+      --font-display: 'Cormorant Garamond', Garamond, Georgia, serif;
+      --font-body:    'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+
+      --radius-card: 16px;
+      --shadow-card: 0 2px 24px rgba(14,21,32,0.12);
+    }
+
+    /* ─── Reset ──────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--chalk);
+      color: var(--navy);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── Utilities ──────────────────────────────────────────────────────── */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+    .label {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-family: var(--font-body);
+      font-weight: 500;
+    }
+
+    /* ─── Nav ────────────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(14,21,32,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+    .nav-wordmark {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .nav-wordmark .name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1;
+    }
+    .nav-wordmark .tag {
+      font-size: 7.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+    }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--amber);
+      color: var(--navy-deep);
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 8px 18px;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--amber-l); transform: translateY(-1px); }
+    .nav-cta svg { width: 14px; height: 14px; }
+
+    /* ─── Hero ───────────────────────────────────────────────────────────── */
+    .hero {
+      background: var(--navy-deep);
+      padding: 160px 0 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Subtle radial glow behind seal */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -55%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(232,165,48,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-seal {
+      display: inline-block;
+      margin-bottom: 32px;
+      animation: sealFadeIn 1s ease both;
+    }
+    @keyframes sealFadeIn {
+      from { opacity: 0; transform: scale(0.92) rotate(-4deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(48px, 6vw, 80px);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 10px;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .hero-tagline {
+      font-size: 11px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      margin-bottom: 36px;
+      animation: fadeUp 0.8s 0.35s ease both;
+    }
+    .hero-desc {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      max-width: 560px;
+      margin: 0 auto 48px;
+      line-height: 1.65;
+      animation: fadeUp 0.8s 0.45s ease both;
+    }
+    .hero-desc strong { color: rgba(255,255,255,0.88); font-weight: 500; }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.55s ease both;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--amber);
+      color: var(--navy-deep);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 13px 28px;
+      border-radius: 10px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(232,165,48,0.3);
+    }
+    .btn-primary:hover {
+      background: var(--amber-l);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(232,165,48,0.4);
+    }
+    .btn-primary svg { width: 16px; height: 16px; }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: rgba(255,255,255,0.55);
+      font-size: 13px;
+      font-weight: 400;
+      padding: 13px 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.28); }
+
+    .hero-meta {
+      margin-top: 56px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.06em;
+      animation: fadeUp 0.8s 0.65s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── Pipeline strip ─────────────────────────────────────────────────── */
+    .pipeline {
+      background: var(--navy);
+      padding: 64px 0;
+    }
+    .pipeline-label {
+      text-align: center;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 36px;
+    }
+    .pipeline-stages {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      row-gap: 16px;
+    }
+    .stage {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .stage-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 14px 22px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      min-width: 130px;
+      transition: border-color 0.2s, background 0.2s;
+      cursor: default;
+    }
+    .stage-pill:hover {
+      border-color: var(--amber);
+      background: rgba(232,165,48,0.06);
+    }
+    .stage-num {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--amber);
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    .stage-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.03em;
+    }
+    .stage-arrow {
+      width: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .stage-arrow svg { color: rgba(255,255,255,0.2); width: 16px; height: 16px; }
+
+    /* Won/Lost final stage */
+    .stage-pill.terminal {
+      border-color: rgba(232,165,48,0.3);
+      background: rgba(232,165,48,0.07);
+    }
+    .stage-pill.terminal .stage-name { color: var(--amber-l); }
+
+    /* ─── Features ───────────────────────────────────────────────────────── */
+    .features {
+      background: var(--parchment);
+      padding: 100px 0;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .section-header .label { color: var(--amber); margin-bottom: 10px; }
+    .section-header h2 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4vw, 50px);
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+    }
+    .section-header p {
+      margin-top: 14px;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--slate);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      padding: 32px 28px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(26,35,64,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 36px rgba(14,21,32,0.14);
+    }
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--amber-dim);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .feature-icon svg {
+      width: 22px;
+      height: 22px;
+      color: var(--amber);
+    }
+    .feature-card h3 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--slate);
+      line-height: 1.65;
+    }
+
+    /* ─── Quick capture callout ──────────────────────────────────────────── */
+    .capture {
+      background: var(--navy);
+      padding: 100px 0;
+    }
+    .capture-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    @media (max-width: 680px) {
+      .capture-inner { grid-template-columns: 1fr; }
+    }
+    .capture-text .label { color: var(--amber); margin-bottom: 14px; }
+    .capture-text h2 {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 3.5vw, 46px);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.03em;
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+    .capture-text p {
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.58);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    /* Simulated menu bar widget */
+    .menubar-widget {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 14px;
+      padding: 20px;
+      font-size: 13px;
+    }
+    .menubar-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .menubar-title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.04em;
+    }
+    .menubar-badge {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: rgba(232,165,48,0.12);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .menubar-project {
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .project-name { color: var(--white); font-weight: 500; font-size: 13px; }
+    .project-stage {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+    .menubar-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .menubar-btn {
+      flex: 1;
+      padding: 8px;
+      border-radius: 7px;
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.7);
+      font-size: 11px;
+      text-align: center;
+      letter-spacing: 0.04em;
+      border: 1px solid rgba(255,255,255,0.08);
+      cursor: default;
+    }
+    .menubar-btn.primary-btn {
+      background: var(--amber);
+      color: var(--navy-deep);
+      border-color: transparent;
+      font-weight: 500;
+    }
+
+    /* ─── Templates section ──────────────────────────────────────────────── */
+    .templates {
+      background: var(--chalk-d);
+      padding: 100px 0;
+    }
+    .template-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .template-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      border: 1px solid rgba(26,35,64,0.07);
+      box-shadow: 0 1px 12px rgba(26,35,64,0.06);
+    }
+    .template-card h4 {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .template-tag {
+      display: inline-block;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: var(--amber-dim);
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    .template-tasks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .template-tasks li {
+      font-size: 12px;
+      color: var(--slate);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .template-tasks li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--amber);
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    /* ─── CTA / footer ───────────────────────────────────────────────────── */
+    .cta-section {
+      background: var(--navy-deep);
+      padding: 100px 0;
+      text-align: center;
+    }
+    .cta-seal { margin: 0 auto 28px; display: block; }
+    .cta-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .cta-section p {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 40px;
+    }
+    .cta-req {
+      margin-top: 24px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.08em;
+    }
+
+    footer {
+      background: var(--navy-deep);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 28px 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-brand {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-links a {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.55); }
+
+    /* ─── Responsive ─────────────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .pipeline-stages { flex-direction: column; align-items: stretch; }
+      .stage-arrow { transform: rotate(90deg); }
+      .stage-pill { min-width: unset; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ─────────────────────────────────────────────────────────────────── -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">
+        <svg id="nav-seal" width="32" height="32" viewBox="0 0 32 32"></svg>
+        <div class="nav-wordmark">
+          <span class="name">Charter</span>
+          <span class="tag">the bridge from idea to launch</span>
+        </div>
+      </a>
+      <a href="https://github.com/greyhoundforty/work-project-tracker/releases" class="nav-cta" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Download for Mac
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-seal">
+      <svg id="hero-seal" width="140" height="140" viewBox="0 0 140 140"></svg>
+    </div>
+    <h1>Charter</h1>
+    <p class="hero-tagline">the bridge from idea to launch</p>
+    <p class="hero-desc">
+      A native macOS app for tracking client projects through their <strong>full lifecycle</strong> — from first discovery call to signed proposal. Local-first, menu bar ready, built for the way you actually work.
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/greyhoundforty/work-project-tracker/releases" class="btn-primary" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Download .dmg — free
+      </a>
+      <a href="https://github.com/greyhoundforty/work-project-tracker" class="btn-ghost" target="_blank" rel="noopener">
+        View on GitHub →
+      </a>
+    </div>
+    <p class="hero-meta">macOS 14.0+ · SwiftData · iCloud sync optional</p>
+  </div>
+</section>
+
+<!-- ── Pipeline ─────────────────────────────────────────────────────────────── -->
+<section class="pipeline">
+  <div class="container">
+    <p class="label pipeline-label">Project lifecycle</p>
+    <div class="pipeline-stages">
+      <div class="stage">
+        <div class="stage-pill">
+          <span class="stage-num">01</span>
+          <span class="stage-name">Discovery</span>
+        </div>
+      </div>
+      <div class="stage-arrow">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </div>
+      <div class="stage">
+        <div class="stage-pill">
+          <span class="stage-num">02</span>
+          <span class="stage-name">Initial Delivery</span>
+        </div>
+      </div>
+      <div class="stage-arrow">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </div>
+      <div class="stage">
+        <div class="stage-pill">
+          <span class="stage-num">03</span>
+          <span class="stage-name">Refine</span>
+        </div>
+      </div>
+      <div class="stage-arrow">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </div>
+      <div class="stage">
+        <div class="stage-pill">
+          <span class="stage-num">04</span>
+          <span class="stage-name">Proposal</span>
+        </div>
+      </div>
+      <div class="stage-arrow">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </div>
+      <div class="stage">
+        <div class="stage-pill terminal">
+          <span class="stage-num">05</span>
+          <span class="stage-name">Won / Lost</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ─────────────────────────────────────────────────────────────── -->
+<section class="features">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">What it does</p>
+      <h2>Everything the project needs.<br>Nothing it doesn't.</h2>
+      <p>Charter keeps every engagement, contact, and decision attached to the project — not scattered across tabs.</p>
+    </div>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><path d="M9 12h6M9 16h4"/></svg>
+        </div>
+        <h3>Lifecycle Tracking</h3>
+        <p>Projects move through a fixed pipeline with stage-specific checkpoints. Always know exactly where each engagement stands and what's needed to advance it.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>Contact Management</h3>
+        <p>Track internal team members and external stakeholders. Every contact includes role, title, email, preferred contact method, and notes — linked directly to engagement logs.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <h3>Engagement Logs</h3>
+        <p>Timestamped notes on every call, meeting, and email. Attach the contacts who were in the room. The full history stays with the project, always.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <h3>Tasks</h3>
+        <p>Lightweight per-project task lists. Create them manually or let a template pre-populate them the moment a project is created. No ceremony required.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h3>Markdown Notes</h3>
+        <p>Free-form notes per project, rendered with syntax highlighting. Keep open questions, decisions, and context in one place — attached to the project, not to a doc somewhere else.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="7.5 4.21 12 6.81 16.5 4.21"/><polyline points="7.5 19.79 7.5 14.6 3 12"/><polyline points="21 12 16.5 14.6 16.5 19.79"/></svg>
+        </div>
+        <h3>Export & Import</h3>
+        <p>Export projects to JSON or CSV for backup or sharing. Import JSON bundles or CSV files to restore or migrate data. Your data stays yours.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Quick Capture ─────────────────────────────────────────────────────────── -->
+<section class="capture">
+  <div class="container">
+    <div class="capture-inner">
+      <div class="capture-text">
+        <p class="label">Menu bar</p>
+        <h2>Log it before you forget it.</h2>
+        <p>Click the menu bar icon to instantly log an engagement, drop a task, or add a note — without opening the main window.</p>
+        <p>Charter defaults to your most recently active project. One tap to switch.</p>
+      </div>
+      <div class="menubar-widget">
+        <div class="menubar-top">
+          <span class="menubar-title">Charter</span>
+          <span class="menubar-badge">Quick Capture</span>
+        </div>
+        <div class="menubar-project">
+          <span class="project-name">Acme Corp Migration</span>
+          <span class="project-stage">Refine</span>
+        </div>
+        <div style="font-size:10px; color:rgba(255,255,255,0.3); margin-bottom:10px; letter-spacing:0.06em;">
+          Active project · <span style="color:rgba(232,165,48,0.7);">change</span>
+        </div>
+        <div class="menubar-actions">
+          <div class="menubar-btn">+ Task</div>
+          <div class="menubar-btn">+ Note</div>
+          <div class="menubar-btn primary-btn">Log Engagement</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Templates ─────────────────────────────────────────────────────────────── -->
+<section class="templates">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Project templates</p>
+      <h2>Start every project right.</h2>
+      <p>Define JSON templates that pre-fill stage, tags, and task lists. Drop three files in a folder and point Charter at it.</p>
+    </div>
+    <div class="template-cards">
+      <div class="template-card">
+        <div class="template-tag">Discovery</div>
+        <h4>New Client Engagement</h4>
+        <ul class="template-tasks">
+          <li>Schedule discovery call</li>
+          <li>Send intro questionnaire</li>
+          <li>Map key stakeholders</li>
+          <li>Document requirements</li>
+          <li>Define success criteria</li>
+        </ul>
+      </div>
+      <div class="template-card">
+        <div class="template-tag">Proposal</div>
+        <h4>Proposal Delivery</h4>
+        <ul class="template-tasks">
+          <li>Draft scope of work</li>
+          <li>Define deliverables</li>
+          <li>Set pricing & timeline</li>
+          <li>Internal review</li>
+          <li>Send to client</li>
+          <li>Follow-up scheduled</li>
+        </ul>
+      </div>
+      <div class="template-card">
+        <div class="template-tag">Custom</div>
+        <h4>Your Template</h4>
+        <ul class="template-tasks">
+          <li>Any stage, any tasks</li>
+          <li>Custom fields (URL, budget…)</li>
+          <li>Tags pre-applied</li>
+          <li>POC flag configurable</li>
+          <li>Point Settings at any folder</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ──────────────────────────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="container">
+    <svg class="cta-seal" id="cta-seal" width="100" height="100" viewBox="0 0 100 100"></svg>
+    <h2>Charter</h2>
+    <p>Local-first. Menu bar ready. Yours.</p>
+    <a href="https://github.com/greyhoundforty/work-project-tracker/releases" class="btn-primary" target="_blank" rel="noopener" style="display:inline-flex;">
+      <svg viewBox="0 0 16 16" fill="currentColor" style="width:16px;height:16px;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Download for Mac — free
+    </a>
+    <p class="cta-req">Requires macOS 14.0 or later</p>
+  </div>
+</section>
+
+<!-- ── Footer ───────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-brand">Charter</span>
+      <div class="footer-links">
+        <a href="https://github.com/greyhoundforty/work-project-tracker" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/greyhoundforty/work-project-tracker/releases" target="_blank" rel="noopener">Releases</a>
+        <a href="https://github.com/greyhoundforty/work-project-tracker/blob/main/README.md" target="_blank" rel="noopener">Docs</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ── SVG Seal renderer ─────────────────────────────────────────────────────── -->
+<script>
+  /**
+   * Draws the Charter wax-seal mark into any <svg> element.
+   * All geometry is derived from the element's viewBox size.
+   *
+   * @param {SVGElement} svgEl   - Target SVG element (must have a square viewBox)
+   * @param {object}     opts
+   *   bg      {string}  - Background fill (#1A2340)
+   *   fgRing  {string}  - Ring + tick color (#E8A530)
+   *   fgC     {string}  - C letterform color (#E8A530)
+   *   radius  {number}  - Corner radius fraction for squircle (0–0.5, default 0.22)
+   */
+  function drawSeal(svgEl, { bg = '#1A2340', fgRing = '#E8A530', fgC = '#E8A530', radius = 0.22 } = {}) {
+    const vb   = svgEl.getAttribute('viewBox').split(' ').map(Number);
+    const size = vb[2];
+    const cx   = size / 2, cy = size / 2;
+    const r    = size * radius;
+    const pad  = size * 0.08;
+    const Ro   = size / 2 - pad;
+    const Ri   = Ro - size * 0.055;
+    const Rm   = (Ro + Ri) / 2;
+
+    const swOuter = size * 0.022;
+    const swInner = size * 0.013;
+    const swTick  = size * 0.020;
+    const swC     = size * 0.100;
+
+    const ns = 'http://www.w3.org/2000/svg';
+    const uid = Math.random().toString(36).slice(2, 7);
+
+    const mk = (tag, attrs) => {
+      const el = document.createElementNS(ns, tag);
+      Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+      return el;
+    };
+
+    svgEl.innerHTML = '';
+
+    // Defs: clip + gradient
+    const defs = mk('defs', {});
+    const clip = mk('clipPath', { id: `c${uid}` });
+    clip.appendChild(mk('rect', { width: size, height: size, rx: r, ry: r }));
+    const rg = mk('radialGradient', { id: `g${uid}`, cx: '35%', cy: '30%', r: '65%' });
+    const s1 = mk('stop', { offset: '0%',   'stop-color': '#ffffff', 'stop-opacity': '0.07' });
+    const s2 = mk('stop', { offset: '100%', 'stop-color': '#000000', 'stop-opacity': '0.10' });
+    rg.append(s1, s2);
+    defs.append(clip, rg);
+    svgEl.appendChild(defs);
+
+    // Background
+    svgEl.appendChild(mk('rect', { width: size, height: size, rx: r, fill: bg }));
+
+    // Content group (clipped)
+    const g = mk('g', { 'clip-path': `url(#c${uid})` });
+
+    // Outer ring
+    g.appendChild(mk('circle', { cx, cy, r: Ro, stroke: fgRing, 'stroke-width': swOuter, fill: 'none' }));
+
+    // Inner ring
+    g.appendChild(mk('circle', { cx, cy, r: Ri, stroke: fgRing, 'stroke-width': swInner, fill: 'none', opacity: 0.55 }));
+
+    // 8 radial ticks
+    for (let i = 0; i < 8; i++) {
+      const a  = (i * 45 - 90) * Math.PI / 180;
+      const x1 = cx + Ri * Math.cos(a), y1 = cy + Ri * Math.sin(a);
+      const x2 = cx + Ro * Math.cos(a), y2 = cy + Ro * Math.sin(a);
+      g.appendChild(mk('line', { x1, y1, x2, y2, stroke: fgRing, 'stroke-width': swTick, opacity: 0.6 }));
+    }
+
+    // 8 pip dots between ticks
+    for (let i = 0; i < 8; i++) {
+      const a = ((i + 0.5) * 45 - 90) * Math.PI / 180;
+      const x = cx + Rm * Math.cos(a), y = cy + Rm * Math.sin(a);
+      g.appendChild(mk('circle', { cx: x, cy: y, r: swTick * 0.38, fill: fgRing, opacity: 0.35 }));
+    }
+
+    // The C
+    const Rc  = Ri * 0.62;
+    const gap = 82;
+    const sA  = (gap / 2) * Math.PI / 180;
+    const sx  = cx + Rc * Math.cos(sA),  sy_ = cy - Rc * Math.sin(sA);
+    const ex  = cx + Rc * Math.cos(-sA), ey  = cy + Rc * Math.sin(sA);
+    const arc = `M ${sx} ${sy_} A ${Rc} ${Rc} 0 1 0 ${ex} ${ey}`;
+    g.appendChild(mk('path', { d: arc, stroke: fgC, 'stroke-width': swC, 'stroke-linecap': 'round', fill: 'none' }));
+
+    svgEl.appendChild(g);
+
+    // Depth overlay
+    svgEl.appendChild(mk('rect', { width: size, height: size, rx: r, fill: `url(#g${uid})` }));
+  }
+
+  // Render all seals on load
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[id$="-seal"]').forEach(el => drawSeal(el));
+  });
+</script>
+
+</body>
+</html>
