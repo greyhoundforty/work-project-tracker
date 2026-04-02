@@ -5,14 +5,20 @@ struct StagesSidebarView: View {
     @Environment(AppState.self) private var appState
     @Query private var projects: [Project]
 
-    private var allLabels: [String] {
-        let active = projects.filter(\.isActive)
-        return Set(active.compactMap(\.accountName).filter { !$0.isEmpty }).sorted()
-    }
-
     private var allTags: [String] {
         let active = projects.filter(\.isActive)
         return Set(active.flatMap(\.tags).filter { $0.hasPrefix("#") }).sorted()
+    }
+
+    /// Active projects that have at least one open task, sorted by open task count descending.
+    private var projectsWithOpenTasks: [(project: Project, count: Int)] {
+        projects
+            .filter(\.isActive)
+            .compactMap { p -> (Project, Int)? in
+                let open = p.tasks.filter { !$0.isCompleted }.count
+                return open > 0 ? (p, open) : nil
+            }
+            .sorted { $0.1 > $1.1 }
     }
 
     var body: some View {
@@ -47,49 +53,6 @@ struct StagesSidebarView: View {
                 }
             }
 
-            Section("Closed") {
-                SidebarRow(
-                    label: ProjectStage.won.rawValue,
-                    icon: "checkmark.seal.fill",
-                    badge: count(for: .won),
-                    isSelected: appState.selectedStage == .won && appState.selectedTag == nil && appState.selectedLabel == nil,
-                    color: .themeGreen
-                ) {
-                    appState.selectedStage = .won
-                    appState.selectedTag = nil
-                    appState.selectedLabel = nil
-                }
-                SidebarRow(
-                    label: ProjectStage.lost.rawValue,
-                    icon: "xmark.seal.fill",
-                    badge: count(for: .lost),
-                    isSelected: appState.selectedStage == .lost && appState.selectedTag == nil && appState.selectedLabel == nil,
-                    color: .themeRed
-                ) {
-                    appState.selectedStage = .lost
-                    appState.selectedTag = nil
-                    appState.selectedLabel = nil
-                }
-            }
-
-            if !allLabels.isEmpty {
-                Section("Labels") {
-                    ForEach(allLabels, id: \.self) { label in
-                        SidebarRow(
-                            label: label.replacingOccurrences(of: " ", with: "-"),
-                            icon: "at",
-                            badge: labelCount(label),
-                            isSelected: appState.selectedLabel == label,
-                            color: .themeBlue
-                        ) {
-                            appState.selectedLabel = label
-                            appState.selectedTag = nil
-                            appState.selectedStage = nil
-                        }
-                    }
-                }
-            }
-
             if !allTags.isEmpty {
                 Section("Tags") {
                     ForEach(allTags, id: \.self) { tag in
@@ -107,6 +70,27 @@ struct StagesSidebarView: View {
                     }
                 }
             }
+
+            if !projectsWithOpenTasks.isEmpty {
+                Section("Tasks") {
+                    ForEach(projectsWithOpenTasks, id: \.project.id) { item in
+                        SidebarRow(
+                            label: item.project.name,
+                            icon: "checklist",
+                            badge: item.count,
+                            isSelected: appState.selectedProject?.id == item.project.id
+                                && appState.selectedStage == nil
+                                && appState.selectedTag == nil,
+                            color: .themeAqua
+                        ) {
+                            appState.selectedProject = item.project
+                            appState.selectedStage = nil
+                            appState.selectedTag = nil
+                            appState.selectedLabel = nil
+                        }
+                    }
+                }
+            }
         }
         .listStyle(.sidebar)
         .navigationTitle("Engagement Tracker")
@@ -115,10 +99,6 @@ struct StagesSidebarView: View {
 
     private func count(for stage: ProjectStage) -> Int {
         projects.filter { $0.stage == stage && $0.isActive }.count
-    }
-
-    private func labelCount(_ accountName: String) -> Int {
-        projects.filter { $0.isActive && $0.accountName == accountName }.count
     }
 
     private func tagCount(_ tag: String) -> Int {
