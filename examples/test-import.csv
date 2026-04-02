@@ -1,0 +1,4 @@
+name,accountName,opportunityID,stage,isPOC,estimatedValueCents,targetCloseDate,tags,iscOpportunityLink,gtmNavAccountLink,oneDriveFolderLink
+Acme Corp Cloud Modernisation,Acme Corporation,OPP-2026-00142,Proposal,false,38000000,2026-06-30T00:00:00Z,#vpc;#iks;#transit-gateway,https://isc.example.com/opp/00142,https://gtm.example.com/acme,
+Learn Swift Concurrency,,,Discovery,false,,,#personal;#learning;#swift,,,
+Redfern Design — Brand Refresh,Redfern Design Studio,,Initial Delivery,false,850000,2026-05-15T00:00:00Z,#freelance;#design,,,
