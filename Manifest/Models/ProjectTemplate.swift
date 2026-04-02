@@ -4,6 +4,32 @@ import Foundation
 struct TemplateCustomField: Codable, Hashable {
     let label: String
     let placeholder: String?
+    let type: FieldType
+    let options: [String]?
+    /// Maps this field to a known `Project` property on save.
+    /// Fields without a key are stored as `ProjectCustomField` entries.
+    let key: String?
+
+    enum FieldType: String, Codable {
+        case text
+        case url
+        case toggle
+        case stagePicker = "stage-picker"
+        case date
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case label, placeholder, type, options, key
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        label       = try c.decode(String.self, forKey: .label)
+        placeholder = try c.decodeIfPresent(String.self, forKey: .placeholder)
+        type        = try c.decodeIfPresent(FieldType.self, forKey: .type) ?? .text
+        options     = try c.decodeIfPresent([String].self, forKey: .options)
+        key         = try c.decodeIfPresent(String.self, forKey: .key)
+    }
 }
 
 struct ProjectTemplate: Codable, Identifiable, Hashable {

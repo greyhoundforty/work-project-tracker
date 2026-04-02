@@ -14,7 +14,6 @@
 		18815C8DE80C4D6E60D445DF /* MenuBarPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB07E5C58865B14412FB7BB /* MenuBarPopoverView.swift */; };
 		1D25C0F0FB8C945482CA70D9 /* ProjectTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EA4C475CF13BDC9B064BD /* ProjectTemplate.swift */; };
 		1EB249A23CCD3672FFB906E6 /* ProjectCustomField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E83DAB93A1F61577AFEC5AA /* ProjectCustomField.swift */; };
-		23E24F6C2C4A9F466D77566E /* TemplatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC551A693605A9C973EAD3 /* TemplatePickerView.swift */; };
 		2447C958C18B1D75E72616B6 /* ContactsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD6FE6A679A6B05F37C6E51 /* ContactsTabView.swift */; };
 		269C6C9134F315B7950565B3 /* LogEngagementSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E151B361F6E14D906322F2 /* LogEngagementSheet.swift */; };
 		271B36AEFA0DDD427795C8F5 /* NewProjectSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DF2AEE30E3C7BE50C4D8EB /* NewProjectSheet.swift */; };
@@ -75,7 +74,6 @@
 		125CC862DE70B9254A676D1D /* SearchFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterTests.swift; sourceTree = "<group>"; };
 		15BF56409884AAEE02B93CCC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		16F5C778B65DEDB531EDB7DE /* NotesTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTabView.swift; sourceTree = "<group>"; };
-		23AC551A693605A9C973EAD3 /* TemplatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatePickerView.swift; sourceTree = "<group>"; };
 		2B5ECE25B8B62321A1031749 /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
 		365C65F49BF4FAE1827875AB /* ProjectStageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectStageTests.swift; sourceTree = "<group>"; };
 		3A08605AA8AA545E18628583 /* ExportModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportModels.swift; sourceTree = "<group>"; };
@@ -309,7 +307,6 @@
 				7814EA9547F43526F136A69E /* AddContactSheet.swift */,
 				E4E151B361F6E14D906322F2 /* LogEngagementSheet.swift */,
 				08DF2AEE30E3C7BE50C4D8EB /* NewProjectSheet.swift */,
-				23AC551A693605A9C973EAD3 /* TemplatePickerView.swift */,
 			);
 			path = Sheets;
 			sourceTree = "<group>";
@@ -448,7 +445,6 @@
 				F6A6045ED4E2FC9938D8D68E /* SettingsView.swift in Sources */,
 				8F27FE05A97562EC2827003B /* StagesSidebarView.swift in Sources */,
 				59AE63601E88DC9D6A4BDF09 /* TasksTabView.swift in Sources */,
-				23E24F6C2C4A9F466D77566E /* TemplatePickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

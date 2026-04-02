@@ -5,6 +5,7 @@ import SwiftData
 final class Project {
     var id: UUID
     var name: String
+    var summary: String?
     var accountName: String?
     var opportunityID: String?
     var stage: ProjectStage
