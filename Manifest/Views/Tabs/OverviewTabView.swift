@@ -74,7 +74,7 @@ private struct ProjectLinksCard: View {
                 }
             }
         }
-        .onAppear { ensureLinks() }
+        .task { ensureLinks() }
     }
 
     private func ensureLinks() {

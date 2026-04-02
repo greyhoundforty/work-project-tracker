@@ -164,10 +164,22 @@ struct NewProjectSheet: View {
         project.summary = summary.isEmpty ? nil : summary
         context.insert(project)
 
-        let checkpoints = CheckpointSeeder.makeAllCheckpoints()
-        checkpoints.forEach { cp in
-            project.checkpoints.append(cp)
-            context.insert(cp)
+        if let template = selectedTemplate, !template.checkpoints.isEmpty {
+            // Use template-defined checkpoints, tracking sort order per stage
+            var sortOrders: [ProjectStage: Int] = [:]
+            template.checkpoints.forEach { cp in
+                let stage = cp.projectStage
+                let order = sortOrders[stage, default: 0]
+                let checkpoint = Checkpoint(title: cp.title, stage: stage, sortOrder: order)
+                sortOrders[stage] = order + 1
+                project.checkpoints.append(checkpoint)
+                context.insert(checkpoint)
+            }
+        } else {
+            CheckpointSeeder.makeAllCheckpoints().forEach { cp in
+                project.checkpoints.append(cp)
+                context.insert(cp)
+            }
         }
 
         if let template = selectedTemplate {
