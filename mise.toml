@@ -1,15 +1,18 @@
 [tools]
 fnox = "latest"
 
-[env]
-_.python.venv = { path = ".venv", create = true }
-PROJECT_NAME = "{{ config_root | basename }}"
+[tasks."icon:vet"]
+description = "Validate app icon sizes and DPI using sips"
+run = "bash scripts/vet-icons.sh"
 
-[tasks.rename]
-description = "Rename project from Charter → Charter (live)"
-run = "bash scripts/rename-to-charter.sh"
- 
-[tasks."rename:dry"]
-description = "Preview Charter → Charter rename without changing anything"
-run = "bash scripts/rename-to-charter.sh --dry-run"
- 
+[tasks."icon:fix"]
+description = "Validate icons and auto-fix DPI issues"
+run = "bash scripts/vet-icons.sh --fix"
+
+[tasks."icon:populate"]
+description = "Copy iconset PNGs into xcassets and write Contents.json"
+run = "python scripts/populate-xcassets.py"
+
+[tasks."icon:populate-dry"]
+description = "Preview populate without writing files"
+run = "python scripts/populate-xcassets.py --dry-run"

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# mise description="Generate all macOS app icon sizes from a 1024x1024 PNG"
+#MISE description="Generate all macOS app icon sizes from a 1024x1024 PNG"
 # Usage: mise run gen-icons /path/to/icon-1024.png
 set -euo pipefail
 
