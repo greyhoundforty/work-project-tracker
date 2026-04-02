@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# mise description="Bump patch version from latest git tag and run release.sh"
+#MISE description="Bump patch version from latest git tag and run release.sh"
 set -euo pipefail
 
 # Get latest semver tag, strip leading 'v'
