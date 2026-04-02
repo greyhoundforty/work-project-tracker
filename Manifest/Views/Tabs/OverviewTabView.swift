@@ -11,22 +11,26 @@ struct OverviewTabView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
 
-                // Combined Project Info + Links card
-                OverviewCard(title: "Project Info") {
-                    OverviewInfoRow(label: "Account", value: project.accountName ?? "—")
-                    OverviewInfoRow(label: "Stage") {
-                        Text("● \(project.stage.rawValue)")
-                            .font(.system(size: 12, weight: .semibold))
-                            .foregroundStyle(Color.themeStageColor(for: project.stage))
+                // Top row: Project Info + Quick Links side by side
+                HStack(alignment: .top, spacing: 12) {
+                    OverviewCard(title: "Project Info") {
+                        OverviewInfoRow(label: "Account", value: project.accountName ?? "—")
+                        OverviewInfoRow(label: "Stage") {
+                            Text("● \(project.stage.rawValue)")
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundStyle(Color.themeStageColor(for: project.stage))
+                        }
+                        if let oppID = project.opportunityID, !oppID.isEmpty {
+                            OverviewInfoRow(label: "Opp ID", value: oppID)
+                        }
+                        let projectTags = project.tags.filter { $0.hasPrefix("#") }
+                        if !projectTags.isEmpty {
+                            OverviewInfoRow(label: "Tags", value: projectTags.map { String($0.dropFirst()) }.joined(separator: ", "))
+                        }
                     }
-                    if let oppID = project.opportunityID, !oppID.isEmpty {
-                        OverviewInfoRow(label: "Opp ID", value: oppID)
-                    }
-                    let projectTags = project.tags.filter { $0.hasPrefix("#") }
-                    if !projectTags.isEmpty {
-                        OverviewInfoRow(label: "Tags", value: projectTags.map { String($0.dropFirst()) }.joined(separator: ", "))
-                    }
+                    .fixedSize(horizontal: false, vertical: true)
 
+                    ProjectLinksCard(project: project)
                 }
 
                 if !project.customFields.isEmpty {
@@ -41,6 +45,102 @@ struct OverviewTabView: View {
         .background(Color.themeBg)
     }
 
+}
+
+// MARK: - Quick Links Card
+
+private struct ProjectLinksCard: View {
+    @Bindable var project: Project
+    @Environment(\.modelContext) private var context
+
+    private let maxLinks = 4
+
+    private var sortedLinks: [ProjectLink] {
+        project.links.sorted { $0.sortOrder < $1.sortOrder }
+    }
+
+    var body: some View {
+        OverviewCard(title: "Quick Links") {
+            VStack(spacing: 6) {
+                // Column headers
+                HStack(spacing: 8) {
+                    Text("Name")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(Color.themeFgDim)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("URL")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(Color.themeFgDim)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Color.clear.frame(width: 20)
+                }
+
+                ForEach(sortedLinks) { link in
+                    ProjectLinkRow(link: link, onSave: { try? context.save() }, onClear: {
+                        link.name = ""
+                        link.url = ""
+                        try? context.save()
+                    })
+                }
+            }
+        }
+        .onAppear { ensureLinks() }
+    }
+
+    private func ensureLinks() {
+        let existing = sortedLinks.count
+        guard existing < maxLinks else { return }
+        for i in existing..<maxLinks {
+            let link = ProjectLink(sortOrder: i)
+            link.project = project
+            project.links.append(link)
+            context.insert(link)
+        }
+        try? context.save()
+    }
+}
+
+private struct ProjectLinkRow: View {
+    @Bindable var link: ProjectLink
+    let onSave: () -> Void
+    let onClear: () -> Void
+
+    private var resolvedURL: URL? {
+        let s = link.url.trimmingCharacters(in: .whitespaces)
+        guard !s.isEmpty else { return nil }
+        let normalized = s.hasPrefix("http") ? s : "https://\(s)"
+        return URL(string: normalized)
+    }
+
+    var body: some View {
+        HStack(spacing: 8) {
+            TextField("Name", text: $link.name)
+                .font(.system(size: 12))
+                .textFieldStyle(.roundedBorder)
+                .frame(maxWidth: .infinity)
+                .onSubmit { onSave() }
+
+            TextField("https://", text: $link.url)
+                .font(.system(size: 12))
+                .textFieldStyle(.roundedBorder)
+                .frame(maxWidth: .infinity)
+                .onSubmit { onSave() }
+
+            // Open button — only active when URL is valid
+            Button {
+                if let url = resolvedURL {
+                    NSWorkspace.shared.open(url)
+                }
+            } label: {
+                Image(systemName: "arrow.up.right.square")
+                    .font(.system(size: 13))
+                    .foregroundStyle(resolvedURL != nil ? Color.themeAqua : Color.themeBg3)
+            }
+            .buttonStyle(.plain)
+            .disabled(resolvedURL == nil)
+            .help(resolvedURL != nil ? "Open \(link.name.isEmpty ? "link" : link.name)" : "Enter a URL to open")
+        }
+    }
 }
 
 // MARK: - Engagement Calendar

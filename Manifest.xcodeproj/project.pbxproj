@@ -14,6 +14,7 @@
 		18815C8DE80C4D6E60D445DF /* MenuBarPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB07E5C58865B14412FB7BB /* MenuBarPopoverView.swift */; };
 		1D25C0F0FB8C945482CA70D9 /* ProjectTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EA4C475CF13BDC9B064BD /* ProjectTemplate.swift */; };
 		1EB249A23CCD3672FFB906E6 /* ProjectCustomField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E83DAB93A1F61577AFEC5AA /* ProjectCustomField.swift */; };
+		A1B2C3D4E5F6A7B8C9D0E1F2 /* ProjectLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7B8C9D0E1F2A3 /* ProjectLink.swift */; };
 		2447C958C18B1D75E72616B6 /* ContactsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD6FE6A679A6B05F37C6E51 /* ContactsTabView.swift */; };
 		269C6C9134F315B7950565B3 /* LogEngagementSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E151B361F6E14D906322F2 /* LogEngagementSheet.swift */; };
 		271B36AEFA0DDD427795C8F5 /* NewProjectSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DF2AEE30E3C7BE50C4D8EB /* NewProjectSheet.swift */; };
@@ -88,6 +89,7 @@
 		776AB8C9FA6B248C195CF6B3 /* StagesSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagesSidebarView.swift; sourceTree = "<group>"; };
 		7814EA9547F43526F136A69E /* AddContactSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactSheet.swift; sourceTree = "<group>"; };
 		7E83DAB93A1F61577AFEC5AA /* ProjectCustomField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCustomField.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A7B8C9D0E1F2A3 /* ProjectLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLink.swift; sourceTree = "<group>"; };
 		82534F00A1CBC465876FB300 /* Engagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Engagement.swift; sourceTree = "<group>"; };
 		84895A5B2A35EFCE4C28D0A9 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		84F455E8D50EE84EC9478B9A /* Manifest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Manifest.entitlements; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				7677F5897E5AB70DDFEB8297 /* Note.swift */,
 				75BF4731F6FBEB5DB8C06E07 /* Project.swift */,
 				7E83DAB93A1F61577AFEC5AA /* ProjectCustomField.swift */,
+				B2C3D4E5F6A7B8C9D0E1F2A3 /* ProjectLink.swift */,
 				E9A03C4E2C1AEE259CAF5323 /* ProjectTask.swift */,
 				857EA4C475CF13BDC9B064BD /* ProjectTemplate.swift */,
 			);
@@ -437,6 +440,7 @@
 				F2CD83A45244BB5FBF2E973A /* OverviewTabView.swift in Sources */,
 				2E568211E918A6F0386E81F0 /* Project.swift in Sources */,
 				1EB249A23CCD3672FFB906E6 /* ProjectCustomField.swift in Sources */,
+				A1B2C3D4E5F6A7B8C9D0E1F2 /* ProjectLink.swift in Sources */,
 				058F86F7AC113FA2C5457FE8 /* ProjectDetailView.swift in Sources */,
 				DA3C5EE527DB18A04D288EAD /* ProjectListView.swift in Sources */,
 				8FE951BD175BD895D3B841E6 /* ProjectTask.swift in Sources */,

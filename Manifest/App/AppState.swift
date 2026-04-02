@@ -52,7 +52,8 @@ final class AppState {
             ProjectTask.self,
             Engagement.self,
             Note.self,
-            ProjectCustomField.self
+            ProjectCustomField.self,
+            ProjectLink.self
         ])
         let config: ModelConfiguration
         if cloudSync {
