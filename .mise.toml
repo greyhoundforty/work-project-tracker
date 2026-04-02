@@ -88,3 +88,6 @@ fi
 [tasks.package]
 description = "Build, sign, notarize, and package Charter as a DMG"
 run = "scripts/build-release.sh"
+
+[tools]
+python = "3.12"
