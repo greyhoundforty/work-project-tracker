@@ -203,6 +203,11 @@ struct SettingsView: View {
         let projects = (try? modelContext.fetch(FetchDescriptor<Project>())) ?? []
         projects.forEach { modelContext.delete($0) }
         try? modelContext.save()
+        appState.selectedProject = nil
+        appState.selectedStage = nil
+        appState.selectedTag = nil
+        appState.selectedLabel = nil
+        appState.searchQuery = ""
     }
 
     private func resetAll() {
