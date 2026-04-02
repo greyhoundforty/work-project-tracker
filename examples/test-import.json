@@ -1,0 +1,132 @@
+{
+  "exportVersion": "1.0",
+  "exportDate": "2026-04-02T08:00:00Z",
+  "projects": [
+    {
+      "name": "Acme Corp Cloud Modernisation",
+      "accountName": "Acme Corporation",
+      "opportunityID": "OPP-2026-00142",
+      "stage": "Proposal",
+      "isPOC": false,
+      "estimatedValueCents": 38000000,
+      "targetCloseDate": "2026-06-30T00:00:00Z",
+      "tags": ["#vpc", "#iks", "#transit-gateway"],
+      "iscOpportunityLink": "https://isc.example.com/opp/00142",
+      "gtmNavAccountLink": "https://gtm.example.com/acme",
+      "oneDriveFolderLink": "",
+      "contacts": [
+        {
+          "name": "Sandra Okafor",
+          "title": "VP of Infrastructure",
+          "email": "s.okafor@acme.example.com",
+          "type": "External"
+        },
+        {
+          "name": "James Whitfield",
+          "title": "Client Executive",
+          "email": "j.whitfield@ibm.com",
+          "type": "Internal"
+        }
+      ],
+      "tasks": [
+        { "title": "Define project goals", "isCompleted": true, "completedAt": "2026-02-10T12:00:00Z", "createdAt": "2026-02-01T09:00:00Z" },
+        { "title": "Identify key stakeholders", "isCompleted": true, "completedAt": "2026-02-14T12:00:00Z", "createdAt": "2026-02-01T09:00:00Z" },
+        { "title": "Deliver architecture proposal", "isCompleted": false, "completedAt": null, "createdAt": "2026-02-01T09:00:00Z" },
+        { "title": "Obtain sign-off on SOW", "isCompleted": false, "completedAt": null, "createdAt": "2026-02-01T09:00:00Z" }
+      ],
+      "notes": [
+        {
+          "title": "Discovery call summary",
+          "content": "Sandra confirmed budget is approved for Q2. Main concern is downtime during migration — need to present a phased approach. Follow up with James on exec sponsor.",
+          "createdAt": "2026-02-10T14:30:00Z"
+        }
+      ],
+      "engagements": [
+        {
+          "date": "2026-02-10T10:00:00Z",
+          "summary": "Initial discovery call. Reviewed current on-prem footprint and migration goals.",
+          "contactNames": ["Sandra Okafor", "James Whitfield"]
+        },
+        {
+          "date": "2026-03-05T14:00:00Z",
+          "summary": "Architecture workshop — walked through VPC topology and IKS cluster design.",
+          "contactNames": ["Sandra Okafor"]
+        }
+      ],
+      "checkpoints": []
+    },
+    {
+      "name": "Learn Swift Concurrency",
+      "accountName": null,
+      "opportunityID": null,
+      "stage": "Discovery",
+      "isPOC": false,
+      "estimatedValueCents": null,
+      "targetCloseDate": null,
+      "tags": ["#personal", "#learning", "#swift"],
+      "iscOpportunityLink": "",
+      "gtmNavAccountLink": "",
+      "oneDriveFolderLink": "",
+      "contacts": [],
+      "tasks": [
+        { "title": "Read Swift concurrency docs (async/await, actors)", "isCompleted": true, "completedAt": "2026-03-01T18:00:00Z", "createdAt": "2026-02-20T09:00:00Z" },
+        { "title": "Work through WWDC sessions on structured concurrency", "isCompleted": true, "completedAt": "2026-03-10T18:00:00Z", "createdAt": "2026-02-20T09:00:00Z" },
+        { "title": "Build a small proof project using actors", "isCompleted": false, "completedAt": null, "createdAt": "2026-02-20T09:00:00Z" },
+        { "title": "Write up learnings in a blog post", "isCompleted": false, "completedAt": null, "createdAt": "2026-02-20T09:00:00Z" }
+      ],
+      "notes": [
+        {
+          "title": "Key concepts",
+          "content": "Actors prevent data races by serialising access. Task groups are the structured concurrency primitive for parallel work. AsyncStream is great for bridging delegate callbacks.",
+          "createdAt": "2026-03-01T19:00:00Z"
+        }
+      ],
+      "engagements": [],
+      "checkpoints": []
+    },
+    {
+      "name": "Redfern Design — Brand Refresh",
+      "accountName": "Redfern Design Studio",
+      "opportunityID": null,
+      "stage": "Initial Delivery",
+      "isPOC": false,
+      "estimatedValueCents": 850000,
+      "targetCloseDate": "2026-05-15T00:00:00Z",
+      "tags": ["#freelance", "#design"],
+      "iscOpportunityLink": "",
+      "gtmNavAccountLink": "",
+      "oneDriveFolderLink": "",
+      "contacts": [
+        {
+          "name": "Priya Redfern",
+          "title": "Creative Director",
+          "email": "priya@redferndesign.example.com",
+          "type": "External"
+        }
+      ],
+      "tasks": [
+        { "title": "Proposal sent", "isCompleted": true, "completedAt": "2026-03-01T09:00:00Z", "createdAt": "2026-02-28T09:00:00Z" },
+        { "title": "Contract signed", "isCompleted": true, "completedAt": "2026-03-08T09:00:00Z", "createdAt": "2026-02-28T09:00:00Z" },
+        { "title": "Kickoff meeting held", "isCompleted": true, "completedAt": "2026-03-12T09:00:00Z", "createdAt": "2026-02-28T09:00:00Z" },
+        { "title": "Deliver logo concepts (3 directions)", "isCompleted": false, "completedAt": null, "createdAt": "2026-02-28T09:00:00Z" },
+        { "title": "Collect feedback and revise", "isCompleted": false, "completedAt": null, "createdAt": "2026-02-28T09:00:00Z" },
+        { "title": "Final deliverable and brand guide", "isCompleted": false, "completedAt": null, "createdAt": "2026-02-28T09:00:00Z" }
+      ],
+      "notes": [
+        {
+          "title": "Kickoff notes",
+          "content": "Priya wants to move away from the current earth tones — looking for something cleaner and more modern. Primary audience is tech startups. Deliverables: logo, colour palette, type system, brand guide PDF.",
+          "createdAt": "2026-03-12T11:00:00Z"
+        }
+      ],
+      "engagements": [
+        {
+          "date": "2026-03-12T10:00:00Z",
+          "summary": "Kickoff call — reviewed brief, confirmed scope and timeline.",
+          "contactNames": ["Priya Redfern"]
+        }
+      ],
+      "checkpoints": []
+    }
+  ]
+}
