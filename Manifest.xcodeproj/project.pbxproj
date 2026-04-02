@@ -510,7 +510,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.2.2;
+				MARKETING_VERSION = 0.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.greyhoundforty.Manifest;
 				PRODUCT_NAME = Manifest;
 				SDKROOT = macosx;
@@ -671,7 +671,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.2.2;
+				MARKETING_VERSION = 0.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.greyhoundforty.Manifest;
 				PRODUCT_NAME = Manifest;
 				SDKROOT = macosx;
