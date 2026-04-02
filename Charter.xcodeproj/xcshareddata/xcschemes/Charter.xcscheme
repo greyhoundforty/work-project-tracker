@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7611AC8940127D854088D555"
-               BuildableName = "Manifest.app"
-               BlueprintName = "Manifest"
-               ReferencedContainer = "container:Manifest.xcodeproj">
+               BlueprintIdentifier = "55589088174D99E1C2EF74ED"
+               BuildableName = "Charter.app"
+               BlueprintName = "Charter"
+               ReferencedContainer = "container:Charter.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7611AC8940127D854088D555"
-            BuildableName = "Manifest.app"
-            BlueprintName = "Manifest"
-            ReferencedContainer = "container:Manifest.xcodeproj">
+            BlueprintIdentifier = "55589088174D99E1C2EF74ED"
+            BuildableName = "Charter.app"
+            BlueprintName = "Charter"
+            ReferencedContainer = "container:Charter.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -44,10 +44,10 @@
             parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B809B603FC687E2351B4A7BD"
-               BuildableName = "ManifestTests.xctest"
-               BlueprintName = "ManifestTests"
-               ReferencedContainer = "container:Manifest.xcodeproj">
+               BlueprintIdentifier = "DBEE36133355901A51ABF245"
+               BuildableName = "CharterTests.xctest"
+               BlueprintName = "CharterTests"
+               ReferencedContainer = "container:Charter.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -68,10 +68,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7611AC8940127D854088D555"
-            BuildableName = "Manifest.app"
-            BlueprintName = "Manifest"
-            ReferencedContainer = "container:Manifest.xcodeproj">
+            BlueprintIdentifier = "55589088174D99E1C2EF74ED"
+            BuildableName = "Charter.app"
+            BlueprintName = "Charter"
+            ReferencedContainer = "container:Charter.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -87,10 +87,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7611AC8940127D854088D555"
-            BuildableName = "Manifest.app"
-            BlueprintName = "Manifest"
-            ReferencedContainer = "container:Manifest.xcodeproj">
+            BlueprintIdentifier = "55589088174D99E1C2EF74ED"
+            BuildableName = "Charter.app"
+            BlueprintName = "Charter"
+            ReferencedContainer = "container:Charter.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>

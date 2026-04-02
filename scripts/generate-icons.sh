@@ -8,7 +8,7 @@ ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 SVG="$ROOT/assets/icon/icon.svg"
 BG_SVG="$ROOT/assets/dmg-background.svg"
 ICONSET="$ROOT/build/AppIcon.iconset"
-APPICONSET="$ROOT/Manifest/Assets.xcassets/AppIcon.appiconset"
+APPICONSET="$ROOT/Charter/Assets.xcassets/AppIcon.appiconset"
 
 if ! command -v rsvg-convert &>/dev/null; then
   echo "Error: rsvg-convert not found. Install with: brew install librsvg"

@@ -12,7 +12,7 @@ if [[ -z "$VERSION" ]]; then
     exit 1
 fi
 
-PBXPROJ="Manifest.xcodeproj/project.pbxproj"
+PBXPROJ="Charter.xcodeproj/project.pbxproj"
 
 if [[ ! -f "$PBXPROJ" ]]; then
     echo "Error: $PBXPROJ not found. Run this script from the repo root."

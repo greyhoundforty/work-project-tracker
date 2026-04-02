@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# build-release.sh — Archive, sign, package, notarize, and staple Manifest.app
+# build-release.sh — Archive, sign, package, notarize, and staple Charter.app
 # as a distributable DMG.
 #
 # Required env vars (set in .env locally, GitHub secrets in CI):
@@ -25,15 +25,15 @@ for var in CODESIGN_IDENTITY APPLE_ID APPLE_TEAM_ID APP_SPECIFIC_PASSWORD; do
   fi
 done
 
-PROJECT="$ROOT/Manifest.xcodeproj"
-SCHEME="Manifest"
+PROJECT="$ROOT/Charter.xcodeproj"
+SCHEME="Charter"
 BUILD_DIR="$ROOT/build"
-ARCHIVE="$BUILD_DIR/Manifest.xcarchive"
+ARCHIVE="$BUILD_DIR/Charter.xcarchive"
 EXPORT_DIR="$BUILD_DIR/export"
 EXPORT_OPTS="$ROOT/assets/ExportOptions.plist"
 BG="$ROOT/assets/dmg-background.png"
-VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$ROOT/Manifest/Info.plist")
-DMG_PATH="$BUILD_DIR/Manifest-${VERSION}.dmg"
+VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$ROOT/Charter/Info.plist")
+DMG_PATH="$BUILD_DIR/Charter-${VERSION}.dmg"
 
 mkdir -p "$BUILD_DIR"
 
@@ -87,9 +87,9 @@ xcodebuild -exportArchive \
   -exportPath "$EXPORT_DIR" \
   -exportOptionsPlist "$EXPORT_OPTS"
 
-APP="$EXPORT_DIR/Manifest.app"
+APP="$EXPORT_DIR/Charter.app"
 if [ ! -d "$APP" ]; then
-  echo "Error: Export failed — Manifest.app not found at $APP"
+  echo "Error: Export failed — Charter.app not found at $APP"
   exit 1
 fi
 
@@ -97,12 +97,12 @@ fi
 echo "==> Creating DMG..."
 rm -f "$DMG_PATH"
 create-dmg \
-  --volname "Manifest" \
+  --volname "Charter" \
   --window-pos 200 120 \
   --window-size 600 400 \
   --icon-size 128 \
-  --icon "Manifest.app" 160 200 \
-  --hide-extension "Manifest.app" \
+  --icon "Charter.app" 160 200 \
+  --hide-extension "Charter.app" \
   --app-drop-link 440 200 \
   --background "$BG" \
   "$DMG_PATH" \

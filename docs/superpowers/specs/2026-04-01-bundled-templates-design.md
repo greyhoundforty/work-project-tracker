@@ -34,7 +34,7 @@ Bundle the three existing example templates (`Base Project`, `Personal Developme
 | Create | `EngagementTracker/BundledTemplates/base-project.json` |
 | Create | `EngagementTracker/BundledTemplates/personal-development.json` |
 | Create | `EngagementTracker/BundledTemplates/freelance-client.json` |
-| Modify | `project.yml` — add `BundledTemplates` resource folder to Manifest target |
+| Modify | `project.yml` — add `BundledTemplates` resource folder to Charter target |
 | Modify | `EngagementTracker/Models/ProjectTemplate.swift` — add `isBuiltIn` property + `loadBundled()` |
 | Modify | `EngagementTracker/Views/Sheets/NewProjectSheet.swift` — merge bundled + user templates on appear |
 | Modify | `EngagementTracker/Views/Settings/SettingsView.swift` — show built-ins, add "Built-in" badge |
@@ -47,11 +47,11 @@ The files in `examples/templates/` are left in place (they serve as documentatio
 
 Three JSON files are copied into `EngagementTracker/BundledTemplates/` with content identical to the existing `examples/templates/` files.
 
-`project.yml` gains a `resources` entry on the Manifest target:
+`project.yml` gains a `resources` entry on the Charter target:
 
 ```yaml
 targets:
-  Manifest:
+  Charter:
     ...
     sources:
       - EngagementTracker

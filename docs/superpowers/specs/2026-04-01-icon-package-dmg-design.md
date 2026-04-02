@@ -1,4 +1,4 @@
-# Manifest — Icon, Packaging & Distribution Design
+# Charter — Icon, Packaging & Distribution Design
 
 **Date:** 2026-04-01
 **Branch:** `emdash/feat-icon-package-dmg-885`
@@ -8,18 +8,18 @@
 
 ## Overview
 
-Rename the app from "Engagement Tracker" to **Manifest**, add a custom app icon, and build a signed/notarized DMG packaging pipeline that works both locally and in GitHub Actions CI.
+Rename the app from "Engagement Tracker" to **Charter**, add a custom app icon, and build a signed/notarized DMG packaging pipeline that works both locally and in GitHub Actions CI.
 
-**Goal:** Coworkers can download a `.dmg`, drag Manifest to Applications, and open it with zero Gatekeeper friction.
+**Goal:** Coworkers can download a `.dmg`, drag Charter to Applications, and open it with zero Gatekeeper friction.
 
 ---
 
 ## 1. App Rename
 
-Rename the app display name and bundle identifier from "EngagementTracker" to "Manifest" throughout the project.
+Rename the app display name and bundle identifier from "EngagementTracker" to "Charter" throughout the project.
 
 **Changes required:**
-- `project.yml` — update `name`, `PRODUCT_NAME`, `PRODUCT_BUNDLE_IDENTIFIER` (`com.greyhoundforty.Manifest`)
+- `project.yml` — update `name`, `PRODUCT_NAME`, `PRODUCT_BUNDLE_IDENTIFIER` (`com.greyhoundforty.Charter`)
 - `EngagementTracker/Info.plist` — `CFBundleName`, `CFBundleDisplayName`
 - Regenerate `.xcodeproj` via `xcodegen generate` after `project.yml` changes
 - Source directory rename is optional — internal folder name does not affect the shipped app
@@ -49,7 +49,7 @@ scripts/
 2. Produces all required macOS icon sizes: 16, 32, 64, 128, 256, 512, 1024px (plus @2x variants)
 3. Assembles `AppIcon.iconset/`, runs `iconutil -c icns` to produce `AppIcon.icns`
 4. Copies PNG set into `EngagementTracker/Assets.xcassets/AppIcon.appiconset/`
-5. Generates `assets/dmg-background.png` (dark background, "Manifest" wordmark in warm orange)
+5. Generates `assets/dmg-background.png` (dark background, "Charter" wordmark in warm orange)
 
 **Dependencies:** `librsvg` (`brew install librsvg`) for SVG rasterization. Falls back to `sips` for simple cases.
 
@@ -77,14 +77,14 @@ xcodebuild archive
   → .xcarchive (in build/)
 
 xcodebuild -exportArchive
-  → Manifest.app (signed with Developer ID Application cert)
+  → Charter.app (signed with Developer ID Application cert)
   → Requires: ExportOptions.plist
 
 create-dmg
-  → Manifest-<version>.dmg
+  → Charter-<version>.dmg
   → Custom background (assets/dmg-background.png)
   → 600×400 window, app icon left, Applications alias right
-  → Volume name: "Manifest"
+  → Volume name: "Charter"
 
 xcrun notarytool submit
   → Sends DMG to Apple notarization service
@@ -92,7 +92,7 @@ xcrun notarytool submit
 
 xcrun stapler staple
   → Attaches notarization ticket to DMG
-  → Output: build/Manifest-<version>.dmg (ready to distribute)
+  → Output: build/Charter-<version>.dmg (ready to distribute)
 ```
 
 ### ExportOptions.plist
@@ -119,7 +119,7 @@ Loaded from `.env` locally (gitignored), from GitHub Actions secrets in CI.
 ```toml
 # .mise.toml addition
 [tasks.package]
-description = "Build, sign, notarize, and package Manifest as a DMG"
+description = "Build, sign, notarize, and package Charter as a DMG"
 run = "scripts/build-release.sh"
 ```
 
@@ -133,8 +133,8 @@ run = "scripts/build-release.sh"
 | Background | `assets/dmg-background.png` (dark, warm orange wordmark) |
 | App icon position | Left (160, 200) |
 | Applications alias position | Right (440, 200) |
-| Volume name | `Manifest` |
-| Output filename | `Manifest-<CFBundleShortVersionString>.dmg` |
+| Volume name | `Charter` |
+| Output filename | `Charter-<CFBundleShortVersionString>.dmg` |
 
 ---
 
@@ -158,7 +158,7 @@ Runs on `macos-14` (Apple Silicon runner, Xcode 16 pre-installed).
 2. Install `create-dmg` via Homebrew
 3. Import Developer ID certificate into a temporary keychain from `DEVELOPER_ID_CERT_P12` secret
 4. Run `scripts/build-release.sh`
-5. Create GitHub Release and upload `build/Manifest-*.dmg` as a release asset
+5. Create GitHub Release and upload `build/Charter-*.dmg` as a release asset
 
 ### Required GitHub Secrets
 | Secret | Value |

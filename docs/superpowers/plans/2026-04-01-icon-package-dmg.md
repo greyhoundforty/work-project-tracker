@@ -1,8 +1,8 @@
-# Manifest — Icon, Packaging & Distribution Implementation Plan
+# Charter — Icon, Packaging & Distribution Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Rename the app to Manifest, add a warm/bold brain-inbox icon, and build a signed/notarized DMG pipeline that works locally via `mise run package` and in GitHub Actions on version tags.
+**Goal:** Rename the app to Charter, add a warm/bold brain-inbox icon, and build a signed/notarized DMG pipeline that works locally via `mise run package` and in GitHub Actions on version tags.
 
 **Architecture:** The pipeline is three independent pieces — icon generation (SVG → PNG sizes → `.appiconset`), local release script (archive → sign → DMG → notarize → staple), and CI workflow (same script, cert injected from secrets). All three share the same env-var contract so local and CI behaviour are identical.
 
@@ -14,13 +14,13 @@
 
 | Action | Path | Purpose |
 |--------|------|---------|
-| Modify | `project.yml` | Rename target + bundle ID to Manifest |
+| Modify | `project.yml` | Rename target + bundle ID to Charter |
 | Modify | `EngagementTracker/Info.plist` | Update display name + bundle ID |
 | Modify | `.mise.toml` | Update scheme/project refs + add `package` task |
 | Create | `assets/icon/icon.svg` | Warm brain-inbox vector source |
 | Create | `assets/dmg-background.svg` | DMG window background source |
 | Create | `scripts/generate-icons.sh` | SVG → PNG sizes → AppIcon.appiconset |
-| Create | `EngagementTracker/Assets.xcassets/AppIcon.appiconset/Contents.json` | Asset catalog manifest |
+| Create | `EngagementTracker/Assets.xcassets/AppIcon.appiconset/Contents.json` | Asset catalog charter |
 | Create | `assets/ExportOptions.plist` | xcodebuild archive export config |
 | Create | `scripts/build-release.sh` | Full archive → sign → DMG → notarize pipeline |
 | Create | `.env.example` | Documents required env vars |
@@ -29,7 +29,7 @@
 
 ---
 
-## Task 1: Rename App to Manifest
+## Task 1: Rename App to Charter
 
 **Files:**
 - Modify: `project.yml`
@@ -41,7 +41,7 @@
 Replace the entire file contents with:
 
 ```yaml
-name: Manifest
+name: Charter
 options:
   bundleIdPrefix: com.greyhoundforty
   deploymentTarget:
@@ -61,17 +61,17 @@ settings:
     ENABLE_HARDENED_RUNTIME: YES
 
 targets:
-  Manifest:
+  Charter:
     type: application
     platform: macOS
     sources:
       - EngagementTracker
     settings:
       base:
-        PRODUCT_NAME: Manifest
+        PRODUCT_NAME: Charter
         INFOPLIST_FILE: EngagementTracker/Info.plist
         CODE_SIGN_STYLE: Automatic
-        PRODUCT_BUNDLE_IDENTIFIER: com.greyhoundforty.Manifest
+        PRODUCT_BUNDLE_IDENTIFIER: com.greyhoundforty.Charter
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     entitlements:
       path: EngagementTracker/EngagementTracker.entitlements
@@ -79,16 +79,16 @@ targets:
       - sdk: SwiftData.framework
       - package: MarkdownUI
 
-  ManifestTests:
+  CharterTests:
     type: bundle.unit-test
     platform: macOS
     sources:
       - EngagementTrackerTests
     dependencies:
-      - target: Manifest
+      - target: Charter
     settings:
       base:
-        PRODUCT_NAME: ManifestTests
+        PRODUCT_NAME: CharterTests
         GENERATE_INFOPLIST_FILE: YES
 ```
 
@@ -102,11 +102,11 @@ Replace the three name/ID entries:
 <plist version="1.0">
 <dict>
     <key>CFBundleName</key>
-    <string>Manifest</string>
+    <string>Charter</string>
     <key>CFBundleDisplayName</key>
-    <string>Manifest</string>
+    <string>Charter</string>
     <key>CFBundleIdentifier</key>
-    <string>com.greyhoundforty.Manifest</string>
+    <string>com.greyhoundforty.Charter</string>
     <key>CFBundleVersion</key>
     <string>1</string>
     <key>CFBundleShortVersionString</key>
@@ -127,50 +127,50 @@ Replace entire file with updated scheme/project/container references:
 
 ```toml
 [tasks.run]
-description = "Build and launch Manifest without opening Xcode"
+description = "Build and launch Charter without opening Xcode"
 run = """
 set -e
 
 # Kill any running instance first
-pkill -x Manifest 2>/dev/null || true
+pkill -x Charter 2>/dev/null || true
 
 # Build
 xcodebuild \
-  -project Manifest.xcodeproj \
-  -scheme Manifest \
+  -project Charter.xcodeproj \
+  -scheme Charter \
   -destination 'platform=macOS,arch=arm64' \
   -configuration Debug \
   build 2>&1 | grep -E "error:|BUILD SUCCEEDED|BUILD FAILED"
 
 # Resolve the built products dir and launch
 APP_DIR=$(xcodebuild \
-  -project Manifest.xcodeproj \
-  -scheme Manifest \
+  -project Charter.xcodeproj \
+  -scheme Charter \
   -configuration Debug \
   -showBuildSettings 2>/dev/null \
   | awk '/BUILT_PRODUCTS_DIR/ { print $3; exit }')
 
-echo "Launching $APP_DIR/Manifest.app"
-open "$APP_DIR/Manifest.app"
+echo "Launching $APP_DIR/Charter.app"
+open "$APP_DIR/Charter.app"
 """
 
 [tasks.build]
-description = "Build Manifest via xcodebuild"
+description = "Build Charter via xcodebuild"
 run = """
 xcodebuild \
-  -project Manifest.xcodeproj \
-  -scheme Manifest \
+  -project Charter.xcodeproj \
+  -scheme Charter \
   -destination 'platform=macOS,arch=arm64' \
   -configuration Debug \
   build
 """
 
 [tasks.clean]
-description = "Clean Manifest build products"
+description = "Clean Charter build products"
 run = """
 xcodebuild \
-  -project Manifest.xcodeproj \
-  -scheme Manifest \
+  -project Charter.xcodeproj \
+  -scheme Charter \
   clean
 """
 
@@ -178,8 +178,8 @@ xcodebuild \
 description = "Clean then build"
 run = """
 xcodebuild \
-  -project Manifest.xcodeproj \
-  -scheme Manifest \
+  -project Charter.xcodeproj \
+  -scheme Charter \
   -destination 'platform=macOS,arch=arm64' \
   -configuration Debug \
   clean build
@@ -189,17 +189,17 @@ xcodebuild \
 description = "Run unit tests"
 run = """
 xcodebuild \
-  -project Manifest.xcodeproj \
-  -scheme ManifestTests \
+  -project Charter.xcodeproj \
+  -scheme CharterTests \
   -destination 'platform=macOS,arch=arm64' \
   test
 """
 
 [tasks."db-backup"]
-description = "Backup SwiftData store to ~/Desktop/Manifest-backups/"
+description = "Backup SwiftData store to ~/Desktop/Charter-backups/"
 run = """
-BACKUP_DIR="$HOME/Desktop/Manifest-backups"
-DB_DIR="$HOME/Library/Containers/com.greyhoundforty.Manifest/Data/Library/Application Support"
+BACKUP_DIR="$HOME/Desktop/Charter-backups"
+DB_DIR="$HOME/Library/Containers/com.greyhoundforty.Charter/Data/Library/Application Support"
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 DEST="$BACKUP_DIR/$TIMESTAMP"
 
@@ -214,7 +214,7 @@ fi
 """
 
 [tasks.package]
-description = "Build, sign, notarize, and package Manifest as a DMG"
+description = "Build, sign, notarize, and package Charter as a DMG"
 run = "scripts/build-release.sh"
 ```
 
@@ -224,7 +224,7 @@ run = "scripts/build-release.sh"
 xcodegen generate
 ```
 
-Expected: `Generating project Manifest` and `Manifest.xcodeproj` appears in the project root. The old `EngagementTracker.xcodeproj` directory is replaced.
+Expected: `Generating project Charter` and `Charter.xcodeproj` appears in the project root. The old `EngagementTracker.xcodeproj` directory is replaced.
 
 - [ ] **Step 5: Verify the build**
 
@@ -236,12 +236,12 @@ Expected output ends with: `BUILD SUCCEEDED`
 
 - [ ] **Step 6: Commit**
 
-Remove the old project file (xcodegen created `Manifest.xcodeproj` but `EngagementTracker.xcodeproj` is still tracked):
+Remove the old project file (xcodegen created `Charter.xcodeproj` but `EngagementTracker.xcodeproj` is still tracked):
 
 ```bash
 git rm -r --cached EngagementTracker.xcodeproj 2>/dev/null || true
-git add project.yml EngagementTracker/Info.plist .mise.toml Manifest.xcodeproj
-git commit -m "feat: rename app to Manifest"
+git add project.yml EngagementTracker/Info.plist .mise.toml Charter.xcodeproj
+git commit -m "feat: rename app to Charter"
 ```
 
 ---
@@ -354,7 +354,7 @@ Write `assets/dmg-background.svg`:
     font-family="-apple-system, Helvetica, sans-serif"
     font-size="13"
     fill="#78716C"
-  >Drag Manifest to Applications to install</text>
+  >Drag Charter to Applications to install</text>
 </svg>
 ```
 
@@ -496,7 +496,7 @@ Expected: a file of roughly 10–50KB.
 mise run build 2>&1 | tail -3
 ```
 
-Expected: `BUILD SUCCEEDED`. Open `mise run run` and confirm Manifest shows the brain-inbox icon in the Dock.
+Expected: `BUILD SUCCEEDED`. Open `mise run run` and confirm Charter shows the brain-inbox icon in the Dock.
 
 - [ ] **Step 8: Update .gitignore to exclude generated PNG files from appiconset (keep Contents.json)**
 
@@ -575,7 +575,7 @@ Write `.env.example`:
 # APPLE_TEAM_ID: 10-character team ID from developer.apple.com → Membership.
 #
 # APP_SPECIFIC_PASSWORD: Generate at appleid.apple.com → Sign-In and Security
-#   → App-Specific Passwords. Label it "Manifest notarytool".
+#   → App-Specific Passwords. Label it "Charter notarytool".
 
 CODESIGN_IDENTITY="Developer ID Application: Your Name (XXXXXXXXXX)"
 APPLE_ID="you@example.com"
@@ -603,7 +603,7 @@ Write `scripts/build-release.sh`:
 
 ```bash
 #!/usr/bin/env bash
-# build-release.sh — Archive, sign, package, notarize, and staple Manifest.app
+# build-release.sh — Archive, sign, package, notarize, and staple Charter.app
 # as a distributable DMG.
 #
 # Required env vars (set in .env locally, GitHub secrets in CI):
@@ -629,15 +629,15 @@ for var in CODESIGN_IDENTITY APPLE_ID APPLE_TEAM_ID APP_SPECIFIC_PASSWORD; do
   fi
 done
 
-PROJECT="$ROOT/Manifest.xcodeproj"
-SCHEME="Manifest"
+PROJECT="$ROOT/Charter.xcodeproj"
+SCHEME="Charter"
 BUILD_DIR="$ROOT/build"
-ARCHIVE="$BUILD_DIR/Manifest.xcarchive"
+ARCHIVE="$BUILD_DIR/Charter.xcarchive"
 EXPORT_DIR="$BUILD_DIR/export"
 EXPORT_OPTS="$ROOT/assets/ExportOptions.plist"
 BG="$ROOT/assets/dmg-background.png"
 VERSION=$(defaults read "$ROOT/EngagementTracker/Info.plist" CFBundleShortVersionString)
-DMG_PATH="$BUILD_DIR/Manifest-${VERSION}.dmg"
+DMG_PATH="$BUILD_DIR/Charter-${VERSION}.dmg"
 
 mkdir -p "$BUILD_DIR"
 
@@ -665,9 +665,9 @@ xcodebuild -exportArchive \
   -exportPath "$EXPORT_DIR" \
   -exportOptionsPlist "$EXPORT_OPTS"
 
-APP="$EXPORT_DIR/Manifest.app"
+APP="$EXPORT_DIR/Charter.app"
 if [ ! -d "$APP" ]; then
-  echo "Error: Export failed — Manifest.app not found at $APP"
+  echo "Error: Export failed — Charter.app not found at $APP"
   exit 1
 fi
 
@@ -675,12 +675,12 @@ fi
 echo "==> Creating DMG..."
 rm -f "$DMG_PATH"
 create-dmg \
-  --volname "Manifest" \
+  --volname "Charter" \
   --window-pos 200 120 \
   --window-size 600 400 \
   --icon-size 128 \
-  --icon "Manifest.app" 160 200 \
-  --hide-extension "Manifest.app" \
+  --icon "Charter.app" 160 200 \
+  --hide-extension "Charter.app" \
   --app-drop-link 440 200 \
   --background "$BG" \
   "$DMG_PATH" \
@@ -794,7 +794,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: build/Manifest-*.dmg
+          files: build/Charter-*.dmg
           generate_release_notes: true
 ```
 
@@ -844,13 +844,13 @@ mise run build 2>&1 | tail -3
 
 Expected: `BUILD SUCCEEDED`
 
-- [ ] **Step 4: Confirm the app launches as "Manifest"**
+- [ ] **Step 4: Confirm the app launches as "Charter"**
 
 ```bash
 mise run run
 ```
 
-Expected: app launches, title bar shows "Manifest", Dock shows the brain-inbox icon.
+Expected: app launches, title bar shows "Charter", Dock shows the brain-inbox icon.
 
 - [ ] **Step 5: Final commit of any remaining tracked files**
 
@@ -858,10 +858,10 @@ Expected: app launches, title bar shows "Manifest", Dock shows the brain-inbox i
 git status
 ```
 
-If any tracked files show modifications (e.g., `Manifest.xcodeproj/project.pbxproj` from the build), commit them:
+If any tracked files show modifications (e.g., `Charter.xcodeproj/project.pbxproj` from the build), commit them:
 
 ```bash
-git add Manifest.xcodeproj
+git add Charter.xcodeproj
 git commit -m "chore: sync generated xcodeproj after icon integration"
 ```
 
@@ -879,7 +879,7 @@ This is not a task — it's a reference for when you're ready to do a real signe
 
 **Generate an App-Specific Password:**
 1. Go to appleid.apple.com → Sign-In and Security → App-Specific Passwords
-2. Click `+`, label it "Manifest notarytool"
+2. Click `+`, label it "Charter notarytool"
 3. Copy the `xxxx-xxxx-xxxx-xxxx` value — that's `APP_SPECIFIC_PASSWORD`
 
 **Add secrets to GitHub:**

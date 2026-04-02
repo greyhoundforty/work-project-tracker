@@ -31,7 +31,7 @@ struct SettingsView: View {
                             .frame(width: 48, height: 48)
                     }
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Manifest")
+                        Text("Charter")
                             .font(.system(size: 14, weight: .semibold))
                         LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.2.2")
                     }

@@ -1,6 +1,6 @@
 import Testing
 import Foundation
-@testable import Manifest
+@testable import Charter
 
 @Suite("QuickCapture save helpers")
 struct QuickCaptureTests {

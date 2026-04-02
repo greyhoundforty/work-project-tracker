@@ -1,5 +1,5 @@
 import Testing
-@testable import Manifest
+@testable import Charter
 
 @Suite("Search Filtering")
 struct SearchFilterTests {

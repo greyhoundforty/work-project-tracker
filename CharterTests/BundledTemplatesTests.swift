@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import Manifest
+@testable import Charter
 
 struct BundledTemplatesTests {
 

@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Bundle three default project templates into the Manifest app so they are always available without any user configuration, while still allowing users to add their own templates via the Settings folder picker.
+**Goal:** Bundle three default project templates into the Charter app so they are always available without any user configuration, while still allowing users to add their own templates via the Settings folder picker.
 
 **Architecture:** Three JSON files are added to `EngagementTracker/BundledTemplates/` and registered as app bundle resources in `project.yml`. `ProjectTemplate` gains an `isBuiltIn` flag and a `loadBundled()` method. `NewProjectSheet` and `SettingsView` both merge bundled templates with any user-configured templates, with user templates winning on name collisions.
 
@@ -102,11 +102,11 @@ Write `EngagementTracker/BundledTemplates/freelance-client.json`:
 
 - [ ] **Step 2: Register BundledTemplates as a bundle resource in project.yml**
 
-In `project.yml`, find the `Manifest:` target block (which has `sources: - EngagementTracker`). Add a `resources:` key at the same level as `sources:`:
+In `project.yml`, find the `Charter:` target block (which has `sources: - EngagementTracker`). Add a `resources:` key at the same level as `sources:`:
 
 ```yaml
 targets:
-  Manifest:
+  Charter:
     type: application
     platform: macOS
     sources:
@@ -126,7 +126,7 @@ The `type: folder` creates a folder reference in Xcode, preserving the `BundledT
 xcodegen generate
 ```
 
-Expected: `Generating project Manifest` with no errors.
+Expected: `Generating project Charter` with no errors.
 
 - [ ] **Step 4: Verify the folder appears in the bundle**
 
@@ -138,18 +138,18 @@ Expected: `BUILD SUCCEEDED`
 
 Then verify the JSON files are in the built app bundle:
 ```bash
-find ~/Library/Developer/Xcode/DerivedData/Manifest-*/Build/Products/Debug/Manifest.app \
+find ~/Library/Developer/Xcode/DerivedData/Charter-*/Build/Products/Debug/Charter.app \
   -name "*.json" -path "*/BundledTemplates/*"
 ```
 
 Expected: three lines showing `base-project.json`, `freelance-client.json`, `personal-development.json` inside `BundledTemplates/` within the bundle.
 
-If the files are at the bundle root (not in a `BundledTemplates/` subdirectory), the folder reference did not work. In that case, open `Manifest.xcodeproj` in Xcode, find the three JSON files in the project navigator, select them, open File Inspector, and verify "Location" shows them inside a blue folder reference. If they're yellow group folders, remove them and re-add `EngagementTracker/BundledTemplates` as a folder reference manually, then commit the updated xcodeproj.
+If the files are at the bundle root (not in a `BundledTemplates/` subdirectory), the folder reference did not work. In that case, open `Charter.xcodeproj` in Xcode, find the three JSON files in the project navigator, select them, open File Inspector, and verify "Location" shows them inside a blue folder reference. If they're yellow group folders, remove them and re-add `EngagementTracker/BundledTemplates` as a folder reference manually, then commit the updated xcodeproj.
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add EngagementTracker/BundledTemplates/ project.yml Manifest.xcodeproj
+git add EngagementTracker/BundledTemplates/ project.yml Charter.xcodeproj
 git commit -m "feat: add BundledTemplates JSON files and register as app resources"
 ```
 
@@ -167,7 +167,7 @@ Create `EngagementTrackerTests/BundledTemplatesTests.swift`:
 
 ```swift
 import Testing
-@testable import Manifest
+@testable import Charter
 
 struct BundledTemplatesTests {
 

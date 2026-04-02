@@ -1,8 +1,15 @@
 [tools]
 fnox = "latest"
-node = "lts"
-python = "3.12"
 
 [env]
 _.python.venv = { path = ".venv", create = true }
 PROJECT_NAME = "{{ config_root | basename }}"
+
+[tasks.rename]
+description = "Rename project from Charter → Charter (live)"
+run = "bash scripts/rename-to-charter.sh"
+ 
+[tasks."rename:dry"]
+description = "Preview Charter → Charter rename without changing anything"
+run = "bash scripts/rename-to-charter.sh --dry-run"
+ 

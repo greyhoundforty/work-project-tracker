@@ -1,8 +1,8 @@
-# Manifest
+# Charter
 
 A macOS app for tracking client projects and engagements through their full lifecycle. Runs as a menu bar popover for quick capture and a full dock window for project management. Local-first via SwiftData with optional iCloud sync.
 
-![Manifest in action](work-tracker-demo.gif)
+![Charter in action](work-tracker-demo.gif)
 
 ## What it does
 
@@ -24,7 +24,7 @@ A macOS app for tracking client projects and engagements through their full life
 
 ## Install
 
-Download the latest `.dmg` from [Releases](https://github.com/greyhoundforty/work-project-tracker/releases), open it, and drag **Manifest.app** to your Applications folder.
+Download the latest `.dmg` from [Releases](https://github.com/greyhoundforty/work-project-tracker/releases), open it, and drag **Charter.app** to your Applications folder.
 
 ## Requirements (building from source)
 
@@ -38,7 +38,7 @@ Download the latest `.dmg` from [Releases](https://github.com/greyhoundforty/wor
 git clone https://github.com/greyhoundforty/work-project-tracker.git
 cd work-project-tracker
 xcodegen generate
-open Manifest.xcodeproj
+open Charter.xcodeproj
 ```
 
 Press `⌘R` to build and run.
