@@ -1,0 +1,24 @@
+{
+  "name": "Work Tracking",
+  "isPOC": false,
+  "stage": "Discovery",
+  "tags": [],
+  "taskTitles": [
+    "Define project goals",
+    "Identify key stakeholders",
+    "Set milestones",
+    "Review progress at midpoint",
+    "Document outcomes",
+    "Close out project"
+  ],
+  "customFields": [
+    { "label": "Account / Company", "key": "accountName", "type": "text", "placeholder": "Optional" },
+    { "label": "Opportunity ID", "key": "opportunityID", "type": "text", "placeholder": "Optional" },
+    { "label": "ISC Opportunity Link", "key": "iscOpportunityLink", "type": "url", "placeholder": "https://…" },
+    { "label": "GTM Nav Account Link", "key": "gtmNavAccountLink", "type": "url", "placeholder": "https://…" },
+    { "label": "Initial Stage", "key": "stage", "type": "stage-picker", "options": ["Discovery", "Initial Delivery", "Refine", "Proposal", "Won", "Lost"] },
+    { "label": "Estimated Value", "key": "estimatedValue", "type": "text", "placeholder": "e.g. 240000" },
+    { "label": "Target Close Date", "key": "targetCloseDate", "type": "date" },
+    { "label": "POC Engagement", "key": "isPOC", "type": "toggle" }
+  ]
+}

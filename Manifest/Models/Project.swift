@@ -5,6 +5,7 @@ import SwiftData
 final class Project {
     var id: UUID
     var name: String
+    var summary: String?
     var accountName: String?
     var opportunityID: String?
     var stage: ProjectStage
@@ -25,6 +26,7 @@ final class Project {
     @Relationship(deleteRule: .cascade) var engagements: [Engagement]
     @Relationship(deleteRule: .cascade) var notes: [Note]
     @Relationship(deleteRule: .cascade) var customFields: [ProjectCustomField] = []
+    @Relationship(deleteRule: .cascade) var links: [ProjectLink] = []
 
     init(
         name: String,
@@ -60,6 +62,7 @@ final class Project {
         self.engagements = []
         self.notes = []
         self.customFields = []
+        self.links = []
     }
 
     var estimatedValueFormatted: String? {
