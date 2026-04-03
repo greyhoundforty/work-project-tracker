@@ -1,4 +1,4 @@
-name: Update Sparkle appcast (gh-pages)
+name: Update Sparkle appcast (latest only)
 
 on:
   release:
@@ -11,9 +11,6 @@ jobs:
   appcast:
     runs-on: macos-latest
     steps:
-      - name: Checkout (for git + metadata)
-        uses: actions/checkout@v4
-
       - name: Download Sparkle tools
         run: |
           set -euxo pipefail
@@ -22,31 +19,38 @@ jobs:
           mkdir -p sparkle-tools
           tar -xJf sparkle.tar.xz -C sparkle-tools
 
-      - name: Download release DMG assets
+      - name: Download the DMG asset for this release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euxo pipefail
-          mkdir -p release-assets
-          gh release download "${{ github.event.release.tag_name }}" --repo "${{ github.repository }}" --dir release-assets
-          ls -la release-assets
+          TAG="${{ github.event.release.tag_name }}"
+          DMG="Charter-${TAG}.dmg"
 
-      - name: Generate appcast.xml (EdDSA)
+          mkdir -p updates
+          gh release download "${TAG}" \
+            --repo "${{ github.repository }}" \
+            --pattern "${DMG}" \
+            --dir updates
+
+          ls -la updates
+
+      - name: Generate appcast.xml (EdDSA, latest only)
         env:
           SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
           set -euxo pipefail
+          TAG="${{ github.event.release.tag_name }}"
 
-          # Filter to DMGs only (adjust if you later publish ZIP too)
-          mkdir -p updates
-          find release-assets -maxdepth 1 -type f -name "*.dmg" -print -exec cp {} updates/ \;
-
-          # Generate appcast.xml into updates/
           ./sparkle-tools/bin/generate_appcast \
             --ed-key-file <(echo "$SPARKLE_PRIVATE_KEY") \
-            --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${{ github.event.release.tag_name }}/" \
+            --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${TAG}/" \
             --link "https://greyhoundforty.github.io/charter-app/" \
             updates/
+
+          test -f updates/appcast.xml
+          echo "Generated appcast:"
+          head -n 40 updates/appcast.xml
 
       - name: Checkout gh-pages branch
         run: |
@@ -55,17 +59,17 @@ jobs:
             "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" \
             gh-pages-dir
 
-      - name: Copy appcast.xml into gh-pages root
+      - name: Replace appcast.xml at gh-pages root
         run: |
           set -euxo pipefail
           cp updates/appcast.xml gh-pages-dir/appcast.xml
 
-      - name: Commit and push appcast.xml
+      - name: Commit and push
         run: |
           set -euxo pipefail
           cd gh-pages-dir
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add appcast.xml
-          git commit -m "chore: update appcast for ${{ github.event.release.tag_name }}" || echo "No changes to commit"
+          git commit -m "chore: appcast ${TAG}" || echo "No changes"
           git push
