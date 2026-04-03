@@ -48,17 +48,18 @@ jobs:
         run: |
           set -euxo pipefail
           TAG="${{ github.event.release.tag_name }}"
-
+          # or if using workflow_dispatch input:
+          # TAG="${{ inputs.tag }}"
+      
+          KEY_FILE="$RUNNER_TEMP/sparkle_ed25519_private_key"
+          printf '%s' "$SPARKLE_PRIVATE_KEY" > "$KEY_FILE"
+          chmod 600 "$KEY_FILE"
+      
           ./sparkle-tools/bin/generate_appcast \
-            --ed-key-file <(echo "$SPARKLE_PRIVATE_KEY") \
+            --ed-key-file "$KEY_FILE" \
             --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${TAG}/" \
             --link "https://greyhoundforty.github.io/charter-app/" \
             updates/
-
-          test -f updates/appcast.xml
-          echo "Generated appcast:"
-          head -n 40 updates/appcast.xml
-
       - name: Checkout gh-pages branch
         run: |
           set -euxo pipefail
