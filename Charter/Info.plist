@@ -9,21 +9,21 @@
 	<key>CFBundleName</key>
 	<string>Charter</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.2.8</string>
+	<string>0.3.8</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>23</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>14.0</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSSupportsAutomaticGraphicsSwitching</key>
 	<true/>
-	<key>SUPublicEDKey</key>
-	<string>wjVq0HC/GDUzuvneK8/pxuW3wt0l5q880CqFDBBBNaM=</string>
-        <key>SUFeedURL</key>
-        <string>https://greyhoundforty.github.io/charter-app/appcast.xml</string>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
+	<key>SUFeedURL</key>
+	<string>https://greyhoundforty.github.io/charter-app/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>wjVq0HC/GDUzuvneK8/pxuW3wt0l5q880CqFDBBBNaM=</string>
 	<key>SUScheduledCheckInterval</key>
 	<string>86400</string>
 </dict>
