@@ -46,8 +46,16 @@ rasterize 1024 "$ICONSET/icon_512x512@2x.png"
 echo "==> Building .icns..."
 iconutil -c icns "$ICONSET" -o "$ROOT/build/AppIcon.icns"
 
-echo "==> Copying PNGs to AppIcon.appiconset..."
-cp "$ICONSET"/*.png "$APPICONSET/"
+echo "==> Copying PNGs to AppIcon.appiconset (Charter-*.png naming)..."
+# Contents.json references Charter-{size}.png filenames.
+# Map each iconset file to its canonical xcassets name.
+cp "$ICONSET/icon_16x16.png"       "$APPICONSET/Charter-16.png"
+cp "$ICONSET/icon_32x32.png"       "$APPICONSET/Charter-32.png"
+cp "$ICONSET/icon_32x32@2x.png"    "$APPICONSET/Charter-64.png"
+cp "$ICONSET/icon_128x128.png"     "$APPICONSET/Charter-128.png"
+cp "$ICONSET/icon_256x256.png"     "$APPICONSET/Charter-256.png"
+cp "$ICONSET/icon_512x512.png"     "$APPICONSET/Charter-512.png"
+cp "$ICONSET/icon_512x512@2x.png"  "$APPICONSET/Charter-1024.png"
 
 echo "==> Generating DMG background..."
 rsvg-convert -w 600 -h 400 "$BG_SVG" -o "$ROOT/assets/dmg-background.png"
