@@ -225,7 +225,7 @@ step "Dock icon sanity check (512pt / 1024px @2x)"
 
 DOCK_CANDIDATES=(
     "$ICONSET_DIR/icon_512x512@2x.png"
-    "$XCASSETS_DIR/1024.png"
+    "$XCASSETS_DIR/Charter-1024.png"
 )
 
 for candidate in "${DOCK_CANDIDATES[@]}"; do
