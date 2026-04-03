@@ -32,7 +32,7 @@ ARCHIVE="$BUILD_DIR/Charter.xcarchive"
 EXPORT_DIR="$BUILD_DIR/export"
 EXPORT_OPTS="$ROOT/assets/ExportOptions.plist"
 BG="$ROOT/assets/dmg-background.png"
-VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$ROOT/Charter/Info.plist")
+VERSION="${MARKETING_VERSION:-$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$ROOT/Charter/Info.plist")}"
 DMG_PATH="$BUILD_DIR/Charter-${VERSION}.dmg"
 
 mkdir -p "$BUILD_DIR"
@@ -66,6 +66,8 @@ xcodebuild archive \
   -scheme "$SCHEME" \
   -destination "generic/platform=macOS" \
   -archivePath "$ARCHIVE" \
+  MARKETING_VERSION="${MARKETING_VERSION}" \
+  CURRENT_PROJECT_VERSION="${CURRENT_PROJECT_VERSION}" \
   CODE_SIGN_IDENTITY="$CODESIGN_IDENTITY" \
   CODE_SIGN_STYLE=Manual \
   DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
