@@ -34,6 +34,9 @@ EXPORT_OPTS="$ROOT/assets/ExportOptions.plist"
 BG="$ROOT/assets/dmg-background.png"
 VERSION="${MARKETING_VERSION:-$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$ROOT/Charter/Info.plist")}"
 DMG_PATH="$BUILD_DIR/Charter-${VERSION}.dmg"
+XCODE_MARKETING_VERSION="${MARKETING_VERSION:-$VERSION}"
+XCODE_PROJECT_VERSION="${CURRENT_PROJECT_VERSION:-${GITHUB_RUN_NUMBER:-1}}"
+
 
 mkdir -p "$BUILD_DIR"
 
@@ -66,11 +69,11 @@ xcodebuild archive \
   -scheme "$SCHEME" \
   -destination "generic/platform=macOS" \
   -archivePath "$ARCHIVE" \
-  MARKETING_VERSION="${MARKETING_VERSION}" \
-  CURRENT_PROJECT_VERSION="${CURRENT_PROJECT_VERSION}" \
   CODE_SIGN_IDENTITY="$CODESIGN_IDENTITY" \
   CODE_SIGN_STYLE=Manual \
   DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
+  MARKETING_VERSION="$XCODE_MARKETING_VERSION" \
+  CURRENT_PROJECT_VERSION="$XCODE_PROJECT_VERSION" \
   2>&1 | tee "$XCODE_LOG"
 XCODE_STATUS=${PIPESTATUS[0]}
 set -e
@@ -87,8 +90,10 @@ rm -rf "$EXPORT_DIR"
 xcodebuild -exportArchive \
   -archivePath "$ARCHIVE" \
   -exportPath "$EXPORT_DIR" \
-  -exportOptionsPlist "$EXPORT_OPTS"
-
+  -exportOptionsPlist "$EXPORT_OPTS" \
+  MARKETING_VERSION="$XCODE_MARKETING_VERSION" \
+  CURRENT_PROJECT_VERSION="$XCODE_PROJECT_VERSION"
+  
 APP="$EXPORT_DIR/Charter.app"
 if [ ! -d "$APP" ]; then
   echo "Error: Export failed — Charter.app not found at $APP"
