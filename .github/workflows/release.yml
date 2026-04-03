@@ -78,6 +78,84 @@ jobs:
           generate_release_notes: true
           fail_on_unmatched_files: true
 
+      - name: Download Sparkle tools
+        run: |
+          set -euxo pipefail
+          SPARKLE_VERSION=2.6.4
+          curl -sL "https://github.com/sparkle-project/Sparkle/releases/download/${SPARKLE_VERSION}/Sparkle-${SPARKLE_VERSION}.tar.xz" -o sparkle.tar.xz
+          mkdir -p sparkle-tools
+          tar -xJf sparkle.tar.xz -C sparkle-tools
+          test -x sparkle-tools/bin/generate_appcast
+
+      - name: Download release asset (wait until available)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euxo pipefail
+          mkdir -p updates
+
+          # Even though we just uploaded it, the GitHub API/download can be briefly eventually consistent.
+          for i in {1..30}; do
+            echo "Attempt $i/30: downloading ${DMG} from release ${TAG}"
+            rm -f "updates/${DMG}" || true
+
+            if gh release download "${TAG}" \
+              --repo "${{ github.repository }}" \
+              --pattern "${DMG}" \
+              --dir updates; then
+              if [ -f "updates/${DMG}" ]; then
+                break
+              fi
+            fi
+
+            sleep 5
+          done
+
+          ls -la updates
+          test -f "updates/${DMG}"
+
+      - name: Generate appcast.xml (EdDSA, latest only)
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          set -euxo pipefail
+
+          KEY_FILE="$RUNNER_TEMP/sparkle_ed25519_private_key"
+          printf '%s' "$SPARKLE_PRIVATE_KEY" > "$KEY_FILE"
+          chmod 600 "$KEY_FILE"
+
+          ./sparkle-tools/bin/generate_appcast \
+            --ed-key-file "$KEY_FILE" \
+            --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${TAG}/" \
+            --link "https://greyhoundforty.github.io/charter-app/" \
+            updates/
+
+          test -f updates/appcast.xml
+          echo "Generated appcast.xml (first 60 lines):"
+          head -n 60 updates/appcast.xml
+
+      - name: Checkout gh-pages branch
+        run: |
+          set -euxo pipefail
+          git clone --branch gh-pages --depth 1 \
+            "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" \
+            gh-pages-dir
+
+      - name: Replace appcast.xml at gh-pages root
+        run: |
+          set -euxo pipefail
+          cp updates/appcast.xml gh-pages-dir/appcast.xml
+
+      - name: Commit and push appcast.xml to gh-pages
+        run: |
+          set -euxo pipefail
+          cd gh-pages-dir
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add appcast.xml
+          git commit -m "chore: update appcast for ${TAG}" || echo "No changes"
+          git push
+
       - name: Clean up keychain and certificate
         if: always()
         run: |
