@@ -56,41 +56,6 @@ jobs:
             -s -k "$KEYCHAIN_PASSWORD" \
             "$KEYCHAIN_PATH"
 
-      - name: Stamp Info.plist version/build
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: |
-          set -euxo pipefail
-          INFO_PLIST="Charter/Info.plist"
-
-          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString ${VERSION}" "${INFO_PLIST}"
-          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${GITHUB_RUN_NUMBER}" "${INFO_PLIST}"
-
-          echo "Stamped ${INFO_PLIST}:"
-          /usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "${INFO_PLIST}"
-          /usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "${INFO_PLIST}"
-
-      - name: Commit version bump to main (best-effort)
-        if: startsWith(github.ref, 'refs/tags/v')
-        continue-on-error: true
-        run: |
-          set -euxo pipefail
-
-          # Ensure we're on main (tag workflows check out detached HEAD by default)
-          git fetch origin main
-          git checkout -B main origin/main
-
-          # Apply version stamp to the file on main as well
-          INFO_PLIST="Charter/Info.plist"
-          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString ${VERSION}" "${INFO_PLIST}"
-
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add "${INFO_PLIST}"
-          git commit -m "chore: bump version to ${VERSION}" || exit 0
-          git push origin main
-
-
       - name: Build, sign, notarize, and package
         env:
           CODESIGN_IDENTITY: ${{ secrets.CODESIGN_IDENTITY }}
