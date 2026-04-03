@@ -42,6 +42,25 @@ jobs:
             -S apple-tool:,apple: \
             -s -k "$KEYCHAIN_PASSWORD" \
             "$KEYCHAIN_PATH"
+      - name: Set app version from tag
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          set -euxo pipefail
+
+          TAG="${GITHUB_REF_NAME}" 
+          VERSION="${TAG#v}"
+
+          INFO_PLIST="Charter/Info.plist"
+
+          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString ${VERSION}" "${INFO_PLIST}"
+
+          # Build number: simplest is the run number (monotonic within the repo)
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${GITHUB_RUN_NUMBER}" "${INFO_PLIST}"
+
+          echo "Stamped ${INFO_PLIST}:"
+          /usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "${INFO_PLIST}"
+          /usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "${INFO_PLIST}"
+
 
       - name: Build, sign, notarize, and package
         env:
