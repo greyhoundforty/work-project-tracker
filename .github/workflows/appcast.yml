@@ -1,15 +1,18 @@
 name: Update Sparkle appcast (latest only)
 
 on:
+  # Run when a release is created or published. "created" can happen before
+  # assets are uploaded, so we include a retry loop below.
   release:
     types: [created, published]
-    
+
 permissions:
   contents: write
 
 jobs:
   appcast:
     runs-on: macos-latest
+
     steps:
       - name: Download Sparkle tools
         run: |
@@ -18,39 +21,73 @@ jobs:
           curl -sL "https://github.com/sparkle-project/Sparkle/releases/download/${SPARKLE_VERSION}/Sparkle-${SPARKLE_VERSION}.tar.xz" -o sparkle.tar.xz
           mkdir -p sparkle-tools
           tar -xJf sparkle.tar.xz -C sparkle-tools
+          test -x sparkle-tools/bin/generate_appcast
 
-      - name: Download the DMG asset for this release
+      - name: Download the DMG asset for this release (wait for upload)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euxo pipefail
+
           TAG="${{ github.event.release.tag_name }}"
+          if [ -z "${TAG}" ]; then
+            echo "Error: github.event.release.tag_name is empty (workflow must be triggered by a release event)."
+            exit 1
+          fi
+
           VERSION="${TAG#v}"
           DMG="Charter-${VERSION}.dmg"
 
           mkdir -p updates
-          gh release download "${TAG}" \
-            --repo "${{ github.repository }}" \
-            --pattern "${DMG}" \
-            --dir updates
+
+          # Release "created" event may fire before assets are uploaded.
+          # Retry for up to ~5 minutes.
+          for i in {1..30}; do
+            echo "Attempt $i/30: downloading ${DMG} from release ${TAG}"
+            rm -f "updates/${DMG}" || true
+
+            if gh release download "${TAG}" \
+              --repo "${{ github.repository }}" \
+              --pattern "${DMG}" \
+              --dir updates; then
+              if [ -f "updates/${DMG}" ]; then
+                echo "Downloaded updates/${DMG}"
+                break
+              fi
+            fi
+
+            sleep 10
+          done
 
           ls -la updates
+          test -f "updates/${DMG}"
 
       - name: Generate appcast.xml (EdDSA, latest only)
         env:
           SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
           set -euxo pipefail
-          TAG="${{ github.event.release.tag_name }}"      
+
+          TAG="${{ github.event.release.tag_name }}"
+          VERSION="${TAG#v}"
+          DMG="Charter-${VERSION}.dmg"
+
+          # Write the EdDSA private key to a real file (process substitution /dev/fd can fail on macOS runners).
           KEY_FILE="$RUNNER_TEMP/sparkle_ed25519_private_key"
           printf '%s' "$SPARKLE_PRIVATE_KEY" > "$KEY_FILE"
           chmod 600 "$KEY_FILE"
-      
+
+          # Generate appcast.xml into the updates/ directory (latest-only because updates/ contains only this DMG)
           ./sparkle-tools/bin/generate_appcast \
             --ed-key-file "$KEY_FILE" \
             --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${TAG}/" \
             --link "https://greyhoundforty.github.io/charter-app/" \
             updates/
+
+          test -f updates/appcast.xml
+          echo "Generated appcast.xml (first 60 lines):"
+          head -n 60 updates/appcast.xml
+
       - name: Checkout gh-pages branch
         run: |
           set -euxo pipefail
@@ -66,9 +103,13 @@ jobs:
       - name: Commit and push
         run: |
           set -euxo pipefail
+
+          TAG="${{ github.event.release.tag_name }}"
+
           cd gh-pages-dir
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
           git add appcast.xml
-          git commit -m "chore: appcast ${TAG}" || echo "No changes"
+          git commit -m "chore: update appcast for ${TAG}" || echo "No changes"
           git push
