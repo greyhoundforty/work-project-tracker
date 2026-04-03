@@ -36,12 +36,12 @@
 		85E84D4EDBFDF7A7D05E0144 /* ProjectTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98D77C617A950BEEC45A754 /* ProjectTemplate.swift */; };
 		8CE7A7B6A2A1B4A0145589A1 /* Engagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79E5F132AF61639D1ED1E08 /* Engagement.swift */; };
 		949835C676642DB04FCDF30D /* QuickCaptureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44807BC1F189B4C6C849BCF5 /* QuickCaptureTests.swift */; };
-		94DBCC4C2F80333700D66C11 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 94DBCC4B2F80333700D66C11 /* Sparkle */; };
 		95F1F6C81AF521CFDE5EDF1C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4642D24D49293B886C9004 /* AppState.swift */; };
 		9CC7BD88C3AE9F2FBEA9DC9E /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F5B3305F298D847935C6DD /* ImportService.swift */; };
 		A3BAAC3351977D8317F4408C /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E17EF137EC89CE1622E139 /* Project.swift */; };
 		B0A29777A7EDB576554DB8C3 /* ExportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFC4C5A4A7B31188592E717 /* ExportSheet.swift */; };
 		B376A08FB97DE4063AF48FD5 /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB32B5E535A6AE7F4E9847F /* ExportService.swift */; };
+		B767FBF91FE1534498B3617C /* UpdaterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A342674CBE9865D61E219730 /* UpdaterService.swift */; };
 		BEC95E98C50F16E2B6B7563D /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E536E5729762EE17853546AA /* ProjectListView.swift */; };
 		BFA979D97DDF3C4AE62F332F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A64A7909ACFE80130ED68EB8 /* Assets.xcassets */; };
 		CDFC63F8DD6779459060EEF0 /* StagesSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9781DBD148113FC65A5BDA31 /* StagesSidebarView.swift */; };
@@ -108,6 +108,7 @@
 		9848BFBDD94E4436AEE0CC30 /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
 		9C411038C85E9D4CC74CAE6F /* Checkpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkpoint.swift; sourceTree = "<group>"; };
 		9E22B066571B3BB7EDA3EB25 /* Charter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Charter.entitlements; sourceTree = "<group>"; };
+		A342674CBE9865D61E219730 /* UpdaterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterService.swift; sourceTree = "<group>"; };
 		A64A7909ACFE80130ED68EB8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A79DED21F67D243CD120763D /* LogEngagementSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEngagementSheet.swift; sourceTree = "<group>"; };
 		A9EAF894246395C52D97B59D /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
@@ -130,7 +131,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94DBCC4C2F80333700D66C11 /* Sparkle in Frameworks */,
 				E588EA7A1E135C8C5078BCE4 /* SwiftData.framework in Frameworks */,
 				80BC8E5E22613FC908C36C11 /* MarkdownUI in Frameworks */,
 			);
@@ -255,6 +255,7 @@
 				04F30B6022862F9FBB00899C /* ExportModels.swift */,
 				0CB32B5E535A6AE7F4E9847F /* ExportService.swift */,
 				25F5B3305F298D847935C6DD /* ImportService.swift */,
+				A342674CBE9865D61E219730 /* UpdaterService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -336,7 +337,6 @@
 			name = Charter;
 			packageProductDependencies = (
 				84CA3AB3A189E36D2266606D /* MarkdownUI */,
-				94DBCC4B2F80333700D66C11 /* Sparkle */,
 			);
 			productName = Charter;
 			productReference = 77A9B226DCA33C033D058355 /* Charter.app */;
@@ -389,7 +389,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				0B24FF29D35718DCCC58391B /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
-				94DBCC4A2F80333700D66C11 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F51E81EB8E72F43C49A3B4B6 /* Products */;
@@ -455,6 +454,7 @@
 				0EE1E7E562695D92BB4E93E0 /* SettingsView.swift in Sources */,
 				CDFC63F8DD6779459060EEF0 /* StagesSidebarView.swift in Sources */,
 				DC1FE2BF0F057A00BA484DF2 /* TasksTabView.swift in Sources */,
+				B767FBF91FE1534498B3617C /* UpdaterService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,7 +535,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.2.7;
+				MARKETING_VERSION = 0.2.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.greyhoundforty.Charter;
 				PRODUCT_NAME = Charter;
 				SDKROOT = macosx;
@@ -679,7 +679,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.2.7;
+				MARKETING_VERSION = 0.2.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.greyhoundforty.Charter;
 				PRODUCT_NAME = Charter;
 				SDKROOT = macosx;
@@ -727,14 +727,6 @@
 				minimumVersion = 2.4.1;
 			};
 		};
-		94DBCC4A2F80333700D66C11 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.9.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -742,11 +734,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0B24FF29D35718DCCC58391B /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
-		};
-		94DBCC4B2F80333700D66C11 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 94DBCC4A2F80333700D66C11 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
