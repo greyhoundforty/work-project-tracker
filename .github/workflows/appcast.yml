@@ -1,0 +1,71 @@
+name: Update Sparkle appcast (gh-pages)
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  appcast:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout (for git + metadata)
+        uses: actions/checkout@v4
+
+      - name: Download Sparkle tools
+        run: |
+          set -euxo pipefail
+          SPARKLE_VERSION=2.6.4
+          curl -sL "https://github.com/sparkle-project/Sparkle/releases/download/${SPARKLE_VERSION}/Sparkle-${SPARKLE_VERSION}.tar.xz" -o sparkle.tar.xz
+          mkdir -p sparkle-tools
+          tar -xJf sparkle.tar.xz -C sparkle-tools
+
+      - name: Download release DMG assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euxo pipefail
+          mkdir -p release-assets
+          gh release download "${{ github.event.release.tag_name }}" --repo "${{ github.repository }}" --dir release-assets
+          ls -la release-assets
+
+      - name: Generate appcast.xml (EdDSA)
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          set -euxo pipefail
+
+          # Filter to DMGs only (adjust if you later publish ZIP too)
+          mkdir -p updates
+          find release-assets -maxdepth 1 -type f -name "*.dmg" -print -exec cp {} updates/ \;
+
+          # Generate appcast.xml into updates/
+          ./sparkle-tools/bin/generate_appcast \
+            --ed-key-file <(echo "$SPARKLE_PRIVATE_KEY") \
+            --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${{ github.event.release.tag_name }}/" \
+            --link "https://greyhoundforty.github.io/charter-app/" \
+            updates/
+
+      - name: Checkout gh-pages branch
+        run: |
+          set -euxo pipefail
+          git clone --branch gh-pages --depth 1 \
+            "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" \
+            gh-pages-dir
+
+      - name: Copy appcast.xml into gh-pages root
+        run: |
+          set -euxo pipefail
+          cp updates/appcast.xml gh-pages-dir/appcast.xml
+
+      - name: Commit and push appcast.xml
+        run: |
+          set -euxo pipefail
+          cd gh-pages-dir
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add appcast.xml
+          git commit -m "chore: update appcast for ${{ github.event.release.tag_name }}" || echo "No changes to commit"
+          git push
