@@ -25,7 +25,8 @@ jobs:
         run: |
           set -euxo pipefail
           TAG="${{ github.event.release.tag_name }}"
-          DMG="Charter-${TAG}.dmg"
+          VERSION="${TAG#v}"
+          DMG="Charter-${VERSION}.dmg"
 
           mkdir -p updates
           gh release download "${TAG}" \
