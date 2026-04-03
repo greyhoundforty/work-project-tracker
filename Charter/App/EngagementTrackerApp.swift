@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import Sparkle
 
 @main
 struct EngagementTrackerApp: App {
@@ -7,6 +8,8 @@ struct EngagementTrackerApp: App {
     @State private var container = AppState.makeContainer(
         cloudSync: UserDefaults.standard.bool(forKey: "cloudSyncEnabled")
     )
+
+    @StateObject private var updaterService = UpdaterService.shared
 
     var body: some Scene {
         WindowGroup(id: "main") {
@@ -16,6 +19,13 @@ struct EngagementTrackerApp: App {
                                       appState.themeMode == .light ? .light : .dark)
         }
         .modelContainer(container)
+        .commands {
+            CommandGroup(after: .appInfo) {
+                Button("Check for Updates…") {
+                    updaterService.checkForUpdates()
+                }
+            }
+        }
 
         MenuBarExtra("Engagement Tracker", systemImage: "briefcase.fill") {
             MenuBarPopoverView()

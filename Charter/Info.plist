@@ -20,5 +20,11 @@
 	<true/>
 	<key>SUPublicEDKey</key>
 	<string>wjVq0HC/GDUzuvneK8/pxuW3wt0l5q880CqFDBBBNaM=</string>
+        <key>SUFeedURL</key>
+        <string>https://greyhoundforty.github.io/charter-app/appcast.xml</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUScheduledCheckInterval</key>
+	<string>86400</string>
 </dict>
 </plist>

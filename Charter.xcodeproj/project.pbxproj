@@ -36,6 +36,7 @@
 		85E84D4EDBFDF7A7D05E0144 /* ProjectTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98D77C617A950BEEC45A754 /* ProjectTemplate.swift */; };
 		8CE7A7B6A2A1B4A0145589A1 /* Engagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79E5F132AF61639D1ED1E08 /* Engagement.swift */; };
 		949835C676642DB04FCDF30D /* QuickCaptureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44807BC1F189B4C6C849BCF5 /* QuickCaptureTests.swift */; };
+		94DBCC4C2F80333700D66C11 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 94DBCC4B2F80333700D66C11 /* Sparkle */; };
 		95F1F6C81AF521CFDE5EDF1C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4642D24D49293B886C9004 /* AppState.swift */; };
 		9CC7BD88C3AE9F2FBEA9DC9E /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F5B3305F298D847935C6DD /* ImportService.swift */; };
 		A3BAAC3351977D8317F4408C /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E17EF137EC89CE1622E139 /* Project.swift */; };
@@ -129,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94DBCC4C2F80333700D66C11 /* Sparkle in Frameworks */,
 				E588EA7A1E135C8C5078BCE4 /* SwiftData.framework in Frameworks */,
 				80BC8E5E22613FC908C36C11 /* MarkdownUI in Frameworks */,
 			);
@@ -334,6 +336,7 @@
 			name = Charter;
 			packageProductDependencies = (
 				84CA3AB3A189E36D2266606D /* MarkdownUI */,
+				94DBCC4B2F80333700D66C11 /* Sparkle */,
 			);
 			productName = Charter;
 			productReference = 77A9B226DCA33C033D058355 /* Charter.app */;
@@ -386,6 +389,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				0B24FF29D35718DCCC58391B /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				94DBCC4A2F80333700D66C11 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F51E81EB8E72F43C49A3B4B6 /* Products */;
@@ -723,6 +727,14 @@
 				minimumVersion = 2.4.1;
 			};
 		};
+		94DBCC4A2F80333700D66C11 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -730,6 +742,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0B24FF29D35718DCCC58391B /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
+		};
+		94DBCC4B2F80333700D66C11 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94DBCC4A2F80333700D66C11 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
