@@ -47,7 +47,7 @@ jobs:
           SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
           set -euxo pipefail
-          TAG="${{ github.event.release.tag_name }}"
+          TAG="${{ github.event.release.tag_name || inputs.tag }}"
           # or if using workflow_dispatch input:
           # TAG="${{ inputs.tag }}"
       
