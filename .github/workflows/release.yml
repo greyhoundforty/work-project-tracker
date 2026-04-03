@@ -24,6 +24,7 @@ jobs:
           VERSION="${TAG#v}"         # 0.3.6
           echo "TAG=${TAG}" >> "$GITHUB_ENV"
           echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
+          echo "BUILD_NUMBER=${GITHUB_RUN_NUMBER}" >> "$GITHUB_ENV"
           echo "DMG=Charter-${VERSION}.dmg" >> "$GITHUB_ENV"
 
       - name: Install build tools
@@ -62,6 +63,8 @@ jobs:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           APP_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PASSWORD }}
+          MARKETING_VERSION: ${{ env.VERSION }}
+          CURRENT_PROJECT_VERSION: ${{ env.BUILD_NUMBER }}
         run: bash scripts/build-release.sh
 
       - name: Verify DMG name
