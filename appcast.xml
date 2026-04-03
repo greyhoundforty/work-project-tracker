@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Charter</title>
+        <item>
+            <title>0.3.7</title>
+            <pubDate>Fri, 03 Apr 2026 17:12:29 +0000</pubDate>
+            <link>https://greyhoundforty.github.io/charter-app/</link>
+            <sparkle:version>22</sparkle:version>
+            <sparkle:shortVersionString>0.3.7</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/greyhoundforty/charter-app/releases/download/v0.3.7/Charter-0.3.7.dmg" length="2276887" type="application/octet-stream" sparkle:edSignature="qZDyvqe85YBLRQY9jLbdkvMhdxX5bMDzbKGcdXMn5BSzupNV2BOlgWqcPjC5xqFxQWHIG+/1boB4cdWCWKHQBg=="/>
+        </item>
+    </channel>
+</rss>
