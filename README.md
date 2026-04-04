@@ -2,8 +2,6 @@
 
 A macOS app for tracking client projects and engagements through their full lifecycle. Runs as a menu bar popover for quick capture and a full dock window for project management. Local-first via SwiftData with optional iCloud sync.
 
-![Charter in action](work-tracker-demo.gif)
-
 ## What it does
 
 **Project lifecycle tracking** — Projects move through a fixed pipeline: Discovery → Initial Delivery → Refine → Proposal → Won/Lost. Stage-specific checkpoints keep each phase on track.
