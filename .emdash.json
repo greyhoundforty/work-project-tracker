@@ -5,11 +5,9 @@
     ".env.local",
     ".env.*.local",
     ".envrc",
-    "docker-compose.override.yml"
-  ],
-  "scripts": {
-    "setup": "",
-    "run": "",
-    "teardown": ""
-  }
+    "docker-compose.override.yml",
+    "mise.toml",
+    ".mise.toml",
+    "fnox.toml"
+  ]
 }
