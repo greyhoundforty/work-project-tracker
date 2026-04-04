@@ -72,4 +72,120 @@ struct ImportServiceTests {
             #expect(p.name == "Project, Special")
         }
     }
+
+    // MARK: - parseCSVRows edge cases
+
+    @Test("parseCSVRows returns empty array for empty string")
+    func parseCSVRowsEmpty() {
+        let rows = ImportService.parseCSVRows("")
+        #expect(rows.isEmpty)
+    }
+
+    @Test("parseCSVRows parses single row without trailing newline")
+    func parseCSVRowsSingleRow() {
+        let rows = ImportService.parseCSVRows("a,b,c")
+        #expect(rows.count == 1)
+        #expect(rows[0] == ["a", "b", "c"])
+    }
+
+    @Test("parseCSVRows parses two rows separated by newline")
+    func parseCSVRowsTwoRows() {
+        let rows = ImportService.parseCSVRows("header1,header2\nval1,val2")
+        #expect(rows.count == 2)
+        #expect(rows[0] == ["header1", "header2"])
+        #expect(rows[1] == ["val1", "val2"])
+    }
+
+    @Test("parseCSVRows handles CRLF line endings")
+    func parseCSVRowsCRLF() {
+        let rows = ImportService.parseCSVRows("a,b\r\nc,d")
+        #expect(rows.count == 2)
+        #expect(rows[0] == ["a", "b"])
+        #expect(rows[1] == ["c", "d"])
+    }
+
+    @Test("parseCSVRows handles quoted field containing a comma")
+    func parseCSVRowsQuotedComma() {
+        let rows = ImportService.parseCSVRows("\"hello, world\",b")
+        #expect(rows.count == 1)
+        #expect(rows[0][0] == "hello, world")
+        #expect(rows[0][1] == "b")
+    }
+
+    @Test("parseCSVRows handles escaped double-quote inside quoted field")
+    func parseCSVRowsEscapedQuote() {
+        let rows = ImportService.parseCSVRows("\"say \"\"hi\"\"\",b")
+        #expect(rows.count == 1)
+        #expect(rows[0][0] == "say \"hi\"")
+        #expect(rows[0][1] == "b")
+    }
+
+    // MARK: - parseProjectsCSV additional cases
+
+    @Test("CSV with empty name returns failure result")
+    func csvMissingName() {
+        let csv = "name,accountName,stage,isPOC,estimatedValueCents,targetCloseDate,tags,iscOpportunityLink,gtmNavAccountLink,oneDriveFolderLink,opportunityID\n,Acme,Discovery,false,,,,,,"
+        let results = ImportService.parseProjectsCSV(csv)
+        #expect(results.count == 1)
+        if case .failure(let name, _) = results[0] {
+            #expect(name == "(unnamed row)")
+        } else {
+            Issue.record("Expected failure for missing name")
+        }
+    }
+
+    @Test("CSV with header only returns empty results")
+    func csvHeaderOnly() {
+        let csv = "name,accountName,stage"
+        let results = ImportService.parseProjectsCSV(csv)
+        #expect(results.isEmpty)
+    }
+
+    @Test("CSV parses isPOC=true correctly")
+    func csvIsPOCTrue() {
+        let csv = "name,accountName,stage,isPOC,estimatedValueCents,targetCloseDate,tags,iscOpportunityLink,gtmNavAccountLink,oneDriveFolderLink,opportunityID\nPOC Project,Acme,Discovery,true,,,,,,"
+        let results = ImportService.parseProjectsCSV(csv)
+        #expect(results.count == 1)
+        if case .success(let p) = results[0] {
+            #expect(p.isPOC == true)
+        } else {
+            Issue.record("Expected success")
+        }
+    }
+
+    @Test("CSV parses estimatedValueCents correctly")
+    func csvEstimatedValue() {
+        let csv = "name,accountName,stage,isPOC,estimatedValueCents,targetCloseDate,tags,iscOpportunityLink,gtmNavAccountLink,oneDriveFolderLink,opportunityID\nDeal,Acme,Discovery,false,500000,,,,,,"
+        let results = ImportService.parseProjectsCSV(csv)
+        #expect(results.count == 1)
+        if case .success(let p) = results[0] {
+            #expect(p.estimatedValueCents == 500000)
+        } else {
+            Issue.record("Expected success")
+        }
+    }
+
+    @Test("CSV parses semicolon-delimited tags correctly")
+    func csvTagsParsing() {
+        let csv = "name,accountName,stage,isPOC,estimatedValueCents,targetCloseDate,tags,iscOpportunityLink,gtmNavAccountLink,oneDriveFolderLink,opportunityID\nDeal,Acme,Discovery,false,,cloud;security;vpc,,,,,"
+        let results = ImportService.parseProjectsCSV(csv)
+        #expect(results.count == 1)
+        if case .success(let p) = results[0] {
+            #expect(p.tags == ["cloud", "security", "vpc"])
+        } else {
+            Issue.record("Expected success")
+        }
+    }
+
+    @Test("CSV with unknown stage returns failure result")
+    func csvUnknownStage() {
+        let csv = "name,accountName,stage,isPOC,estimatedValueCents,targetCloseDate,tags,iscOpportunityLink,gtmNavAccountLink,oneDriveFolderLink,opportunityID\nBad Project,Acme,NotAStage,false,,,,,,"
+        let results = ImportService.parseProjectsCSV(csv)
+        #expect(results.count == 1)
+        if case .failure(let name, _) = results[0] {
+            #expect(name == "Bad Project")
+        } else {
+            Issue.record("Expected failure for unknown stage")
+        }
+    }
 }

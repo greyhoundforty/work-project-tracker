@@ -65,4 +65,16 @@ struct CheckpointSeederTests {
             #expect(cp.isCompleted == false)
         }
     }
+
+    @Test func makeAllCheckpointsProducesExpectedTotal() {
+        let all = CheckpointSeeder.makeAllCheckpoints()
+        let expected = ProjectStage.allCases.reduce(0) { $0 + CheckpointSeeder.titles(for: $1).count }
+        #expect(all.count == expected)
+    }
+
+    @Test func makeAllCheckpointsContainsAllStages() {
+        let all = CheckpointSeeder.makeAllCheckpoints()
+        let stagesPresent = Set(all.map(\.stage))
+        #expect(stagesPresent == Set(ProjectStage.allCases))
+    }
 }

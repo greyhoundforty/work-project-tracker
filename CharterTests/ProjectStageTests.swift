@@ -21,4 +21,20 @@ struct ProjectStageTests {
     @Test func allCasesCount() {
         #expect(ProjectStage.allCases.count == 6)
     }
+
+    @Test func terminalStagesHaveNilNext() {
+        #expect(ProjectStage.won.next == nil)
+        #expect(ProjectStage.lost.next == nil)
+    }
+
+    @Test func nonTerminalActiveStagesAreNotTerminal() {
+        #expect(ProjectStage.initialDelivery.isTerminal == false)
+        #expect(ProjectStage.refine.isTerminal == false)
+    }
+
+    @Test func idMatchesRawValue() {
+        for stage in ProjectStage.allCases {
+            #expect(stage.id == stage.rawValue)
+        }
+    }
 }
