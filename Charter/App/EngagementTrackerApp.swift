@@ -16,8 +16,7 @@ struct EngagementTrackerApp: App {
             CustomThemeProvider {
                 ContentView()
                     .environment(appState)
-                    .preferredColorScheme(appState.themeMode == .system ? nil :
-                                          appState.themeMode == .light ? .light : .dark)
+                    .preferredColorScheme(appState.preferredColorScheme)
             }
         }
         .modelContainer(container)
@@ -39,6 +38,7 @@ struct EngagementTrackerApp: App {
         Settings {
             SettingsView()
                 .environment(appState)
+                .preferredColorScheme(appState.preferredColorScheme)
         }
         .modelContainer(container)
     }

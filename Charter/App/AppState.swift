@@ -19,6 +19,14 @@ final class AppState {
     var themeMode: ThemeMode = ThemeMode(rawValue: UserDefaults.standard.string(forKey: "themeMode") ?? "system") ?? .system {
         didSet { UserDefaults.standard.set(themeMode.rawValue, forKey: "themeMode") }
     }
+
+    var preferredColorScheme: ColorScheme? {
+        switch themeMode {
+        case .light: return .light
+        case .dark: return .dark
+        case .system: return nil
+        }
+    }
     var templateFolderPath: String? = UserDefaults.standard.string(forKey: "templateFolderPath") {
         didSet { UserDefaults.standard.set(templateFolderPath, forKey: "templateFolderPath") }
     }
