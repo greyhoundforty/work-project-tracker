@@ -1,5 +1,5 @@
 {
-  "originHash" : "b01df3f6f684b292917840312829c4b1bda62391eed7beba6e05d5524ddfba93",
+  "originHash" : "e6f316c0221401c5b516fe2cf219d946a068cd347f4864d75255c26222d60627",
   "pins" : [
     {
       "identity" : "networkimage",
@@ -35,6 +35,15 @@
       "state" : {
         "revision" : "5f613358148239d0292c0cef674a3c2314737f9e",
         "version" : "2.4.1"
+      }
+    },
+    {
+      "identity" : "swift-theme-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Charlyk/swift-theme-kit.git",
+      "state" : {
+        "revision" : "174a9f70d5b980c602f92fc2340d65a988bbee38",
+        "version" : "1.2.4"
       }
     }
   ],

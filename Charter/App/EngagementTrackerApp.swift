@@ -13,10 +13,12 @@ struct EngagementTrackerApp: App {
 
     var body: some Scene {
         WindowGroup(id: "main") {
-            ContentView()
-                .environment(appState)
-                .preferredColorScheme(appState.themeMode == .system ? nil :
-                                      appState.themeMode == .light ? .light : .dark)
+            CustomThemeProvider {
+                ContentView()
+                    .environment(appState)
+                    .preferredColorScheme(appState.themeMode == .system ? nil :
+                                          appState.themeMode == .light ? .light : .dark)
+            }
         }
         .modelContainer(container)
         .commands {

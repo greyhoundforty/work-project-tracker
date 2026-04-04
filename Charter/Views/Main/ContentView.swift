@@ -20,23 +20,5 @@ struct ContentView: View {
         .frame(minWidth: 900, minHeight: 600)
         .background(Color.themeBg)
         .searchable(text: $appState.searchQuery, placement: .toolbar, prompt: "Search projects…")
-        .toolbar {
-            ToolbarItem(placement: .automatic) {
-                SettingsGearButton()
-            }
-        }
-    }
-}
-
-struct SettingsGearButton: View {
-    @Environment(\.openSettings) private var openSettings
-    var body: some View {
-        Button {
-            openSettings()
-        } label: {
-            Image(systemName: "gearshape")
-                .foregroundStyle(Color.themeFgDim)
-        }
-        .help("Settings")
     }
 }

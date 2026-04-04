@@ -11,6 +11,12 @@ packages:
   MarkdownUI:
     url: https://github.com/gonzalezreal/swift-markdown-ui.git
     from: 2.4.1
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle.git
+    from: 2.9.1
+  SwiftThemeKit:
+    url: https://github.com/Charlyk/swift-theme-kit.git
+    from: 1.2.4
 
 settings:
   base:
@@ -62,6 +68,8 @@ targets:
     dependencies:
       - sdk: SwiftData.framework
       - package: MarkdownUI
+      - package: Sparkle
+      - package: SwiftThemeKit
 
   CharterTests:
     type: bundle.unit-test
