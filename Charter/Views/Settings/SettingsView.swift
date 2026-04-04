@@ -4,6 +4,7 @@ import AppKit
 
 struct SettingsView: View {
     @Environment(AppState.self) private var appState
+    @Environment(RemindersService.self) private var remindersService
     @Environment(\.modelContext) private var modelContext
 
     @State private var showResetDataAlert = false
@@ -150,6 +151,12 @@ struct SettingsView: View {
             }
 
             Section {
+                RemindersSettingsSection()
+            } header: {
+                Text("Reminders")
+            }
+
+            Section {
                 HStack {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Reset Data")
@@ -184,7 +191,7 @@ struct SettingsView: View {
             }
         }
         .formStyle(.grouped)
-        .frame(width: 480, height: 600)
+        .frame(width: 480, height: 720)
         .alert("Reset Data?", isPresented: $showResetDataAlert) {
             Button("Cancel", role: .cancel) {}
             Button("Delete All Data", role: .destructive) { resetData() }
@@ -216,6 +223,8 @@ struct SettingsView: View {
         appState.templateFolderBookmark = nil
         appState.themeMode = .system
         appState.isCloudSyncEnabled = false
+        appState.remindersListID = nil
+        appState.remindersMarkCompleted = false
     }
 
     private func chooseTemplateFolder() {
@@ -231,6 +240,74 @@ struct SettingsView: View {
                 includingResourceValuesForKeys: nil,
                 relativeTo: nil
             )
+        }
+    }
+}
+
+// MARK: - RemindersSettingsSection
+
+private struct RemindersSettingsSection: View {
+    @Environment(AppState.self) private var appState
+    @Environment(RemindersService.self) private var remindersService
+
+    var body: some View {
+        @Bindable var appState = appState
+
+        Group {
+            switch remindersService.authorizationStatus {
+            case .notDetermined:
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Import tasks from Reminders")
+                        Text("Charter will ask permission to read a Reminders list you choose.")
+                            .font(.system(size: 11))
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    Button("Allow Access…") {
+                        Task { await remindersService.requestAccess() }
+                    }
+                }
+            case .denied, .restricted:
+                HStack(spacing: 8) {
+                    Image(systemName: "exclamationmark.triangle")
+                        .foregroundStyle(.orange)
+                    Text("Reminders access was denied. Enable it in System Settings → Privacy & Security → Reminders.")
+                        .font(.system(size: 11))
+                        .foregroundStyle(.secondary)
+                }
+            case .fullAccess:
+                authorizedContent(appState: appState)
+            default:
+                EmptyView()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func authorizedContent(appState: AppState) -> some View {
+        if remindersService.availableLists.isEmpty {
+            Text("No Reminders lists found.")
+                .font(.system(size: 11))
+                .foregroundStyle(.secondary)
+        } else {
+            Picker("Import From", selection: Binding(
+                get: { appState.remindersListID ?? "" },
+                set: { appState.remindersListID = $0.isEmpty ? nil : $0 }
+            )) {
+                Text("None").tag("")
+                ForEach(remindersService.availableLists, id: \.calendarIdentifier) { list in
+                    Text(list.title).tag(list.calendarIdentifier)
+                }
+            }
+            Text("Tasks will be imported from this list into whichever project you choose on the Tasks tab.")
+                .font(.system(size: 11))
+                .foregroundStyle(.secondary)
+
+            Toggle("Mark reminders as completed after import", isOn: Binding(
+                get: { appState.remindersMarkCompleted },
+                set: { appState.remindersMarkCompleted = $0 }
+            ))
         }
     }
 }

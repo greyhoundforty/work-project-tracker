@@ -8,6 +8,7 @@ struct EngagementTrackerApp: App {
     @State private var container = AppState.makeContainer(
         cloudSync: UserDefaults.standard.bool(forKey: "cloudSyncEnabled")
     )
+    @State private var remindersService = RemindersService.shared
 
     @StateObject private var updaterService = UpdaterService.shared
 
@@ -16,6 +17,7 @@ struct EngagementTrackerApp: App {
             CustomThemeProvider {
                 ContentView()
                     .environment(appState)
+                    .environment(remindersService)
                     .preferredColorScheme(appState.preferredColorScheme)
             }
         }
@@ -38,6 +40,7 @@ struct EngagementTrackerApp: App {
         Settings {
             SettingsView()
                 .environment(appState)
+                .environment(remindersService)
                 .preferredColorScheme(appState.preferredColorScheme)
         }
         .modelContainer(container)

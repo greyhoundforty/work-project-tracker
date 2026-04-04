@@ -3,10 +3,14 @@ import SwiftData
 
 struct TasksTabView: View {
     @Environment(\.modelContext) private var context
+    @Environment(AppState.self) private var appState
+    @Environment(RemindersService.self) private var remindersService
     let project: Project
 
     @State private var newTaskTitle: String = ""
     @State private var showCompleted: Bool = false
+    @State private var isImporting: Bool = false
+    @State private var lastImportCount: Int? = nil
 
     private var pendingTasks: [ProjectTask] {
         project.tasks.filter { !$0.isCompleted }.sorted { $0.createdAt < $1.createdAt }
@@ -28,9 +32,51 @@ struct TasksTabView: View {
                 }
                 .disabled(newTaskTitle.trimmingCharacters(in: .whitespaces).isEmpty)
                 .buttonStyle(.plain)
+
+                if appState.remindersListID != nil {
+                    Divider()
+                        .frame(height: 16)
+                        .padding(.horizontal, 2)
+                    Button {
+                        importFromReminders()
+                    } label: {
+                        if isImporting {
+                            ProgressView()
+                                .controlSize(.small)
+                        } else {
+                            Label("Import from Reminders", systemImage: "checklist")
+                                .font(.system(size: 12))
+                        }
+                    }
+                    .buttonStyle(.borderless)
+                    .disabled(isImporting || !remindersService.isAuthorized)
+                    .help("Import incomplete tasks from your selected Reminders list into this project")
+                }
             }
             .padding()
             .background(Color.themeBg1)
+
+            if let count = lastImportCount {
+                HStack {
+                    Image(systemName: count > 0 ? "checkmark.circle" : "info.circle")
+                        .foregroundStyle(count > 0 ? Color.themeGreen : Color.themeFgDim)
+                    Text(count > 0 ? "Imported \(count) task\(count == 1 ? "" : "s") from Reminders" : "No new tasks to import")
+                        .font(.system(size: 11))
+                        .foregroundStyle(count > 0 ? Color.themeGreen : Color.themeFgDim)
+                    Spacer()
+                    Button {
+                        lastImportCount = nil
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 10))
+                            .foregroundStyle(Color.themeFgDim)
+                    }
+                    .buttonStyle(.plain)
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 6)
+                .background(Color.themeBg2)
+            }
 
             Divider()
 
@@ -76,6 +122,22 @@ struct TasksTabView: View {
         project.updatedAt = Date()
         try? context.save()
         newTaskTitle = ""
+    }
+
+    private func importFromReminders() {
+        guard let listID = appState.remindersListID, !isImporting else { return }
+        isImporting = true
+        lastImportCount = nil
+        Task { @MainActor in
+            let count = await remindersService.importPendingReminders(
+                fromListWithID: listID,
+                into: project,
+                context: context,
+                markCompleted: appState.remindersMarkCompleted
+            )
+            isImporting = false
+            lastImportCount = count
+        }
     }
 
     private func delete(_ task: ProjectTask) {

@@ -14,6 +14,8 @@
     <string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>14.0</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Charter can import tasks from a Reminders list you choose, letting you capture tasks on your iPhone and pull them into your projects on the Mac.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSSupportsAutomaticGraphicsSwitching</key>
