@@ -12,6 +12,11 @@ struct EngagementTrackerApp: App {
 
     @StateObject private var updaterService = UpdaterService.shared
 
+    init() {
+        let savedMode = ThemeMode(rawValue: UserDefaults.standard.string(forKey: "themeMode") ?? "system") ?? .system
+        Self.applyAppearance(savedMode)
+    }
+
     var body: some Scene {
         WindowGroup(id: "main") {
             CustomThemeProvider {
@@ -19,6 +24,9 @@ struct EngagementTrackerApp: App {
                     .environment(appState)
                     .environment(remindersService)
                     .preferredColorScheme(appState.preferredColorScheme)
+            }
+            .onChange(of: appState.themeMode) { _, newMode in
+                Self.applyAppearance(newMode)
             }
         }
         .modelContainer(container)
@@ -44,5 +52,16 @@ struct EngagementTrackerApp: App {
                 .preferredColorScheme(appState.preferredColorScheme)
         }
         .modelContainer(container)
+    }
+
+    private static func applyAppearance(_ mode: ThemeMode) {
+        switch mode {
+        case .system:
+            NSApp.appearance = nil
+        case .light:
+            NSApp.appearance = NSAppearance(named: .aqua)
+        case .dark:
+            NSApp.appearance = NSAppearance(named: .darkAqua)
+        }
     }
 }
