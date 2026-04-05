@@ -6,6 +6,7 @@ struct NewProjectSheet: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     @Environment(AppState.self) private var appState
+    @Query(sort: \ProjectFolder.sortOrder) private var folders: [ProjectFolder]
 
     @State private var name: String = ""
     @State private var summary: String = ""
@@ -13,6 +14,7 @@ struct NewProjectSheet: View {
     @State private var selectedTemplate: ProjectTemplate? = nil
     @State private var customFieldValues: [String] = []
     @State private var availableTemplates: [ProjectTemplate] = []
+    @State private var selectedFolderForNew: ProjectFolder? = nil
 
     var isValid: Bool { !name.trimmingCharacters(in: .whitespaces).isEmpty }
 
@@ -50,6 +52,15 @@ struct NewProjectSheet: View {
                         }
                         LabeledField(label: "Tags (resource types, comma-separated)") {
                             TextField("e.g. vpc, iks, powervs", text: $tagsString)
+                        }
+                        LabeledField(label: "Folder") {
+                            Picker("", selection: $selectedFolderForNew) {
+                                Text("Unsorted").tag(Optional<ProjectFolder>.none)
+                                ForEach(folders) { folder in
+                                    Text(folder.name).tag(Optional(folder))
+                                }
+                            }
+                            .labelsHidden()
                         }
                         LabeledField(label: "Template") {
                             Picker("", selection: $selectedTemplate) {
@@ -91,7 +102,10 @@ struct NewProjectSheet: View {
         }
         .background(Color.themeBg)
         .frame(width: 480)
-        .onAppear { loadTemplates() }
+        .onAppear {
+            loadTemplates()
+            selectedFolderForNew = appState.selectedFolder
+        }
         .onChange(of: selectedTemplate) { _, newTemplate in
             customFieldValues = Array(
                 repeating: "",
@@ -162,6 +176,7 @@ struct NewProjectSheet: View {
             oneDriveFolderLink: oneDriveLink
         )
         project.summary = summary.isEmpty ? nil : summary
+        project.folder = selectedFolderForNew
         context.insert(project)
 
         if let template = selectedTemplate, !template.checkpoints.isEmpty {

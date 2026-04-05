@@ -9,7 +9,11 @@ struct ProjectListView: View {
     private var filtered: [Project] {
         let base = allProjects.filter(\.isActive)
         let byFilter: [Project]
-        if let label = appState.selectedLabel {
+        if appState.selectedFolderIsUnsorted {
+            byFilter = base.filter { $0.folder == nil }
+        } else if let folder = appState.selectedFolder {
+            byFilter = base.filter { $0.folder?.id == folder.id }
+        } else if let label = appState.selectedLabel {
             byFilter = base.filter { $0.accountName == label }
         } else if let tag = appState.selectedTag {
             byFilter = base.filter { $0.tags.contains(tag) }
@@ -50,7 +54,9 @@ struct ProjectListView: View {
         .listStyle(.inset)
         .frame(minWidth: 220)
         .navigationTitle(
-            appState.selectedLabel.map { $0.replacingOccurrences(of: " ", with: "-") }
+            appState.selectedFolderIsUnsorted ? "Unsorted"
+            : appState.selectedFolder.map { $0.name }
+            ?? appState.selectedLabel.map { $0.replacingOccurrences(of: " ", with: "-") }
             ?? appState.selectedTag.map { String($0.dropFirst()) }
             ?? appState.selectedStage?.rawValue
             ?? "All Projects"

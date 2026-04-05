@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00B840654891196AD69827CC /* NewProjectSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3BFA006D8AFDC8A266C2F7 /* NewProjectSheet.swift */; };
+		AA11BB22CC33DD44EE55FF66 /* ProjectFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF67 /* ProjectFolder.swift */; };
+		BB22CC33DD44EE55FF66AA11 /* NewFolderSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CC33DD44EE55FF66AA12 /* NewFolderSheet.swift */; };
 		01CDAD42B6288E2AC1139D44 /* OverviewTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DD6C15FAC5229B56351512 /* OverviewTabView.swift */; };
 		05724C74904B617635F87B71 /* ProjectDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440085BF15825F4DAF34B834 /* ProjectDetailView.swift */; };
 		087A4D2834613F4F03420283 /* CheckpointsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D404B8604C78FBA458C181 /* CheckpointsTabView.swift */; };
@@ -133,6 +135,8 @@
 		A79DED21F67D243CD120763D /* LogEngagementSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEngagementSheet.swift; sourceTree = "<group>"; };
 		A9EAF894246395C52D97B59D /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		BF3BFA006D8AFDC8A266C2F7 /* NewProjectSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProjectSheet.swift; sourceTree = "<group>"; };
+		AA11BB22CC33DD44EE55FF67 /* ProjectFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFolder.swift; sourceTree = "<group>"; };
+		BB22CC33DD44EE55FF66AA12 /* NewFolderSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFolderSheet.swift; sourceTree = "<group>"; };
 		C98D77C617A950BEEC45A754 /* ProjectTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTemplate.swift; sourceTree = "<group>"; };
 		CB3D760A75CC59075164F379 /* CharterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CharterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D79E5F132AF61639D1ED1E08 /* Engagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Engagement.swift; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 				68DB3DFF55E84AB0E7B66C76 /* AddContactSheet.swift */,
 				A79DED21F67D243CD120763D /* LogEngagementSheet.swift */,
 				BF3BFA006D8AFDC8A266C2F7 /* NewProjectSheet.swift */,
+				BB22CC33DD44EE55FF66AA12 /* NewFolderSheet.swift */,
 			);
 			path = Sheets;
 			sourceTree = "<group>";
@@ -260,6 +265,7 @@
 				699A8B84E1C556CAA23EFAE4 /* Enums.swift */,
 				A9EAF894246395C52D97B59D /* Note.swift */,
 				27E17EF137EC89CE1622E139 /* Project.swift */,
+				AA11BB22CC33DD44EE55FF67 /* ProjectFolder.swift */,
 				E1250E99F51C82652EC9418F /* ProjectCustomField.swift */,
 				E5C084345998A678EDB34C50 /* ProjectLink.swift */,
 				00099B2BB079DD6B54A8B8F1 /* ProjectTask.swift */,
@@ -477,12 +483,14 @@
 				7D5375613C6882015C68D81B /* MarkdownTheme.swift in Sources */,
 				1754A99A33783118A18C760B /* MenuBarPopoverView.swift in Sources */,
 				00B840654891196AD69827CC /* NewProjectSheet.swift in Sources */,
+				BB22CC33DD44EE55FF66AA11 /* NewFolderSheet.swift in Sources */,
 				D5A365231EC816938100C85F /* Note.swift in Sources */,
 				2D3AD985C6493D55FC9D6F64 /* NotesTabView.swift in Sources */,
 				01CDAD42B6288E2AC1139D44 /* OverviewTabView.swift in Sources */,
 				A3BAAC3351977D8317F4408C /* Project.swift in Sources */,
 				5AF4AD3B6697BF2BB169E1B9 /* ProjectCustomField.swift in Sources */,
 				05724C74904B617635F87B71 /* ProjectDetailView.swift in Sources */,
+				AA11BB22CC33DD44EE55FF66 /* ProjectFolder.swift in Sources */,
 				18D4E2A8E39E111F9DD59263 /* ProjectLink.swift in Sources */,
 				BEC95E98C50F16E2B6B7563D /* ProjectListView.swift in Sources */,
 				2773C91608F1C839E17C4750 /* ProjectTask.swift in Sources */,
