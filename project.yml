@@ -67,6 +67,7 @@ targets:
       path: Charter/Charter.entitlements
     dependencies:
       - sdk: SwiftData.framework
+      - sdk: EventKit.framework
       - package: MarkdownUI
       - package: Sparkle
       - package: SwiftThemeKit

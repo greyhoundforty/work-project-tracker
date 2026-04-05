@@ -34,6 +34,14 @@ final class AppState {
         didSet { UserDefaults.standard.set(templateFolderBookmark, forKey: "templateFolderBookmark") }
     }
 
+    var remindersListID: String? = UserDefaults.standard.string(forKey: "remindersListID") {
+        didSet { UserDefaults.standard.set(remindersListID, forKey: "remindersListID") }
+    }
+    var remindersMarkCompleted: Bool {
+        get { UserDefaults.standard.bool(forKey: "remindersMarkCompleted") }
+        set { UserDefaults.standard.set(newValue, forKey: "remindersMarkCompleted") }
+    }
+
     func resolveTemplateFolderURL() -> URL? {
         if let bookmarkData = templateFolderBookmark {
             var isStale = false
