@@ -3,13 +3,13 @@
     <channel>
         <title>Charter</title>
         <item>
-            <title>0.4.7</title>
-            <pubDate>Sat, 04 Apr 2026 09:38:04 +0000</pubDate>
+            <title>0.4.9</title>
+            <pubDate>Sun, 05 Apr 2026 10:26:32 +0000</pubDate>
             <link>https://greyhoundforty.github.io/charter-app/</link>
-            <sparkle:version>31</sparkle:version>
-            <sparkle:shortVersionString>0.4.7</sparkle:shortVersionString>
+            <sparkle:version>33</sparkle:version>
+            <sparkle:shortVersionString>0.4.9</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/greyhoundforty/charter-app/releases/download/v0.4.7/Charter-0.4.7.dmg" length="3691328" type="application/octet-stream" sparkle:edSignature="OYrI0TNkldXVA46m8RewmZkJk53pqpotdzNeW2nvcYz+O90R83AN7jWdqyg0eGAvkzDlTtY+wJwE2ZujfpE1Bg=="/>
+            <enclosure url="https://github.com/greyhoundforty/charter-app/releases/download/v0.4.9/Charter-0.4.9.dmg" length="3754681" type="application/octet-stream" sparkle:edSignature="MZwB43tlE+Z84bzPxJd+v/P874g4mvD2ASFG03N/o4LBvYuy7iTCSGZPiYUZJ6PdnE2rTRhvpdhpl6RXMpRtAw=="/>
         </item>
     </channel>
 </rss>
