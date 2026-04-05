@@ -81,7 +81,6 @@ private struct SidebarList: View {
     var body: some View {
         List {
             allProjectsSection
-            projectsSection
             stagesSection
             if !allTags.isEmpty { tagsSection }
             if !projectsWithOpenTasks.isEmpty { tasksSection }
@@ -92,7 +91,7 @@ private struct SidebarList: View {
         Section {
             SidebarRow(
                 label: "All Projects",
-                icon: "folder",
+                icon: "tray.2",
                 badge: activeProjects.count,
                 isSelected: appState.selectedStage == nil
                     && appState.selectedTag == nil
@@ -107,25 +106,19 @@ private struct SidebarList: View {
                 appState.selectedFolder = nil
                 appState.selectedFolderIsUnsorted = false
             }
-        }
-    }
 
-    private var projectsSection: some View {
-        Section {
-            if unsortedCount > 0 {
-                SidebarRow(
-                    label: "Unsorted",
-                    icon: "tray",
-                    badge: unsortedCount,
-                    isSelected: appState.selectedFolderIsUnsorted,
-                    color: .themeFgDim
-                ) {
-                    appState.selectedFolderIsUnsorted = true
-                    appState.selectedFolder = nil
-                    appState.selectedStage = nil
-                    appState.selectedTag = nil
-                    appState.selectedLabel = nil
-                }
+            SidebarRow(
+                label: "Unsorted",
+                icon: "tray",
+                badge: unsortedCount,
+                isSelected: appState.selectedFolderIsUnsorted,
+                color: .themeFgDim
+            ) {
+                appState.selectedFolderIsUnsorted = true
+                appState.selectedFolder = nil
+                appState.selectedStage = nil
+                appState.selectedTag = nil
+                appState.selectedLabel = nil
             }
 
             ForEach(rootFolders) { folder in
@@ -162,7 +155,7 @@ private struct SidebarList: View {
             }
         } header: {
             HStack {
-                Text("Projects")
+                Text("All Projects")
                 Spacer()
                 Button {
                     showNewFolder = true
