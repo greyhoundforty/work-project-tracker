@@ -49,6 +49,8 @@
 		B0A29777A7EDB576554DB8C3 /* ExportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFC4C5A4A7B31188592E717 /* ExportSheet.swift */; };
 		B376A08FB97DE4063AF48FD5 /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB32B5E535A6AE7F4E9847F /* ExportService.swift */; };
 		B767FBF91FE1534498B3617C /* UpdaterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A342674CBE9865D61E219730 /* UpdaterService.swift */; };
+		1480A40BCF804AF2AEDD35AB /* RemindersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039B349CBB4E48AC9416C4A6 /* RemindersService.swift */; };
+		22459066B1E34931A673CF6A /* RemindersServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABB531AD10F42D6BC775A45 /* RemindersServiceTests.swift */; };
 		BEC95E98C50F16E2B6B7563D /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E536E5729762EE17853546AA /* ProjectListView.swift */; };
 		BFA979D97DDF3C4AE62F332F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A64A7909ACFE80130ED68EB8 /* Assets.xcassets */; };
 		C527B6FC9955F67DE31A8201 /* SwiftThemeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1920BFC4653B91A6E9C9A939 /* SwiftThemeKit */; };
@@ -125,6 +127,8 @@
 		9C411038C85E9D4CC74CAE6F /* Checkpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkpoint.swift; sourceTree = "<group>"; };
 		9E22B066571B3BB7EDA3EB25 /* Charter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Charter.entitlements; sourceTree = "<group>"; };
 		A342674CBE9865D61E219730 /* UpdaterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterService.swift; sourceTree = "<group>"; };
+		039B349CBB4E48AC9416C4A6 /* RemindersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersService.swift; sourceTree = "<group>"; };
+		FABB531AD10F42D6BC775A45 /* RemindersServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersServiceTests.swift; sourceTree = "<group>"; };
 		A64A7909ACFE80130ED68EB8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A79DED21F67D243CD120763D /* LogEngagementSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEngagementSheet.swift; sourceTree = "<group>"; };
 		A9EAF894246395C52D97B59D /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 				3217AB78811D2AB793685F65 /* ProjectTaskTests.swift */,
 				880E9C71946EDD42069C3C3A /* ProjectTemplateDecodingTests.swift */,
 				44807BC1F189B4C6C849BCF5 /* QuickCaptureTests.swift */,
+				FABB531AD10F42D6BC775A45 /* RemindersServiceTests.swift */,
 				75B0C2C4EFAC3D07CF26A9C9 /* SearchFilterTests.swift */,
 			);
 			path = CharterTests;
@@ -280,6 +285,7 @@
 				04F30B6022862F9FBB00899C /* ExportModels.swift */,
 				0CB32B5E535A6AE7F4E9847F /* ExportService.swift */,
 				25F5B3305F298D847935C6DD /* ImportService.swift */,
+				039B349CBB4E48AC9416C4A6 /* RemindersService.swift */,
 				A342674CBE9865D61E219730 /* UpdaterService.swift */,
 			);
 			path = Services;
@@ -487,6 +493,7 @@
 				CDFC63F8DD6779459060EEF0 /* StagesSidebarView.swift in Sources */,
 				DC1FE2BF0F057A00BA484DF2 /* TasksTabView.swift in Sources */,
 				B767FBF91FE1534498B3617C /* UpdaterService.swift in Sources */,
+				1480A40BCF804AF2AEDD35AB /* RemindersService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +514,7 @@
 				4F8A8E3AA5B13CEA4C5A34CA /* ProjectTemplateDecodingTests.swift in Sources */,
 				949835C676642DB04FCDF30D /* QuickCaptureTests.swift in Sources */,
 				DE46909C610D3A3A70255F97 /* SearchFilterTests.swift in Sources */,
+				22459066B1E34931A673CF6A /* RemindersServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
