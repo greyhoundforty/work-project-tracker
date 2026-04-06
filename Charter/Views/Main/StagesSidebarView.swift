@@ -9,12 +9,13 @@ struct StagesSidebarView: View {
     @State private var showImport = false
     @State private var showShare = false
     @State private var showBackup = false
+    @State private var showNewFolder = false
 
     var body: some View {
         VStack(spacing: 0) {
-            SidebarList(projects: projects)
+            SidebarList(projects: projects, showNewFolder: $showNewFolder)
                 .listStyle(.sidebar)
-                .navigationTitle("Engagement Tracker")
+                .navigationTitle("Charter")
 
             Divider()
 
@@ -22,6 +23,7 @@ struct StagesSidebarView: View {
                 SidebarActionButton(icon: "gearshape", help: "Settings") { openSettings() }
                 SidebarActionButton(icon: "square.and.arrow.down", help: "Import Projects") { showImport = true }
                 Spacer()
+                SidebarActionButton(icon: "folder.badge.plus", help: "New Folder") { showNewFolder = true }
                 SidebarActionButton(icon: "square.and.arrow.up", help: "Share Project Data") { showShare = true }
                 SidebarActionButton(icon: "archivebox", help: "Backup Projects") { showBackup = true }
             }
@@ -33,6 +35,7 @@ struct StagesSidebarView: View {
         .sheet(isPresented: $showImport) { ImportSheet() }
         .sheet(isPresented: $showShare) { ShareSheet() }
         .sheet(isPresented: $showBackup) { BackupSheet() }
+        .sheet(isPresented: $showNewFolder) { NewFolderSheet() }
     }
 }
 
@@ -40,7 +43,9 @@ struct StagesSidebarView: View {
 
 private struct SidebarList: View {
     @Environment(AppState.self) private var appState
+    @Query(sort: \ProjectFolder.sortOrder) private var folders: [ProjectFolder]
     let projects: [Project]
+    @Binding var showNewFolder: Bool
 
     private var activeProjects: [Project] { projects.filter(\.isActive) }
 
@@ -57,10 +62,26 @@ private struct SidebarList: View {
             .sorted { $0.1 > $1.1 }
     }
 
+    private var unsortedCount: Int {
+        activeProjects.filter { $0.folder == nil }.count
+    }
+
+    private var rootFolders: [ProjectFolder] {
+        folders.filter { $0.parent == nil }
+    }
+
+    private func childFolders(of parent: ProjectFolder) -> [ProjectFolder] {
+        folders.filter { $0.parent?.id == parent.id }
+    }
+
+    private func projectCount(in folder: ProjectFolder) -> Int {
+        activeProjects.filter { $0.folder?.id == folder.id }.count
+    }
+
     var body: some View {
         List {
             allProjectsSection
-            pipelineSection
+            stagesSection
             if !allTags.isEmpty { tagsSection }
             if !projectsWithOpenTasks.isEmpty { tasksSection }
         }
@@ -70,22 +91,87 @@ private struct SidebarList: View {
         Section {
             SidebarRow(
                 label: "All Projects",
-                icon: "folder",
+                icon: "tray.2",
                 badge: activeProjects.count,
                 isSelected: appState.selectedStage == nil
                     && appState.selectedTag == nil
-                    && appState.selectedLabel == nil,
+                    && appState.selectedLabel == nil
+                    && appState.selectedFolder == nil
+                    && !appState.selectedFolderIsUnsorted,
                 color: .themeFg
             ) {
                 appState.selectedStage = nil
                 appState.selectedTag = nil
                 appState.selectedLabel = nil
+                appState.selectedFolder = nil
+                appState.selectedFolderIsUnsorted = false
+            }
+
+            SidebarRow(
+                label: "Unsorted",
+                icon: "tray",
+                badge: unsortedCount,
+                isSelected: appState.selectedFolderIsUnsorted,
+                color: .themeFgDim
+            ) {
+                appState.selectedFolderIsUnsorted = true
+                appState.selectedFolder = nil
+                appState.selectedStage = nil
+                appState.selectedTag = nil
+                appState.selectedLabel = nil
+            }
+
+            ForEach(rootFolders) { folder in
+                SidebarRow(
+                    label: folder.name,
+                    icon: "folder",
+                    badge: projectCount(in: folder),
+                    isSelected: appState.selectedFolder?.id == folder.id,
+                    color: .themeBlue
+                ) {
+                    appState.selectedFolder = folder
+                    appState.selectedFolderIsUnsorted = false
+                    appState.selectedStage = nil
+                    appState.selectedTag = nil
+                    appState.selectedLabel = nil
+                }
+
+                ForEach(childFolders(of: folder)) { child in
+                    SidebarRow(
+                        label: child.name,
+                        icon: "folder",
+                        badge: projectCount(in: child),
+                        isSelected: appState.selectedFolder?.id == child.id,
+                        color: .themeBlue,
+                        indented: true
+                    ) {
+                        appState.selectedFolder = child
+                        appState.selectedFolderIsUnsorted = false
+                        appState.selectedStage = nil
+                        appState.selectedTag = nil
+                        appState.selectedLabel = nil
+                    }
+                }
+            }
+        } header: {
+            HStack {
+                Text("All Projects")
+                Spacer()
+                Button {
+                    showNewFolder = true
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(Color.themeFgDim)
+                }
+                .buttonStyle(.plain)
+                .help("New Folder")
             }
         }
     }
 
-    private var pipelineSection: some View {
-        Section("Pipeline") {
+    private var stagesSection: some View {
+        Section("Stages") {
             ForEach(ProjectStage.allCases.filter { !$0.isTerminal }) { stage in
                 SidebarRow(
                     label: stage.rawValue,
@@ -99,6 +185,8 @@ private struct SidebarList: View {
                     appState.selectedStage = stage
                     appState.selectedTag = nil
                     appState.selectedLabel = nil
+                    appState.selectedFolder = nil
+                    appState.selectedFolderIsUnsorted = false
                 }
             }
         }
@@ -117,6 +205,8 @@ private struct SidebarList: View {
                     appState.selectedTag = tag
                     appState.selectedLabel = nil
                     appState.selectedStage = nil
+                    appState.selectedFolder = nil
+                    appState.selectedFolderIsUnsorted = false
                 }
             }
         }
@@ -138,6 +228,8 @@ private struct SidebarList: View {
                     appState.selectedStage = nil
                     appState.selectedTag = nil
                     appState.selectedLabel = nil
+                    appState.selectedFolder = nil
+                    appState.selectedFolderIsUnsorted = false
                 }
             }
         }
@@ -189,6 +281,7 @@ private struct SidebarRow: View {
     let badge: Int
     let isSelected: Bool
     let color: Color
+    var indented: Bool = false
     let action: () -> Void
 
     var body: some View {
@@ -207,6 +300,7 @@ private struct SidebarRow: View {
                         .clipShape(Capsule())
                 }
             }
+            .padding(.leading, indented ? 16 : 0)
         }
         .buttonStyle(.plain)
         .padding(.vertical, 2)

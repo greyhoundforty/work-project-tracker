@@ -13,6 +13,7 @@ final class Project {
     var estimatedValueCents: Int?           // stored as cents to avoid Decimal SwiftData issues
     var targetCloseDate: Date?
     var tags: [String]
+    var folder: ProjectFolder?
     var iscOpportunityLink: String?
     var gtmNavAccountLink: String?
     var oneDriveFolderLink: String?

@@ -10,6 +10,8 @@ final class AppState {
     var selectedStage: ProjectStage? = .discovery
     var selectedTag: String? = nil
     var selectedLabel: String? = nil
+    var selectedFolder: ProjectFolder? = nil
+    var selectedFolderIsUnsorted: Bool = false
     var selectedProject: Project?
     var searchQuery: String = ""
     var isCloudSyncEnabled: Bool {
@@ -63,6 +65,7 @@ final class AppState {
     static func makeContainer(cloudSync: Bool) -> ModelContainer {
         let schema = Schema([
             Project.self,
+            ProjectFolder.self,
             Contact.self,
             Checkpoint.self,
             ProjectTask.self,
