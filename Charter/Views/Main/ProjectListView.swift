@@ -35,6 +35,14 @@ struct ProjectListView: View {
         }
     }
 
+    private var navigationTitle: String {
+        if appState.selectedFolderIsUnsorted { return "Unsorted" }
+        if let folder = appState.selectedFolder { return folder.name }
+        if let label = appState.selectedLabel { return label.replacingOccurrences(of: " ", with: "-") }
+        if let tag = appState.selectedTag { return String(tag.dropFirst()) }
+        return appState.selectedStage?.rawValue ?? "All Projects"
+    }
+
     var body: some View {
         List {
             ForEach(filtered) { project in
@@ -53,14 +61,7 @@ struct ProjectListView: View {
         }
         .listStyle(.inset)
         .frame(minWidth: 220)
-        .navigationTitle(
-            appState.selectedFolderIsUnsorted ? "Unsorted"
-            : appState.selectedFolder.map { $0.name }
-            ?? appState.selectedLabel.map { $0.replacingOccurrences(of: " ", with: "-") }
-            ?? appState.selectedTag.map { String($0.dropFirst()) }
-            ?? appState.selectedStage?.rawValue
-            ?? "All Projects"
-        )
+        .navigationTitle(navigationTitle)
         .overlay {
             if filtered.isEmpty {
                 ContentUnavailableView(
