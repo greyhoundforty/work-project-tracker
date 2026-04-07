@@ -272,6 +272,7 @@ private struct SidebarList: View {
                         && appState.selectedTag == nil,
                     color: .themeAqua
                 ) {
+                    appState.pendingProjectDetailTab = "tasks"
                     appState.selectedProject = item.project
                     appState.selectedStage = nil
                     appState.selectedTag = nil

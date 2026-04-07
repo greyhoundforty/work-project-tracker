@@ -13,6 +13,8 @@ final class AppState {
     var selectedFolder: ProjectFolder? = nil
     var selectedFolderIsUnsorted: Bool = false
     var selectedProject: Project?
+    /// When set, the next time project detail is shown it selects this tab (`"overview"`, `"tasks"`, etc.), then clears.
+    var pendingProjectDetailTab: String?
     var searchQuery: String = ""
     var isCloudSyncEnabled: Bool {
         get { UserDefaults.standard.bool(forKey: "cloudSyncEnabled") }

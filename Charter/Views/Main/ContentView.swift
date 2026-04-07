@@ -12,6 +12,7 @@ struct ContentView: View {
         } detail: {
             if let project = appState.selectedProject {
                 ProjectDetailView(project: project)
+                    .id(project.id)
             } else {
                 ContentUnavailableView("Select a Project", systemImage: "briefcase", description: Text("Choose a project from the list."))
                     .background(Color.themeBg)

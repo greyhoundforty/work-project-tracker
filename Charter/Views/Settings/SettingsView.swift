@@ -211,6 +211,7 @@ struct SettingsView: View {
         projects.forEach { modelContext.delete($0) }
         try? modelContext.save()
         appState.selectedProject = nil
+        appState.pendingProjectDetailTab = nil
         appState.selectedStage = nil
         appState.selectedTag = nil
         appState.selectedLabel = nil

@@ -215,6 +215,7 @@ struct NewProjectSheet: View {
         do {
             try context.save()
             appState.selectedStage = project.stage
+            appState.pendingProjectDetailTab = nil
             appState.selectedProject = project
             dismiss()
         } catch {

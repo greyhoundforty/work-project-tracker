@@ -76,6 +76,7 @@ struct ProjectListView: View {
                     }
                     .onTapGesture {
                         dragSourceLogger.debug("Project row tapped: \(project.name, privacy: .public)")
+                        appState.pendingProjectDetailTab = nil
                         appState.selectedProject = project
                     }
                     .listRowBackground(

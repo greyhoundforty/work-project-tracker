@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ProjectDetailView: View {
     let project: Project
+    @Environment(AppState.self) private var appState
     @State private var selectedTab: String = "overview"
 
     var body: some View {
@@ -30,6 +31,16 @@ struct ProjectDetailView: View {
             }
         }
         .background(Color.themeBg)
+        .onAppear { applyPendingDetailTabIfNeeded() }
+        .onChange(of: appState.pendingProjectDetailTab) { _, _ in
+            applyPendingDetailTabIfNeeded()
+        }
+    }
+
+    private func applyPendingDetailTabIfNeeded() {
+        guard let tab = appState.pendingProjectDetailTab else { return }
+        selectedTab = tab
+        appState.pendingProjectDetailTab = nil
     }
 }
 
@@ -156,6 +167,7 @@ struct ProjectDetailHeaderView: View {
     }
 
     private func deleteProject() {
+        appState.pendingProjectDetailTab = nil
         appState.selectedProject = nil
         context.delete(project)
         try? context.save()
