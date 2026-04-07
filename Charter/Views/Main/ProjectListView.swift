@@ -146,6 +146,15 @@ struct ProjectRowView: View {
                         .font(.system(size: 11))
                         .foregroundStyle(Color.themeFgDim)
                 }
+                if let folder = project.folder {
+                    Label(folder.name, systemImage: "folder")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundStyle(Color.themeBlue)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 1)
+                        .background(Color.themeBg2)
+                        .clipShape(Capsule())
+                }
                 Spacer()
                 Text(project.stage.rawValue)
                     .font(.system(size: 10, weight: .medium))
