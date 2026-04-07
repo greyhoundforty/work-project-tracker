@@ -6,6 +6,7 @@ import UniformTypeIdentifiers
 struct ImportSheet: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Environment(AppState.self) private var appState
 
     @State private var importResults: [ImportResult] = []
     @State private var hasLoaded = false
@@ -228,6 +229,10 @@ struct ImportSheet: View {
                     project.checkpoints.append(checkpoint)
                 }
             }
+
+            VaultService.prepareProjectDirectoryIfVaultEnabled(project: project, appState: appState)
+            try? VaultService.mirrorAllTasksToVault(project: project, appState: appState)
+            try? VaultService.mirrorAllNotesToVault(project: project, appState: appState)
 
             imported += 1
         }

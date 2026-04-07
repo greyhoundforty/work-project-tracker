@@ -26,6 +26,7 @@ build/
 
 # superpowers brainstorming session files
 .superpowers/
+docs/plans/
 
 # Xcode
 #

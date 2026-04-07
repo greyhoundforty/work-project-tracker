@@ -139,6 +139,37 @@ struct SettingsView: View {
             }
 
             Section {
+                HStack {
+                    if let path = appState.vaultRootPath {
+                        Text(path)
+                            .font(.system(size: 11))
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Button("Clear") {
+                            appState.vaultRootPath = nil
+                            appState.vaultRootBookmark = nil
+                        }
+                        .buttonStyle(.borderless)
+                    } else {
+                        Text("No folder selected")
+                            .font(.system(size: 11))
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    Button("Choose…") {
+                        chooseVaultFolder()
+                    }
+                }
+                Text("Projects get subfolders with notes (Markdown) and tasks (plain text). See docs/research/2026-on-disk-vault.md.")
+                    .font(.system(size: 11))
+                    .foregroundStyle(.secondary)
+            } header: {
+                Text("On-disk vault")
+            }
+
+            Section {
                 Toggle("Sync with iCloud", isOn: Binding(
                     get: { appState.isCloudSyncEnabled },
                     set: { appState.isCloudSyncEnabled = $0 }
@@ -220,6 +251,8 @@ struct SettingsView: View {
 
     private func resetAll() {
         resetData()
+        appState.vaultRootPath = nil
+        appState.vaultRootBookmark = nil
         appState.templateFolderPath = nil
         appState.templateFolderBookmark = nil
         appState.themeMode = .system
@@ -243,6 +276,22 @@ struct SettingsView: View {
             )
         }
     }
+
+    private func chooseVaultFolder() {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = false
+        panel.prompt = "Select Vault Folder"
+        if panel.runModal() == .OK, let url = panel.url {
+            appState.vaultRootPath = url.path
+            appState.vaultRootBookmark = try? url.bookmarkData(
+                options: .withSecurityScope,
+                includingResourceValuesForKeys: nil,
+                relativeTo: nil
+            )
+        }
+    }
 }
 
 // MARK: - RemindersSettingsSection
@@ -250,6 +299,12 @@ struct SettingsView: View {
 private struct RemindersSettingsSection: View {
     @Environment(AppState.self) private var appState
     @Environment(RemindersService.self) private var remindersService
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \Project.name) private var allProjects: [Project]
+
+    @State private var isRoutedImporting = false
+    @State private var showRoutedResult = false
+    @State private var routedResultMessage = ""
 
     var body: some View {
         @Bindable var appState = appState
@@ -283,6 +338,11 @@ private struct RemindersSettingsSection: View {
                 EmptyView()
             }
         }
+        .alert("Routed import", isPresented: $showRoutedResult) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(routedResultMessage)
+        }
     }
 
     @ViewBuilder
@@ -301,14 +361,48 @@ private struct RemindersSettingsSection: View {
                     Text(list.title).tag(list.calendarIdentifier)
                 }
             }
-            Text("Tasks will be imported from this list into whichever project you choose on the Tasks tab.")
+            Text("Shared inbox list. Add Charter: <code> on the first line of a reminder’s notes (code must match a project’s Reminders code on the Overview tab), or use a title like [code] Task name. Then use Import Routed Reminders below. To copy every reminder in the list into one project instead, open that project’s Tasks tab.")
                 .font(.system(size: 11))
                 .foregroundStyle(.secondary)
+
+            HStack {
+                Button {
+                    Task { await runRoutedImport() }
+                } label: {
+                    if isRoutedImporting {
+                        ProgressView()
+                            .controlSize(.small)
+                    } else {
+                        Text("Import Routed Reminders…")
+                    }
+                }
+                .disabled(
+                    appState.remindersListID == nil
+                        || isRoutedImporting
+                        || !remindersService.isAuthorized
+                )
+                Spacer()
+            }
 
             Toggle("Mark reminders as completed after import", isOn: Binding(
                 get: { appState.remindersMarkCompleted },
                 set: { appState.remindersMarkCompleted = $0 }
             ))
         }
+    }
+
+    private func runRoutedImport() async {
+        guard let listID = appState.remindersListID else { return }
+        isRoutedImporting = true
+        let summary = await remindersService.importRoutedPendingReminders(
+            fromListWithID: listID,
+            projects: allProjects,
+            context: modelContext,
+            markImportedRemindersCompleted: appState.remindersMarkCompleted,
+            appState: appState
+        )
+        isRoutedImporting = false
+        routedResultMessage = summary.formattedReport
+        showRoutedResult = true
     }
 }

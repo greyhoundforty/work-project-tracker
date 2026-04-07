@@ -40,6 +40,7 @@ func makeNote(title: String?, content: String, for project: Project) -> Note {
 
 struct QuickCaptureView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(AppState.self) private var appState
     @Query(sort: \Project.updatedAt, order: .reverse) private var allProjects: [Project]
 
     @State private var captureType: CaptureType = .engagement
@@ -230,6 +231,7 @@ struct QuickCaptureView: View {
             modelContext.insert(t)
             project.tasks.append(t)
             try? modelContext.save()
+            try? VaultService.writeTask(t, project: project, appState: appState)
             taskTitle = ""
             hasDueDate = false
             dueDate = Date()
@@ -243,6 +245,7 @@ struct QuickCaptureView: View {
             modelContext.insert(n)
             project.notes.append(n)
             try? modelContext.save()
+            try? VaultService.writeNote(n, project: project, appState: appState)
             noteTitle = ""
             noteContent = ""
         }

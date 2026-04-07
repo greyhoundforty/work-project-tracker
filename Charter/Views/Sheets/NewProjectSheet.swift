@@ -15,6 +15,7 @@ struct NewProjectSheet: View {
     @State private var customFieldValues: [String] = []
     @State private var availableTemplates: [ProjectTemplate] = []
     @State private var selectedFolderForNew: ProjectFolder? = nil
+    @State private var remindersCode: String = ""
 
     var isValid: Bool { !name.trimmingCharacters(in: .whitespaces).isEmpty }
 
@@ -52,6 +53,9 @@ struct NewProjectSheet: View {
                         }
                         LabeledField(label: "Tags (resource types, comma-separated)") {
                             TextField("e.g. vpc, iks, powervs", text: $tagsString)
+                        }
+                        LabeledField(label: "Reminders code (optional)") {
+                            TextField("Matches Charter: line in reminder notes", text: $remindersCode)
                         }
                         LabeledField(label: "Folder") {
                             Picker("", selection: $selectedFolderForNew) {
@@ -177,6 +181,8 @@ struct NewProjectSheet: View {
         )
         project.summary = summary.isEmpty ? nil : summary
         project.folder = selectedFolderForNew
+        let rc = remindersCode.trimmingCharacters(in: .whitespacesAndNewlines)
+        project.remindersCode = rc.isEmpty ? nil : rc
         context.insert(project)
 
         if let template = selectedTemplate, !template.checkpoints.isEmpty {
@@ -214,6 +220,8 @@ struct NewProjectSheet: View {
 
         do {
             try context.save()
+            VaultService.prepareProjectDirectoryIfVaultEnabled(project: project, appState: appState)
+            try? VaultService.mirrorAllTasksToVault(project: project, appState: appState)
             appState.selectedStage = project.stage
             appState.pendingProjectDetailTab = nil
             appState.selectedProject = project

@@ -21,6 +21,23 @@ final class ProjectTask {
         self.createdAt = Date()
     }
 
+    /// Restores a task from vault disk import with a fixed id.
+    init(
+        id: UUID,
+        title: String,
+        isCompleted: Bool,
+        completedAt: Date?,
+        dueDate: Date?,
+        createdAt: Date
+    ) {
+        self.id = id
+        self.title = title
+        self.isCompleted = isCompleted
+        self.completedAt = completedAt
+        self.dueDate = dueDate
+        self.createdAt = createdAt
+    }
+
     func toggle() {
         isCompleted.toggle()
         completedAt = isCompleted ? Date() : nil

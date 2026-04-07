@@ -4,6 +4,7 @@ import MarkdownUI
 
 struct NotesTabView: View {
     @Environment(\.modelContext) private var context
+    @Environment(AppState.self) private var appState
     let project: Project
 
     @State private var newNoteTitle: String = ""
@@ -85,6 +86,9 @@ struct NotesTabView: View {
                 }
             }
         }
+        .onAppear {
+            try? VaultService.syncNotes(project: project, context: context, appState: appState)
+        }
     }
 
     private func saveNote() {
@@ -99,12 +103,14 @@ struct NotesTabView: View {
         project.notes.append(note)
         project.updatedAt = Date()
         try? context.save()
+        try? VaultService.writeNote(note, project: project, appState: appState)
         newNoteTitle = ""
         newNoteContent = ""
         isAddingNote = false
     }
 
     private func delete(_ note: Note) {
+        try? VaultService.deleteNoteFile(note, project: project, appState: appState)
         project.notes.removeAll { $0.id == note.id }
         context.delete(note)
         try? context.save()
@@ -117,6 +123,7 @@ struct NotesTabView: View {
 
 struct NoteRowView: View {
     @Environment(\.modelContext) private var context
+    @Environment(AppState.self) private var appState
     let note: Note
     let onDelete: () -> Void
     @Binding var editingNoteID: UUID?
@@ -173,6 +180,9 @@ struct NoteRowView: View {
                             note.content = editedContent
                             note.project?.updatedAt = Date()
                             try? context.save()
+                            if let p = note.project {
+                                try? VaultService.writeNote(note, project: p, appState: appState)
+                            }
                             editingNoteID = nil
                         }
                         .buttonStyle(.borderedProminent)

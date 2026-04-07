@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct ProjectDetailView: View {
     let project: Project
@@ -168,9 +169,19 @@ struct ProjectDetailHeaderView: View {
 
     private func deleteProject() {
         appState.pendingProjectDetailTab = nil
+        let persistentID = project.persistentModelID
         appState.selectedProject = nil
-        context.delete(project)
-        try? context.save()
+        // Defer delete so TabViews release task/note bindings before cascade deletes run.
+        Task { @MainActor in
+            await Task.yield()
+            do {
+                guard let doomed = try context.model(for: persistentID) as? Project else { return }
+                context.delete(doomed)
+                try context.save()
+            } catch {
+                // Model may already be gone (e.g. CloudKit merge); ignore.
+            }
+        }
     }
 }
 

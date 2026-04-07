@@ -20,6 +20,10 @@ final class Project {
     var isActive: Bool
     var createdAt: Date
     var updatedAt: Date
+    /// Stable subfolder name under the on-disk vault root (`notes/`, `tasks/` inside). Assigned when vault I/O first runs.
+    var vaultFolderName: String?
+    /// Optional short code for routing reminders from a shared inbox (see `RemindersRouting`).
+    var remindersCode: String?
 
     @Relationship(deleteRule: .cascade) var contacts: [Contact]
     @Relationship(deleteRule: .cascade) var checkpoints: [Checkpoint]
@@ -40,7 +44,8 @@ final class Project {
         tags: [String] = [],
         iscOpportunityLink: String? = nil,
         gtmNavAccountLink: String? = nil,
-        oneDriveFolderLink: String? = nil
+        oneDriveFolderLink: String? = nil,
+        remindersCode: String? = nil
     ) {
         self.id = UUID()
         self.name = name
@@ -54,6 +59,7 @@ final class Project {
         self.iscOpportunityLink = iscOpportunityLink
         self.gtmNavAccountLink = gtmNavAccountLink
         self.oneDriveFolderLink = oneDriveFolderLink
+        self.remindersCode = remindersCode
         self.isActive = true
         self.createdAt = Date()
         self.updatedAt = Date()
