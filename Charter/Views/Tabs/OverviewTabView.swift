@@ -245,7 +245,7 @@ struct EngagementCalendarView: View {
 
             // Weekday headers
             LazyVGrid(columns: dayColumns, spacing: 4) {
-                ForEach(weekdaySymbols, id: \.self) { symbol in
+                ForEach(Array(weekdaySymbols.enumerated()), id: \.offset) { _, symbol in
                     Text(symbol)
                         .font(.system(size: 10, weight: .medium))
                         .foregroundStyle(Color.themeFgDim)

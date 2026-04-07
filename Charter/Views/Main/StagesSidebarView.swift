@@ -1,5 +1,20 @@
 import SwiftUI
 import SwiftData
+import CoreTransferable
+import UniformTypeIdentifiers
+import OSLog
+
+extension UTType {
+    static let charterProjectDragItem = UTType(exportedAs: "com.greyhoundforty.charter.project-drag-item")
+}
+
+struct ProjectDragItem: Codable, Transferable {
+    let id: UUID
+
+    static var transferRepresentation: some TransferRepresentation {
+        CodableRepresentation(contentType: .charterProjectDragItem)
+    }
+}
 
 struct StagesSidebarView: View {
     @Environment(AppState.self) private var appState
@@ -39,13 +54,22 @@ struct StagesSidebarView: View {
     }
 }
 
+private let dragDropLogger = Logger(
+    subsystem: Bundle.main.bundleIdentifier ?? "com.greyhoundforty.Charter",
+    category: "DragDrop"
+)
+
 // MARK: - Sidebar List
 
 private struct SidebarList: View {
     @Environment(AppState.self) private var appState
+    @Environment(\.modelContext) private var modelContext
     @Query(sort: \ProjectFolder.sortOrder) private var folders: [ProjectFolder]
     let projects: [Project]
     @Binding var showNewFolder: Bool
+
+    @State private var toastMessage = ""
+    @State private var showToast = false
 
     private var activeProjects: [Project] { projects.filter(\.isActive) }
 
@@ -79,11 +103,29 @@ private struct SidebarList: View {
     }
 
     var body: some View {
-        List {
-            allProjectsSection
-            stagesSection
-            if !allTags.isEmpty { tagsSection }
-            if !projectsWithOpenTasks.isEmpty { tasksSection }
+        ZStack(alignment: .top) {
+            List {
+                allProjectsSection
+                stagesSection
+                if !allTags.isEmpty { tagsSection }
+                if !projectsWithOpenTasks.isEmpty { tasksSection }
+            }
+
+            if showToast {
+                VStack {
+                    Text(toastMessage)
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(Color.themeBlue)
+                        .clipShape(Capsule())
+                        .shadow(radius: 4)
+                        .padding(.top, 8)
+                        .transition(.scale.combined(with: .opacity))
+                    Spacer()
+                }
+            }
         }
     }
 
@@ -91,7 +133,7 @@ private struct SidebarList: View {
         Section {
             SidebarRow(
                 label: "All Projects",
-                icon: "tray.2",
+                icon: "square.grid.2x2",
                 badge: activeProjects.count,
                 isSelected: appState.selectedStage == nil
                     && appState.selectedTag == nil
@@ -109,7 +151,7 @@ private struct SidebarList: View {
 
             SidebarRow(
                 label: "Unsorted",
-                icon: "tray",
+                icon: "tray.and.arrow.down",
                 badge: unsortedCount,
                 isSelected: appState.selectedFolderIsUnsorted,
                 color: .themeFgDim
@@ -119,6 +161,8 @@ private struct SidebarList: View {
                 appState.selectedStage = nil
                 appState.selectedTag = nil
                 appState.selectedLabel = nil
+            } onDropProjects: { ids in
+                moveDroppedProjects(ids, to: nil)
             }
 
             ForEach(rootFolders) { folder in
@@ -134,6 +178,8 @@ private struct SidebarList: View {
                     appState.selectedStage = nil
                     appState.selectedTag = nil
                     appState.selectedLabel = nil
+                } onDropProjects: { ids in
+                    moveDroppedProjects(ids, to: folder)
                 }
 
                 ForEach(childFolders(of: folder)) { child in
@@ -150,6 +196,8 @@ private struct SidebarList: View {
                         appState.selectedStage = nil
                         appState.selectedTag = nil
                         appState.selectedLabel = nil
+                    } onDropProjects: { ids in
+                        moveDroppedProjects(ids, to: child)
                     }
                 }
             }
@@ -253,6 +301,66 @@ private struct SidebarList: View {
         case .lost:            return "xmark.seal.fill"
         }
     }
+
+    private func moveDroppedProjects(_ ids: [UUID], to folder: ProjectFolder?) -> Bool {
+        let uniqueIDs = Array(Set(ids))
+        guard !uniqueIDs.isEmpty else {
+            dragDropLogger.warning("Drop ignored: no project IDs were received")
+            return false
+        }
+
+        dragDropLogger.debug("Handling drop for \(uniqueIDs.count) project(s) into folder=\(folder?.name ?? "Unsorted", privacy: .public)")
+
+        let projectsByID = Dictionary(uniqueKeysWithValues: projects.map { ($0.id, $0) })
+
+        var moved = false
+        for id in uniqueIDs {
+            guard let project = projectsByID[id] else {
+                dragDropLogger.error("Drop payload contained unknown project id \(id.uuidString, privacy: .public)")
+                continue
+            }
+            if project.folder?.id == folder?.id {
+                dragDropLogger.debug("Project already in target folder: \(project.name, privacy: .public)")
+                continue
+            }
+
+            project.folder = folder
+            project.updatedAt = Date()
+            dragDropLogger.debug("Project moved in-memory: \(project.name, privacy: .public)")
+            moved = true
+        }
+
+        guard moved else {
+            dragDropLogger.debug("Drop completed with no changes")
+            return true
+        }
+        do {
+            try modelContext.save()
+            dragDropLogger.info("Drop persisted successfully for \(uniqueIDs.count) project(s)")
+            appState.selectedStage = nil
+            appState.selectedTag = nil
+            appState.selectedLabel = nil
+            appState.selectedFolder = folder
+            appState.selectedFolderIsUnsorted = folder == nil
+
+            // Show toast notification
+            let count = uniqueIDs.count
+            let folderName = folder?.name ?? "Unsorted"
+            toastMessage = "Moved \(count) project\(count == 1 ? "" : "s") to \(folderName)"
+            showToast = true
+
+            // Auto-dismiss toast after 3 seconds
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                showToast = false
+            }
+
+            return true
+        } catch {
+            modelContext.rollback()
+            dragDropLogger.error("Drop save failed: \(error.localizedDescription, privacy: .public)")
+            return false
+        }
+    }
 }
 
 // MARK: - Private components
@@ -283,31 +391,113 @@ private struct SidebarRow: View {
     let color: Color
     var indented: Bool = false
     let action: () -> Void
+    var onDropProjects: (([UUID]) -> Bool)? = nil
+
+    @State private var isDropTarget = false
+
+    private func handleDropProviders(_ providers: [NSItemProvider], onDropProjects: @escaping ([UUID]) -> Bool) -> Bool {
+        let allTypes = providers.flatMap(\.registeredTypeIdentifiers)
+        dragDropLogger.debug("onDrop invoked for row=\(label, privacy: .public), providers=\(providers.count), typeIds=\(allTypes.joined(separator: ","), privacy: .public)")
+
+        var accepted = false
+        let group = DispatchGroup()
+        let lock = NSLock()
+        var droppedIDs: [UUID] = []
+
+        for provider in providers {
+            guard provider.hasItemConformingToTypeIdentifier(UTType.charterProjectDragItem.identifier) else {
+                continue
+            }
+
+            accepted = true
+            group.enter()
+            provider.loadDataRepresentation(forTypeIdentifier: UTType.charterProjectDragItem.identifier) { data, error in
+                defer { group.leave() }
+
+                if let error {
+                    dragDropLogger.error("Drop data load failed for row=\(label, privacy: .public): \(error.localizedDescription, privacy: .public)")
+                    return
+                }
+
+                guard let data else {
+                    dragDropLogger.error("Drop data load returned nil for row=\(label, privacy: .public)")
+                    return
+                }
+
+                if let item = try? JSONDecoder().decode(ProjectDragItem.self, from: data) {
+                    lock.lock()
+                    droppedIDs.append(item.id)
+                    lock.unlock()
+                    dragDropLogger.debug("Drop payload decoded id=\(item.id.uuidString, privacy: .public) for row=\(label, privacy: .public)")
+                    return
+                }
+
+                if let text = String(data: data, encoding: .utf8), let id = UUID(uuidString: text.trimmingCharacters(in: .whitespacesAndNewlines)) {
+                    lock.lock()
+                    droppedIDs.append(id)
+                    lock.unlock()
+                    dragDropLogger.debug("Drop payload decoded fallback UUID string id=\(id.uuidString, privacy: .public) for row=\(label, privacy: .public)")
+                    return
+                }
+
+                dragDropLogger.error("Drop payload decode failed for row=\(label, privacy: .public), bytes=\(data.count)")
+            }
+        }
+
+        guard accepted else {
+            dragDropLogger.warning("Drop rejected for row=\(label, privacy: .public): no providers matched \(UTType.charterProjectDragItem.identifier, privacy: .public)")
+            return false
+        }
+
+        group.notify(queue: .main) {
+            let uniqueIDs = Array(Set(droppedIDs))
+            guard !uniqueIDs.isEmpty else {
+                dragDropLogger.warning("Drop decode completed for row=\(label, privacy: .public) but no valid UUIDs were found")
+                return
+            }
+
+            let didMove = onDropProjects(uniqueIDs)
+            dragDropLogger.debug("Drop apply result for row=\(label, privacy: .public): \(didMove)")
+        }
+
+        return true
+    }
 
     var body: some View {
-        Button(action: action) {
-            HStack {
-                Label(label, systemImage: icon)
-                    .foregroundStyle(color)
-                Spacer()
-                if badge > 0 {
-                    Text("\(badge)")
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundStyle(Color.themeFgDim)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(Color.themeBg2)
-                        .clipShape(Capsule())
-                }
+        let row = HStack {
+            Label(label, systemImage: icon)
+                .foregroundStyle(color)
+            Spacer()
+            if badge > 0 {
+                Text("\(badge)")
+                    .font(.system(size: 11, weight: .medium))
+                    .foregroundStyle(Color.themeFgDim)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(Color.themeBg2)
+                    .clipShape(Capsule())
             }
-            .padding(.leading, indented ? 16 : 0)
         }
-        .buttonStyle(.plain)
+        .padding(.leading, indented ? 16 : 0)
         .padding(.vertical, 2)
         .padding(.horizontal, 4)
+        .contentShape(RoundedRectangle(cornerRadius: 6))
         .background(
             RoundedRectangle(cornerRadius: 6)
-                .fill(isSelected ? Color.themeAqua.opacity(0.2) : Color.clear)
+                .fill((isSelected || isDropTarget) ? Color.themeAqua.opacity(0.2) : Color.clear)
         )
+        .onTapGesture(perform: action)
+
+        if let onDropProjects {
+            row
+                .onDrop(of: [UTType.charterProjectDragItem], isTargeted: $isDropTarget) { providers in
+                    handleDropProviders(providers, onDropProjects: onDropProjects)
+                }
+                .onChange(of: isDropTarget) { _, targeted in
+                    dragDropLogger.debug("Drop target state changed for row=\(label, privacy: .public): \(targeted)")
+                }
+        } else {
+            row
+        }
     }
 }

@@ -1,5 +1,12 @@
 import SwiftUI
 import SwiftData
+import OSLog
+import UniformTypeIdentifiers
+
+private let dragSourceLogger = Logger(
+    subsystem: Bundle.main.bundleIdentifier ?? "com.greyhoundforty.Charter",
+    category: "DragDrop"
+)
 
 struct ProjectListView: View {
     @Environment(AppState.self) private var appState
@@ -48,7 +55,27 @@ struct ProjectListView: View {
             ForEach(filtered) { project in
                 ProjectRowView(project: project, isSelected: appState.selectedProject?.id == project.id)
                     .contentShape(Rectangle())
+                    .onDrag {
+                        let payload = ProjectDragItem(id: project.id)
+                        do {
+                            let data = try JSONEncoder().encode(payload)
+                            let provider = NSItemProvider()
+                            provider.registerDataRepresentation(
+                                forTypeIdentifier: UTType.charterProjectDragItem.identifier,
+                                visibility: .all
+                            ) { completion in
+                                completion(data, nil)
+                                return nil
+                            }
+                            dragSourceLogger.debug("Drag payload encoded for project=\(project.name, privacy: .public) id=\(project.id.uuidString, privacy: .public) bytes=\(data.count)")
+                            return provider
+                        } catch {
+                            dragSourceLogger.error("Failed to encode drag payload for project=\(project.name, privacy: .public): \(error.localizedDescription, privacy: .public)")
+                            return NSItemProvider(object: project.id.uuidString as NSString)
+                        }
+                    }
                     .onTapGesture {
+                        dragSourceLogger.debug("Project row tapped: \(project.name, privacy: .public)")
                         appState.selectedProject = project
                     }
                     .listRowBackground(

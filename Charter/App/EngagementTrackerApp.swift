@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 import Sparkle
+import AppKit
 
 @main
 struct EngagementTrackerApp: App {
@@ -55,13 +56,14 @@ struct EngagementTrackerApp: App {
     }
 
     private static func applyAppearance(_ mode: ThemeMode) {
+        let app = NSApplication.shared
         switch mode {
         case .system:
-            NSApp.appearance = nil
+            app.appearance = nil
         case .light:
-            NSApp.appearance = NSAppearance(named: .aqua)
+            app.appearance = NSAppearance(named: .aqua)
         case .dark:
-            NSApp.appearance = NSAppearance(named: .darkAqua)
+            app.appearance = NSAppearance(named: .darkAqua)
         }
     }
 }

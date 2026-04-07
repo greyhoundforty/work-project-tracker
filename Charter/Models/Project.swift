@@ -12,7 +12,7 @@ final class Project {
     var isPOC: Bool
     var estimatedValueCents: Int?           // stored as cents to avoid Decimal SwiftData issues
     var targetCloseDate: Date?
-    var tags: [String]
+    var tags: [String] = []
     var folder: ProjectFolder?
     var iscOpportunityLink: String?
     var gtmNavAccountLink: String?
@@ -76,3 +76,4 @@ final class Project {
         return formatter.string(from: NSNumber(value: dollars))
     }
 }
+
