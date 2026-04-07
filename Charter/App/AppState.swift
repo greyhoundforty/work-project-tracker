@@ -38,6 +38,13 @@ final class AppState {
         didSet { UserDefaults.standard.set(templateFolderBookmark, forKey: "templateFolderBookmark") }
     }
 
+    var vaultRootPath: String? = UserDefaults.standard.string(forKey: "vaultRootPath") {
+        didSet { UserDefaults.standard.set(vaultRootPath, forKey: "vaultRootPath") }
+    }
+    var vaultRootBookmark: Data? = UserDefaults.standard.data(forKey: "vaultRootBookmark") {
+        didSet { UserDefaults.standard.set(vaultRootBookmark, forKey: "vaultRootBookmark") }
+    }
+
     var remindersListID: String? = UserDefaults.standard.string(forKey: "remindersListID") {
         didSet { UserDefaults.standard.set(remindersListID, forKey: "remindersListID") }
     }
@@ -62,6 +69,24 @@ final class AppState {
             }
         }
         return templateFolderPath.map { URL(fileURLWithPath: $0) }
+    }
+
+    func resolveVaultRootURL() -> URL? {
+        if let bookmarkData = vaultRootBookmark {
+            var isStale = false
+            if let url = try? URL(
+                resolvingBookmarkData: bookmarkData,
+                options: .withSecurityScope,
+                relativeTo: nil,
+                bookmarkDataIsStale: &isStale
+            ) {
+                if isStale {
+                    vaultRootBookmark = try? url.bookmarkData(options: .withSecurityScope)
+                }
+                return url
+            }
+        }
+        return vaultRootPath.map { URL(fileURLWithPath: $0) }
     }
 
     static func makeContainer(cloudSync: Bool) -> ModelContainer {

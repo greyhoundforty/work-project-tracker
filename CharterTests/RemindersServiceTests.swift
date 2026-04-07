@@ -14,6 +14,13 @@ struct RemindersServiceTests {
         #expect(item.title == "Send proposal")
         #expect(item.dueDate == due)
         #expect(item.notes == "Check pricing first")
+        #expect(item.calendarItemIdentifier.isEmpty)
+    }
+
+    @Test("init can store calendarItemIdentifier")
+    func initStoresCalendarId() {
+        let item = ReminderItem(title: "T", calendarItemIdentifier: "id-123")
+        #expect(item.calendarItemIdentifier == "id-123")
     }
 
     @Test("init with no dueDate stores nil")
@@ -95,6 +102,25 @@ struct RemindersServiceTests {
     }
 
     // MARK: - Import count calculation
+
+    @Test("RoutedImportSummary formattedReport explains empty import")
+    func routedSummaryEmpty() {
+        let s = RoutedImportSummary()
+        #expect(s.formattedReport == "No matching reminders to import.")
+    }
+
+    @Test("RoutedImportSummary formattedReport lists issues")
+    func routedSummaryWithIssues() {
+        var s = RoutedImportSummary()
+        s.importedCount = 2
+        s.unknownCodes = ["zap"]
+        s.unparseableTitles = ["Plain task"]
+        let r = s.formattedReport
+        #expect(r.contains("Imported 2 tasks"))
+        #expect(r.contains("Unknown code"))
+        #expect(r.contains("zap"))
+        #expect(r.contains("Plain task"))
+    }
 
     @Test("import count equals number of new items created")
     func importCountMatchesNewItems() {

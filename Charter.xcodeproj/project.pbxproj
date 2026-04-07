@@ -46,12 +46,15 @@
 		949835C676642DB04FCDF30D /* QuickCaptureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44807BC1F189B4C6C849BCF5 /* QuickCaptureTests.swift */; };
 		95F1F6C81AF521CFDE5EDF1C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4642D24D49293B886C9004 /* AppState.swift */; };
 		9CC7BD88C3AE9F2FBEA9DC9E /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F5B3305F298D847935C6DD /* ImportService.swift */; };
+		CAFEBABE00000001CAFEBABE /* VaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFEBABE00000002CAFEBABE /* VaultService.swift */; };
 		A3BAAC3351977D8317F4408C /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E17EF137EC89CE1622E139 /* Project.swift */; };
 		A6ECAE337530BDAC9DAA2C78 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 715BD41C5CD07E6CF6FBEE05 /* Sparkle */; };
 		B0A29777A7EDB576554DB8C3 /* ExportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFC4C5A4A7B31188592E717 /* ExportSheet.swift */; };
 		B376A08FB97DE4063AF48FD5 /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB32B5E535A6AE7F4E9847F /* ExportService.swift */; };
 		B767FBF91FE1534498B3617C /* UpdaterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A342674CBE9865D61E219730 /* UpdaterService.swift */; };
 		1480A40BCF804AF2AEDD35AB /* RemindersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039B349CBB4E48AC9416C4A6 /* RemindersService.swift */; };
+		DEADBEEF0000010100000001 /* RemindersRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEADBEEF0000010300000003 /* RemindersRouting.swift */; };
+		DEADBEEF0000010200000002 /* RemindersRoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEADBEEF0000010400000004 /* RemindersRoutingTests.swift */; };
 		22459066B1E34931A673CF6A /* RemindersServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABB531AD10F42D6BC775A45 /* RemindersServiceTests.swift */; };
 		BEC95E98C50F16E2B6B7563D /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E536E5729762EE17853546AA /* ProjectListView.swift */; };
 		BFA979D97DDF3C4AE62F332F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A64A7909ACFE80130ED68EB8 /* Assets.xcassets */; };
@@ -92,6 +95,7 @@
 		1D70BE28B9160C4DFC0B41AA /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		1EE5B095057727781E7EAFF3 /* ExportServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportServiceTests.swift; sourceTree = "<group>"; };
 		25F5B3305F298D847935C6DD /* ImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportService.swift; sourceTree = "<group>"; };
+		CAFEBABE00000002CAFEBABE /* VaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultService.swift; sourceTree = "<group>"; };
 		27E17EF137EC89CE1622E139 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		3217AB78811D2AB793685F65 /* ProjectTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTaskTests.swift; sourceTree = "<group>"; };
 		352A66F84AEB8CB942F1E4AC /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
@@ -130,6 +134,8 @@
 		9E22B066571B3BB7EDA3EB25 /* Charter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Charter.entitlements; sourceTree = "<group>"; };
 		A342674CBE9865D61E219730 /* UpdaterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterService.swift; sourceTree = "<group>"; };
 		039B349CBB4E48AC9416C4A6 /* RemindersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersService.swift; sourceTree = "<group>"; };
+		DEADBEEF0000010300000003 /* RemindersRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersRouting.swift; sourceTree = "<group>"; };
+		DEADBEEF0000010400000004 /* RemindersRoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersRoutingTests.swift; sourceTree = "<group>"; };
 		FABB531AD10F42D6BC775A45 /* RemindersServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersServiceTests.swift; sourceTree = "<group>"; };
 		A64A7909ACFE80130ED68EB8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A79DED21F67D243CD120763D /* LogEngagementSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEngagementSheet.swift; sourceTree = "<group>"; };
@@ -193,6 +199,7 @@
 				3217AB78811D2AB793685F65 /* ProjectTaskTests.swift */,
 				880E9C71946EDD42069C3C3A /* ProjectTemplateDecodingTests.swift */,
 				44807BC1F189B4C6C849BCF5 /* QuickCaptureTests.swift */,
+				DEADBEEF0000010400000004 /* RemindersRoutingTests.swift */,
 				FABB531AD10F42D6BC775A45 /* RemindersServiceTests.swift */,
 				75B0C2C4EFAC3D07CF26A9C9 /* SearchFilterTests.swift */,
 			);
@@ -292,6 +299,8 @@
 				0CB32B5E535A6AE7F4E9847F /* ExportService.swift */,
 				25F5B3305F298D847935C6DD /* ImportService.swift */,
 				039B349CBB4E48AC9416C4A6 /* RemindersService.swift */,
+				DEADBEEF0000010300000003 /* RemindersRouting.swift */,
+				CAFEBABE00000002CAFEBABE /* VaultService.swift */,
 				A342674CBE9865D61E219730 /* UpdaterService.swift */,
 			);
 			path = Services;
@@ -502,6 +511,8 @@
 				DC1FE2BF0F057A00BA484DF2 /* TasksTabView.swift in Sources */,
 				B767FBF91FE1534498B3617C /* UpdaterService.swift in Sources */,
 				1480A40BCF804AF2AEDD35AB /* RemindersService.swift in Sources */,
+				DEADBEEF0000010100000001 /* RemindersRouting.swift in Sources */,
+				CAFEBABE00000001CAFEBABE /* VaultService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +532,7 @@
 				7FD583CD78FC90DECC83BFAB /* ProjectTaskTests.swift in Sources */,
 				4F8A8E3AA5B13CEA4C5A34CA /* ProjectTemplateDecodingTests.swift in Sources */,
 				949835C676642DB04FCDF30D /* QuickCaptureTests.swift in Sources */,
+				DEADBEEF0000010200000002 /* RemindersRoutingTests.swift in Sources */,
 				DE46909C610D3A3A70255F97 /* SearchFilterTests.swift in Sources */,
 				22459066B1E34931A673CF6A /* RemindersServiceTests.swift in Sources */,
 			);

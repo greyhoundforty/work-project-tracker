@@ -27,6 +27,23 @@ struct OverviewTabView: View {
                         if !projectTags.isEmpty {
                             OverviewInfoRow(label: "Tags", value: projectTags.map { String($0.dropFirst()) }.joined(separator: ", "))
                         }
+                        OverviewInfoRow(label: "Reminders code") {
+                            TextField("e.g. acme-2026", text: Binding(
+                                get: { project.remindersCode ?? "" },
+                                set: { newValue in
+                                    let t = newValue.trimmingCharacters(in: .whitespacesAndNewlines)
+                                    project.remindersCode = t.isEmpty ? nil : t
+                                    project.updatedAt = Date()
+                                }
+                            ))
+                            .font(.system(size: 12))
+                            .foregroundStyle(Color.themeFg)
+                            .textFieldStyle(.roundedBorder)
+                            .onSubmit { try? context.save() }
+                            .onChange(of: project.remindersCode) { _, _ in
+                                try? context.save()
+                            }
+                        }
                         Spacer(minLength: 0)
                     }
                     .frame(maxHeight: .infinity)

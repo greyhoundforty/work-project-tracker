@@ -44,13 +44,13 @@ struct TasksTabView: View {
                             ProgressView()
                                 .controlSize(.small)
                         } else {
-                            Label("Import from Reminders", systemImage: "checklist")
+                            Label("Import all into this project", systemImage: "tray.and.arrow.down")
                                 .font(.system(size: 12))
                         }
                     }
                     .buttonStyle(.borderless)
                     .disabled(isImporting || !remindersService.isAuthorized)
-                    .help("Import incomplete tasks from your selected Reminders list into this project")
+                    .help("Imports every incomplete reminder from the Settings inbox list into this project only. For routing by project code, use Settings → Import Routed Reminders.")
                 }
             }
             .padding()
@@ -111,6 +111,9 @@ struct TasksTabView: View {
                 }
             }
         }
+        .onAppear {
+            try? VaultService.syncTasks(project: project, context: context, appState: appState)
+        }
     }
 
     private func addTask() {
@@ -121,6 +124,7 @@ struct TasksTabView: View {
         project.tasks.append(task)
         project.updatedAt = Date()
         try? context.save()
+        try? VaultService.writeTask(task, project: project, appState: appState)
         newTaskTitle = ""
     }
 
@@ -137,10 +141,14 @@ struct TasksTabView: View {
             )
             isImporting = false
             lastImportCount = count
+            if count > 0 {
+                try? VaultService.mirrorAllTasksToVault(project: project, appState: appState)
+            }
         }
     }
 
     private func delete(_ task: ProjectTask) {
+        try? VaultService.deleteTaskFile(task, project: project, appState: appState)
         project.tasks.removeAll { $0.id == task.id }
         context.delete(task)
         try? context.save()
@@ -151,6 +159,7 @@ struct TaskRowView: View {
     let task: ProjectTask
     let onDelete: () -> Void
     @Environment(\.modelContext) private var context
+    @Environment(AppState.self) private var appState
 
     var body: some View {
         HStack(spacing: 10) {
@@ -158,6 +167,9 @@ struct TaskRowView: View {
                 task.toggle()
                 task.project?.updatedAt = Date()
                 try? context.save()
+                if let p = task.project {
+                    try? VaultService.writeTask(task, project: p, appState: appState)
+                }
             } label: {
                 Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
                     .foregroundStyle(task.isCompleted ? Color.themeGreen : Color.themeBg3)
